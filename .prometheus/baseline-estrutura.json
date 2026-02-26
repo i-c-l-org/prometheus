@@ -1,0 +1,24 @@
+{
+  "arquetipo": "cli-modular",
+  "arquivosRaiz": [
+    ".gitignore",
+    "CHANGELOG.md",
+    "CODE_OF_CONDUCT.md",
+    "CONTRIBUTING.md",
+    "LICENSE",
+    "README.md",
+    "SECURITY.md",
+    "THIRD-PARTY-NOTICES.txt",
+    "eslint.config.js",
+    "package-lock.json",
+    "package.json",
+    "prometheus-0.4.0.tgz",
+    "prometheus.config.json",
+    "tsconfig.eslint.json",
+    "tsconfig.json",
+    "vitest.config.ts"
+  ],
+  "confidence": 70,
+  "timestamp": "2026-02-26T16:39:31.827Z",
+  "version": 1
+}
