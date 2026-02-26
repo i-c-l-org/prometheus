@@ -1,7 +1,11 @@
 // SPDX-License-Identifier: MIT
 import path from 'node:path';
 
-import { exists, findLicenseFile, readPackageJsonSync } from './fs-utils.js';
+import {
+  existsAsync,
+  findLicenseFileAsync,
+  readPackageJson
+} from './fs-utils.js';
 import type { ScanOptions, ScanResult } from './licensas.js';
 import { normalizeLicense } from './normalizer.js';
 
@@ -18,33 +22,35 @@ export async function scan({
     packages: [],
     problematic: []
   };
-  if (!exists(nmDir)) {
+  if (!(await existsAsync(nmDir))) {
     return result;
   }
-  const entries: string[] = [];
+
+  let dirEntries: string[];
   try {
-    const dirEntries = await fsReaddir(nmDir);
-    for (const e of dirEntries) entries.push(e);
+    dirEntries = await fsReaddir(nmDir);
   } catch {
     return result;
   }
-  for (const entryNome of entries) {
-    if (entryNome === '.bin') continue;
-    const full = path.join(nmDir, entryNome);
-    if (entryNome.startsWith('@')) {
-      try {
-        const scoped = await fsReaddir(full);
-        for (const s of scoped) {
-          const p = path.join(full, s);
-          if (await fsStatIsDir(p)) await processPackage(p, result);
-        }
-      } catch {
-        // ignore
+
+  // process entries in parallel to avoid inefficient nested loops
+  await Promise.all(
+    dirEntries.map(async (entryNome) => {
+      if (entryNome === '.bin') return;
+      const full = path.join(nmDir, entryNome);
+      if (entryNome.startsWith('@')) {
+        const scoped = await fsReaddir(full).catch(() => []);
+        await Promise.all(
+          scoped.map(async (s) => {
+            const p = path.join(full, s);
+            if (await fsStatIsDir(p)) await processPackage(p, result);
+          }),
+        );
+      } else {
+        if (await fsStatIsDir(full)) await processPackage(full, result);
       }
-    } else {
-      if (await fsStatIsDir(full)) await processPackage(full, result);
-    }
-  }
+    }),
+  );
 
   // Removido `: unknown` — result.packages já é tipado, inferência funciona corretamente
   const filtered = result.packages.filter(p => !p.name.startsWith('@types/'));
@@ -54,14 +60,14 @@ export async function scan({
   return result;
   async function processPackage(pkgDir: string, resObj: ScanResult) {
     const pkgJsonCaminho = path.join(pkgDir, 'package.json');
-    if (!exists(pkgJsonCaminho)) return;
-    const data = readPackageJsonSync(pkgJsonCaminho);
+    if (!(await existsAsync(pkgJsonCaminho))) return;
+    const data = await readPackageJson(pkgJsonCaminho);
     if (!data) return;
     const name = (typeof data.name === 'string' ? data.name : path.basename(pkgDir)) as string;
     const version = (typeof data.version === 'string' ? data.version : '0.0.0') as string;
     const rawLicenca = data.license ?? data.licenses ?? null;
     const licenseValor = await normalizeLicense(rawLicenca || 'UNKNOWN');
-    const licenseArquivo = findLicenseFile(pkgDir);
+    const licenseArquivo = await findLicenseFileAsync(pkgDir);
     const repo = data.repository;
     const repository = repo == null ? null : typeof repo === 'string' ? repo : (typeof repo === 'object' && repo != null && 'url' in repo ? String((repo as { url: unknown }).url) : null);
     resObj.packages.push({

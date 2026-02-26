@@ -104,11 +104,20 @@ export async function exportarRelatorioArquetiposMarkdown(destino, candidatos, c
             }
             catch { }
             try {
-                const { execSync } = await import('node:child_process');
-                const auditRaw = execSync('npm audit --json', {
-                    encoding: 'utf-8'
-                });
-                const audit = JSON.parse(auditRaw);
+                const { exec } = await import('node:child_process');
+                const { promisify } = await import('node:util');
+                const execp = promisify(exec);
+                let auditRaw = '';
+                try {
+                    const { stdout } = await execp('npm audit --json', {
+                        encoding: 'utf-8',
+                    });
+                    auditRaw = stdout;
+                }
+                catch {
+                    auditRaw = '';
+                }
+                const audit = auditRaw ? JSON.parse(auditRaw) : {};
                 if (audit.metadata?.vulnerabilities?.total > 0) {
                     linhas.push(`Vulnerabilidades detectadas pelo npm audit:`);
                     for (const [sev, qtd] of Object.entries(audit.metadata.vulnerabilities)) {

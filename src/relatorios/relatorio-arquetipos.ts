@@ -102,17 +102,23 @@ export async function exportarRelatorioArquetiposMarkdown(destino: string, candi
               }
             }
           }
-        } catch {}
-      } catch {}
+        } catch { }
+      } catch { }
       // Status do npm audit
       try {
-        const {
-          execSync
-        } = await import('node:child_process');
-        const auditRaw = execSync('npm audit --json', {
-          encoding: 'utf-8'
-        });
-        const audit = JSON.parse(auditRaw);
+        const { exec } = await import('node:child_process');
+        const { promisify } = await import('node:util');
+        const execp = promisify(exec);
+        let auditRaw = '';
+        try {
+          const { stdout } = await execp('npm audit --json', {
+            encoding: 'utf-8',
+          });
+          auditRaw = stdout;
+        } catch {
+          auditRaw = '';
+        }
+        const audit = auditRaw ? JSON.parse(auditRaw) : {};
         if (audit.metadata?.vulnerabilities?.total > 0) {
           linhas.push(`Vulnerabilidades detectadas pelo npm audit:`);
           for (const [sev, qtd] of Object.entries(audit.metadata.vulnerabilities)) {
@@ -124,7 +130,7 @@ export async function exportarRelatorioArquetiposMarkdown(destino: string, candi
         } else {
           linhas.push('Nenhuma vulnerabilidade encontrada pelo npm audit.');
         }
-      } catch {}
+      } catch { }
       linhas.push('---');
     }
   }
@@ -190,7 +196,7 @@ export async function exportarRelatorioArquetiposJson(destino: string, candidato
 
   // Criar relatório com versão
   const relatorioVersionado = criarRelatorioComVersao(relatorio, undefined,
-  // usar versão atual
-  'Relatório de detecção de arquétipos estruturais');
+    // usar versão atual
+    'Relatório de detecção de arquétipos estruturais');
   await salvarEstado(destino, relatorioVersionado);
 }

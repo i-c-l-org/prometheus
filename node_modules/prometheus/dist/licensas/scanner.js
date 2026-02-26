@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { exists, findLicenseFile, readPackageJsonSync } from './fs-utils.js';
+import { existsAsync, findLicenseFileAsync, readPackageJson } from './fs-utils.js';
 import { normalizeLicense } from './normalizer.js';
 export async function scan({ root = process.cwd(), includeDev: _includeDev = false } = {}) {
     const nmDir = path.join(root, 'node_modules');
@@ -11,39 +11,33 @@ export async function scan({ root = process.cwd(), includeDev: _includeDev = fal
         packages: [],
         problematic: []
     };
-    if (!exists(nmDir)) {
+    if (!(await existsAsync(nmDir))) {
         return result;
     }
-    const entries = [];
+    let dirEntries;
     try {
-        const dirEntries = await fsReaddir(nmDir);
-        for (const e of dirEntries)
-            entries.push(e);
+        dirEntries = await fsReaddir(nmDir);
     }
     catch {
         return result;
     }
-    for (const entryNome of entries) {
+    await Promise.all(dirEntries.map(async (entryNome) => {
         if (entryNome === '.bin')
-            continue;
+            return;
         const full = path.join(nmDir, entryNome);
         if (entryNome.startsWith('@')) {
-            try {
-                const scoped = await fsReaddir(full);
-                for (const s of scoped) {
-                    const p = path.join(full, s);
-                    if (await fsStatIsDir(p))
-                        await processPackage(p, result);
-                }
-            }
-            catch {
-            }
+            const scoped = await fsReaddir(full).catch(() => []);
+            await Promise.all(scoped.map(async (s) => {
+                const p = path.join(full, s);
+                if (await fsStatIsDir(p))
+                    await processPackage(p, result);
+            }));
         }
         else {
             if (await fsStatIsDir(full))
                 await processPackage(full, result);
         }
-    }
+    }));
     const filtered = result.packages.filter(p => !p.name.startsWith('@types/'));
     result.totalPackages = result.packages.length;
     result.totalFiltered = filtered.length;
@@ -52,16 +46,16 @@ export async function scan({ root = process.cwd(), includeDev: _includeDev = fal
     return result;
     async function processPackage(pkgDir, resObj) {
         const pkgJsonCaminho = path.join(pkgDir, 'package.json');
-        if (!exists(pkgJsonCaminho))
+        if (!(await existsAsync(pkgJsonCaminho)))
             return;
-        const data = readPackageJsonSync(pkgJsonCaminho);
+        const data = await readPackageJson(pkgJsonCaminho);
         if (!data)
             return;
         const name = (typeof data.name === 'string' ? data.name : path.basename(pkgDir));
         const version = (typeof data.version === 'string' ? data.version : '0.0.0');
         const rawLicenca = data.license ?? data.licenses ?? null;
         const licenseValor = await normalizeLicense(rawLicenca || 'UNKNOWN');
-        const licenseArquivo = findLicenseFile(pkgDir);
+        const licenseArquivo = await findLicenseFileAsync(pkgDir);
         const repo = data.repository;
         const repository = repo == null ? null : typeof repo === 'string' ? repo : (typeof repo === 'object' && repo != null && 'url' in repo ? String(repo.url) : null);
         resObj.packages.push({
