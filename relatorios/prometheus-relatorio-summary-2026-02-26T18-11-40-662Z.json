@@ -3,157 +3,157 @@
   "metricas": {
     "analistas": [
       {
-        "duracaoTotalMs": 228.45,
+        "duracaoTotalMs": 226.3,
         "execucoes": 335,
         "nome": "detector-interfaces-inline",
         "ocorrenciasTotal": 319
       },
       {
-        "duracaoTotalMs": 255.46,
+        "duracaoTotalMs": 267.48,
         "execucoes": 690,
         "nome": "documentacao",
         "ocorrenciasTotal": 308
       },
       {
-        "duracaoTotalMs": 89.06,
+        "duracaoTotalMs": 88.88,
         "execucoes": 345,
         "nome": "qualidade-testes",
         "ocorrenciasTotal": 200
       },
       {
-        "duracaoTotalMs": 125.88,
+        "duracaoTotalMs": 131.6,
         "execucoes": 345,
         "nome": "performance",
         "ocorrenciasTotal": 38
       },
       {
-        "duracaoTotalMs": 812.6,
+        "duracaoTotalMs": 273.24,
         "execucoes": 1,
         "nome": "sugestoes-contextuais",
         "ocorrenciasTotal": 9
       },
       {
-        "duracaoTotalMs": 6.9,
+        "duracaoTotalMs": 7,
         "execucoes": 1,
         "nome": "detector-estrutura",
         "ocorrenciasTotal": 2
       },
       {
-        "duracaoTotalMs": 68.77,
+        "duracaoTotalMs": 72.71,
         "execucoes": 340,
         "nome": "detector-tipos-inseguros",
         "ocorrenciasTotal": 2
       },
       {
-        "duracaoTotalMs": 38.47,
-        "execucoes": 56,
+        "duracaoTotalMs": 34.91,
+        "execucoes": 48,
         "nome": "detector-markdown",
         "ocorrenciasTotal": 0
       },
       {
-        "duracaoTotalMs": 771.49,
-        "execucoes": 42,
+        "duracaoTotalMs": 96.15,
+        "execucoes": 32,
         "nome": "analista-formatador",
         "ocorrenciasTotal": 0
       },
       {
-        "duracaoTotalMs": 45.11,
+        "duracaoTotalMs": 47.85,
         "execucoes": 344,
         "nome": "detector-dependencias",
         "ocorrenciasTotal": 0
       },
       {
-        "duracaoTotalMs": 57.22,
+        "duracaoTotalMs": 59.88,
         "execucoes": 344,
         "nome": "analista-funcoes-longas",
         "ocorrenciasTotal": 0
       },
       {
-        "duracaoTotalMs": 57.13,
+        "duracaoTotalMs": 59.06,
         "execucoes": 344,
         "nome": "analista-padroes-uso",
         "ocorrenciasTotal": 0
       },
       {
-        "duracaoTotalMs": 55.18,
+        "duracaoTotalMs": 56.94,
         "execucoes": 344,
         "nome": "analista-comandos-cli",
         "ocorrenciasTotal": 0
       },
       {
-        "duracaoTotalMs": 41.16,
+        "duracaoTotalMs": 44.09,
         "execucoes": 345,
         "nome": "construcoes-sintaticas",
         "ocorrenciasTotal": 0
       },
       {
-        "duracaoTotalMs": 40.42,
+        "duracaoTotalMs": 43.8,
         "execucoes": 345,
         "nome": "codigo-fragil",
         "ocorrenciasTotal": 0
       },
       {
-        "duracaoTotalMs": 38.99,
+        "duracaoTotalMs": 44.13,
         "execucoes": 345,
         "nome": "detector-duplicacoes",
         "ocorrenciasTotal": 0
       },
       {
-        "duracaoTotalMs": 39.36,
+        "duracaoTotalMs": 42.72,
         "execucoes": 345,
         "nome": "arquitetura",
         "ocorrenciasTotal": 0
       },
       {
-        "duracaoTotalMs": 44.55,
+        "duracaoTotalMs": 42.95,
         "execucoes": 345,
         "nome": "estilo-moderno",
         "ocorrenciasTotal": 0
       },
       {
-        "duracaoTotalMs": 293.15,
+        "duracaoTotalMs": 290.68,
         "execucoes": 345,
         "nome": "seguranca",
         "ocorrenciasTotal": 0
       },
       {
-        "duracaoTotalMs": 44.4,
+        "duracaoTotalMs": 52.64,
         "execucoes": 345,
         "nome": "analista-css-in-js",
         "ocorrenciasTotal": 0
       },
       {
-        "duracaoTotalMs": 80.05,
+        "duracaoTotalMs": 79.27,
         "execucoes": 344,
         "nome": "analista-react-hooks",
         "ocorrenciasTotal": 0
       },
       {
-        "duracaoTotalMs": 88.5,
+        "duracaoTotalMs": 90.89,
         "execucoes": 344,
         "nome": "analista-react",
         "ocorrenciasTotal": 0
       },
       {
-        "duracaoTotalMs": 61.77,
+        "duracaoTotalMs": 65.48,
         "execucoes": 344,
         "nome": "analista-tailwind",
         "ocorrenciasTotal": 0
       },
       {
-        "duracaoTotalMs": 18.29,
+        "duracaoTotalMs": 18.05,
         "execucoes": 345,
         "nome": "quick-fixes",
         "ocorrenciasTotal": 0
       },
       {
-        "duracaoTotalMs": 73.6,
+        "duracaoTotalMs": 81.65,
         "execucoes": 340,
         "nome": "angular-especifico",
         "ocorrenciasTotal": 0
       },
       {
-        "duracaoTotalMs": 103.97,
+        "duracaoTotalMs": 103.91,
         "execucoes": 323,
         "nome": "todo-comments",
         "ocorrenciasTotal": 0
@@ -161,9 +161,9 @@
     ],
     "cacheAstHits": 0,
     "cacheAstMiss": 340,
-    "tempoAnaliseMs": 5669,
-    "tempoParsingMs": 787,
-    "totalArquivos": 393
+    "tempoAnaliseMs": 3091,
+    "tempoParsingMs": 757,
+    "totalArquivos": 381
   },
   "ocorrencias": [
     {
@@ -3114,6 +3114,13 @@
       "tipo": "interface-inline-exportada"
     },
     {
+      "linha": 9,
+      "mensagem": "Interface 'FileEntry' deve estar em src/tipos/",
+      "nivel": "aviso",
+      "relPath": "src/types/comum/file-entries.ts",
+      "tipo": "interface-inline-exportada"
+    },
+    {
       "linha": 4,
       "mensagem": "Problemas de documentação (baixa): magic-constants, magic-constants",
       "nivel": "info",
@@ -3140,13 +3147,6 @@
       "nivel": "info",
       "relPath": "src/types/comum/analistas.ts",
       "tipo": "problemas-teste"
-    },
-    {
-      "linha": 9,
-      "mensagem": "Interface 'FileEntry' deve estar em src/tipos/",
-      "nivel": "aviso",
-      "relPath": "src/types/comum/file-entries.ts",
-      "tipo": "interface-inline-exportada"
     },
     {
       "linha": 77,
@@ -3373,20 +3373,6 @@
       "tipo": "problemas-teste"
     },
     {
-      "linha": 3,
-      "mensagem": "Interface 'SnapshotDiff' deve estar em src/tipos/",
-      "nivel": "aviso",
-      "relPath": "src/types/guardian/snapshot.ts",
-      "tipo": "interface-inline-exportada"
-    },
-    {
-      "linha": 9,
-      "mensagem": "Interface 'SnapshotDetalhado' deve estar em src/tipos/",
-      "nivel": "aviso",
-      "relPath": "src/types/guardian/snapshot.ts",
-      "tipo": "interface-inline-exportada"
-    },
-    {
       "linha": 7,
       "mensagem": "Interface 'ContextoProjeto' deve estar em src/tipos/",
       "nivel": "aviso",
@@ -3398,6 +3384,20 @@
       "mensagem": "Interface 'DetectarContextoOpcoes' deve estar em src/tipos/",
       "nivel": "aviso",
       "relPath": "src/types/projeto/contexto.ts",
+      "tipo": "interface-inline-exportada"
+    },
+    {
+      "linha": 3,
+      "mensagem": "Interface 'SnapshotDiff' deve estar em src/tipos/",
+      "nivel": "aviso",
+      "relPath": "src/types/guardian/snapshot.ts",
+      "tipo": "interface-inline-exportada"
+    },
+    {
+      "linha": 9,
+      "mensagem": "Interface 'SnapshotDetalhado' deve estar em src/tipos/",
+      "nivel": "aviso",
+      "relPath": "src/types/guardian/snapshot.ts",
       "tipo": "interface-inline-exportada"
     },
     {
@@ -5214,6 +5214,6 @@
       "tipo": "interface-inline-exportada"
     }
   ],
-  "timestamp": "2026-02-26T02:12:05.140Z",
+  "timestamp": "2026-02-26T18:11:40.668Z",
   "totalOcorrencias": 368
 }
