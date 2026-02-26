@@ -1,0 +1,1 @@
+{"version":3,"file":"fix-alias-imports.d.ts","sourceRoot":"","sources":["../../../src/analistas/corrections/fix-alias-imports.ts"],"names":[],"mappings":"AAGA,wBAAsB,sBAAsB,CAAC,WAAW,EAAE,MAAM,EAAE,OAAO,EAAE,MAAM,GAAG,OAAO,CAAC;IAC1F,OAAO,EAAE,OAAO,CAAC;IACjB,OAAO,EAAE,MAAM,CAAC;CACjB,CAAC,CAUD;AACD,wBAAsB,eAAe,CAAC,IAAI,EAAE,MAAM,GAAG,OAAO,CAAC,MAAM,CAAC,CA+BnE"}

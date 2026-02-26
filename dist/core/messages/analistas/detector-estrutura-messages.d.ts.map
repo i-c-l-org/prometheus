@@ -1,0 +1,1 @@
+{"version":3,"file":"detector-estrutura-messages.d.ts","sourceRoot":"","sources":["../../../../src/core/messages/analistas/detector-estrutura-messages.ts"],"names":[],"mappings":"AAGA,KAAK,wBAAwB,GAAG;IAC9B,aAAa,EAAE,MAAM,CAAC;IACtB,aAAa,CAAC,EAAE,MAAM,CAAC;CACxB,CAAC;AAEF,eAAO,MAAM,0BAA0B;;;;;;;;;;2CAUE,MAAM,EAAE;sEAI5C,wBAAwB;yCACU,MAAM,EAAE,SAAS,MAAM;CAiB5D,CAAC"}

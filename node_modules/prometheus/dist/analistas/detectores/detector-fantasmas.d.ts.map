@@ -1,0 +1,1 @@
+{"version":3,"file":"detector-fantasmas.d.ts","sourceRoot":"","sources":["../../../src/analistas/detectores/detector-fantasmas.ts"],"names":[],"mappings":"AAUA,OAAO,KAAK,EAAE,eAAe,EAAW,MAAM,GAAG,CAAC;AAwElD,wBAAsB,iBAAiB,CAAC,OAAO,GAAE,MAAsB,GAAG,OAAO,CAAC;IAChF,KAAK,EAAE,MAAM,CAAC;IACd,SAAS,EAAE,eAAe,EAAE,CAAC;CAC9B,CAAC,CAiED"}

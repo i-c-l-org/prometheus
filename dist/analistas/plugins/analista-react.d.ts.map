@@ -1,0 +1,1 @@
+{"version":3,"file":"analista-react.d.ts","sourceRoot":"","sources":["../../../src/analistas/plugins/analista-react.ts"],"names":[],"mappings":"AAUA,OAAO,EAAiB,eAAe,EAAE,MAAM,GAAG,CAAC;AAGnD,KAAK,GAAG,GAAG,UAAU,CAAC,OAAO,eAAe,CAAC,CAAC;AAgU9C,eAAO,MAAM,aAAa;;;;;oBAKR,MAAM,KAAG,OAAO;+CACD,OAAO,CAAC,GAAG,EAAE,GAAG,IAAI,CAAC;CA6BpD,CAAC;AACH,eAAe,aAAa,CAAC"}
