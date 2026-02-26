@@ -13,24 +13,18 @@ import type { Ocorrencia, OcorrenciaNivel, ProblemaAgrupado, RelatorioResumo } f
  */
 
 export function processarRelatorioResumo(ocorrencias: Ocorrencia[], limitePrioridade = 30): RelatorioResumo {
-  // Agrupar ocorrências por tipo e padrões de mensagem
+  // Agrupar ocorrências por tipo e padrões de mensagem em uma só passagem
   const gruposPorTipo = new Map<string, Ocorrencia[]>();
   const gruposPorMensagem = new Map<string, Ocorrencia[]>();
 
-  // Agrupar por tipo primeiro
   for (const ocorrencia of ocorrencias) {
     const tipo = String(ocorrencia.tipo || 'OUTROS');
     if (!gruposPorTipo.has(tipo)) {
       gruposPorTipo.set(tipo, []);
     }
-    const grupo = gruposPorTipo.get(tipo);
-    if (grupo) {
-      grupo.push(ocorrencia);
-    }
-  }
+    const grupoTipo = gruposPorTipo.get(tipo);
+    if (grupoTipo) grupoTipo.push(ocorrencia);
 
-  // Agrupar por padrões de mensagem
-  for (const ocorrencia of ocorrencias) {
     const mensagem = String(ocorrencia.mensagem || '');
     let agrupado = false;
     for (const grupo of AGRUPAMENTOS_MENSAGEM) {
@@ -38,23 +32,18 @@ export function processarRelatorioResumo(ocorrencias: Ocorrencia[], limitePriori
         if (!gruposPorMensagem.has(grupo.categoria)) {
           gruposPorMensagem.set(grupo.categoria, []);
         }
-        const categoriaGrupo = gruposPorMensagem.get(grupo.categoria);
-        if (categoriaGrupo) {
-          categoriaGrupo.push(ocorrencia);
-        }
+        const grupoMsg = gruposPorMensagem.get(grupo.categoria);
+        if (grupoMsg) grupoMsg.push(ocorrencia);
         agrupado = true;
         break;
       }
     }
     if (!agrupado) {
-      const tipo = String(ocorrencia.tipo || 'OUTROS');
       if (!gruposPorMensagem.has(tipo)) {
         gruposPorMensagem.set(tipo, []);
       }
-      const tipoGrupo = gruposPorMensagem.get(tipo);
-      if (tipoGrupo) {
-        tipoGrupo.push(ocorrencia);
-      }
+      const grupoFallback = gruposPorMensagem.get(tipo);
+      if (grupoFallback) grupoFallback.push(ocorrencia);
     }
   }
 

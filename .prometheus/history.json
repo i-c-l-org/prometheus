@@ -1,22 +1,7 @@
 [
   {
     "role": "user",
-    "content": "Execução CLI: formatar --write",
-    "timestamp": "2026-02-26T16:37:46.625Z"
-  },
-  {
-    "role": "user",
-    "content": "Execução CLI: formatar --write",
-    "timestamp": "2026-02-26T16:39:10.455Z"
-  },
-  {
-    "role": "user",
     "content": "Execução CLI: diagnosticar",
-    "timestamp": "2026-02-26T16:39:30.536Z"
-  },
-  {
-    "role": "user",
-    "content": "Execução CLI: diagnosticar --export",
-    "timestamp": "2026-02-26T18:11:36.093Z"
+    "timestamp": "2026-02-26T18:37:29.595Z"
   }
 ]

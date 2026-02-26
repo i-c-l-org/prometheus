@@ -7,10 +7,10 @@ import { defineConfig } from 'vitest/config';
 import type { VitestAlias } from './src/types/shared/vitest-alias.js';
 
 // Helpers extraídos para reduzir complexidade cognitiva da função principal
-function mapTsConfigAliases(rootAbs: string): VitestAlias[] {
+async function mapTsConfigAliases(rootAbs: string): Promise<VitestAlias[]> {
   try {
     const tsconfigPath = path.join(rootAbs, 'tsconfig.json');
-    const raw = fs.readFileSync(tsconfigPath, 'utf8');
+    const raw = await fs.promises.readFile(tsconfigPath, 'utf8');
     // Simplesmente tenta remover comentários de linha que iniciam com // para permitir JSON.parse
     const withoutComments = raw
       .split('\n')
@@ -46,7 +46,7 @@ function mapTsConfigAliases(rootAbs: string): VitestAlias[] {
       // evitar que o Vitest/ESLint reclamem sobre um alias apontando para
       // caminho inexistente.
       const resolverCandidate = path.resolve(rootAbs, 'src', 'resolver.ts');
-      if (fs.existsSync(resolverCandidate)) {
+      if (await fs.promises.access(resolverCandidate).then(() => true).catch(() => false)) {
         entries.push({
           find: '@/resolver.js',
           replacement: resolverCandidate.replace(/\\/g, '/'),
@@ -185,7 +185,7 @@ function createTransformImportsPlugin(_rootAbs: string) {
               changed = true;
               return `${pre}${rel}/src/${rest}.ts`;
             }
-          } catch {}
+          } catch { }
           return m;
         };
 
@@ -235,7 +235,7 @@ function createTransformMocksPlugin(_rootAbs: string) {
                 );
               }
             }
-          } catch {}
+          } catch { }
           return `${prefix}${spec}${suffix}`;
         };
 
@@ -251,7 +251,7 @@ function createTransformMocksPlugin(_rootAbs: string) {
   };
 }
 
-export default defineConfig(() => {
+export default defineConfig(async () => {
   const isCI = process.env.CI === 'true';
   const coverageEnabled = isCI || process.env.COVERAGE === 'true';
   const enforceThresholds = isCI || process.env.COVERAGE_ENFORCE === 'true';
@@ -275,7 +275,27 @@ export default defineConfig(() => {
     process.env.VITEST_MAX_WORKERS || (onWindows ? '1' : ''),
   );
 
-  const alias = mapTsConfigAliases(rootAbs);
+  const alias = await mapTsConfigAliases(rootAbs);
+
+  async function loadCoverageExclude(): Promise<string[]> {
+    try {
+      const exPath = path.join(
+        rootAbs,
+        'scripts',
+        'coverage-exclude.json',
+      );
+      const exists = await fs.promises
+        .access(exPath)
+        .then(() => true)
+        .catch(() => false);
+      if (exists) {
+        const raw = await fs.promises.readFile(exPath, 'utf8');
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed)) return parsed as string[];
+      }
+    } catch { }
+    return [];
+  }
 
   return {
     resolve: { alias },
@@ -291,17 +311,21 @@ export default defineConfig(() => {
       testTimeout: Number(process.env.VITEST_TEST_TIMEOUT_MS || 120000),
       hookTimeout: Number(process.env.VITEST_HOOK_TIMEOUT_MS || 60000),
       teardownTimeout: Number(process.env.VITEST_TEARDOWN_TIMEOUT_MS || 60000),
-      reporters: (process.env.VITEST_REPORTER || 'dot')
+      reporters: ((process.env.VITEST_REPORTER || 'dot')
         .split(',')
         .map((s) => s.trim())
-        .filter(Boolean) as unknown as (
-        | 'default'
-        | 'basic'
-        | 'dot'
-        | 'verbose'
-        | 'tap'
-        | 'junit'
-      )[],
+        .filter((s) => Boolean(s)) as string[]).filter(
+          (r): r is
+            | 'default'
+            | 'basic'
+            | 'dot'
+            | 'verbose'
+            | 'tap'
+            | 'junit' =>
+            ['default', 'basic', 'dot', 'verbose', 'tap', 'junit'].includes(
+              r,
+            ),
+        ),
       pool,
       ...(Number.isFinite(maxWorkersEnv) && maxWorkersEnv > 0
         ? { maxWorkers: maxWorkersEnv }
@@ -313,7 +337,7 @@ export default defineConfig(() => {
       },
       fileParallelism: !onWindows,
       sequence: { concurrent: process.platform !== 'win32' },
-      onConsoleLog(log, type) {
+      onConsoleLog(log: unknown, type: string) {
         try {
           const noisyTypes = ['stdout'];
           if (noisyTypes.includes(type as string)) return false;
@@ -327,45 +351,27 @@ export default defineConfig(() => {
           ) {
             return false;
           }
-        } catch {}
+        } catch { }
         return undefined;
       },
       include: ['tests/**/*.test.ts', 'tests/**/*.spec.ts'],
-      exclude: [
-        '.deprecados/**',
-        '.abandonados/**',
-        'tests/fixtures/estruturas/**/node_modules/**',
-      ],
+      exclude: await loadCoverageExclude(),
       coverage: {
         provider: providerMapped as 'v8' | 'istanbul',
         reportsDirectory: './coverage',
         enabled: coverageEnabled,
         include: ['src/**/*.ts'],
-        exclude: ((): string[] => {
-          try {
-            const exPath = path.join(
-              rootAbs,
-              'scripts',
-              'coverage-exclude.json',
-            );
-            if (fs.existsSync(exPath)) {
-              const raw = fs.readFileSync(exPath, 'utf8');
-              const parsed = JSON.parse(raw);
-              if (Array.isArray(parsed)) return parsed as string[];
-            }
-          } catch {}
-          return [];
-        })(),
-        all: false,
+          exclude: await loadCoverageExclude(),
+          all: false,
         ...(enforceThresholds
           ? {
-              thresholds: {
-                lines: 90,
-                functions: 90,
-                branches: 90,
-                statements: 90,
-              },
-            }
+            thresholds: {
+              lines: 90,
+              functions: 90,
+              branches: 90,
+              statements: 90,
+            },
+          }
           : {}),
       },
     },
