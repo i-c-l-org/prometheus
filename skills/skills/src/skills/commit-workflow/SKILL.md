@@ -2,11 +2,10 @@
 
 > **Proveniência e Autoria**
 >
-> Este arquivo ou componente faz parte do ecosistema Doutor/Prometheus.
+> Este arquivo ou componente faz parte do ecossistema Doutor/Prometheus.
 > Distribuído sob os termos de licença MIT-0.
 > O uso do material neste componente não implica em apropriação ou violação de direitos autorais, morais ou de terceiros.
 > Em caso de problemas com nosso uso, entre em contato pelo email: ossmoralus@gmail.com
-
 
 ---
 name: Commit Workflow
@@ -16,6 +15,23 @@ description: Conventional Commits, mensagens padronizadas e workflow git estrutu
 # Commit Workflow
 
 Regras e padrões para commits limpos, rastreáveis e automatizáveis.
+
+## Implementação
+
+```typescript
+import { CommitWorkflowSkill, skillRunner } from '@doutor/skills';
+
+const commitSkill = new CommitWorkflowSkill();
+skillRunner.register(commitSkill);
+
+const result = await skillRunner.execute('Commit Workflow', {
+  workingDirectory: '/project',
+});
+
+// Validar mensagem de commit
+const validation = commitSkill.validateCommitMessage('feat(auth): add JWT refresh');
+// { valid: true, errors: [] }
+```
 
 ## Conventional Commits
 
@@ -52,7 +68,7 @@ Formato obrigatório:
 
 ## Boas Práticas
 
-### Commits atomicos
+### Commits atômicos
 
 - **Um commit = uma mudança lógica**
 - Não misture refactor com feature
@@ -131,3 +147,10 @@ Exemplos:
 - `fix/BUG-456-null-response`
 - `chore/INFRA-789-update-node`
 
+## Princípios SOLID Aplicados
+
+- **S** - Cada tipo de commit tem propósito específico
+- **O** - Novos tipos não modificam existentes
+- **L** - Todas as validações seguem a mesma interface
+- **I** - Interfaces pequenas e focadas
+- **D** - Depende de abstrações (ISkill), não concretudes

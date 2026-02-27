@@ -2,11 +2,10 @@
 
 > **Proveniência e Autoria**
 >
-> Este arquivo ou componente faz parte do ecosistema Doutor/Prometheus.
+> Este arquivo ou componente faz parte do ecossistema Doutor/Prometheus.
 > Distribuído sob os termos de licença MIT-0.
 > O uso do material neste componente não implica em apropriação ou violação de direitos autorais, morais ou de terceiros.
 > Em caso de problemas com nosso uso, entre em contato pelo email: ossmoralus@gmail.com
-
 
 ---
 name: Feature Development
@@ -16,6 +15,24 @@ description: Workflow estruturado em 7 fases para desenvolvimento de features, d
 # Feature Development
 
 Workflow completo para desenvolver features com qualidade, dividido em 7 fases.
+
+## Implementação
+
+```typescript
+import { FeatureDevSkill, skillRunner } from '@doutor/skills';
+
+const featureSkill = new FeatureDevSkill({
+  requireTests: true,
+  minCoverage: 80,
+  strictTyping: true,
+});
+
+skillRunner.register(featureSkill);
+
+const result = await skillRunner.execute('Feature Development', {
+  workingDirectory: '/project',
+});
+```
 
 ## Fase 1 — Entendimento
 
@@ -110,3 +127,10 @@ Descrição clara da feature.
 - [ ] Comunicar stakeholders
 - [ ] Fechar issue/ticket
 
+## Princípios SOLID Aplicados
+
+- **S** - Cada fase tem responsabilidade única
+- **O** - Novas fases não modificam existentes
+- **L** - Todas as fases seguem a mesma interface
+- **I** - Interfaces pequenas e focadas
+- **D** - Depende de abstrações (ISkill), não concretudes

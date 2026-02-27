@@ -2,11 +2,10 @@
 
 > **Proveniência e Autoria**
 >
-> Este arquivo ou componente faz parte do ecosistema Doutor/Prometheus.
+> Este arquivo ou componente faz parte do ecossistema Doutor/Prometheus.
 > Distribuído sob os termos de licença MIT-0.
 > O uso do material neste componente não implica em apropriação ou violação de direitos autorais, morais ou de terceiros.
 > Em caso de problemas com nosso uso, entre em contato pelo email: ossmoralus@gmail.com
-
 
 ---
 name: Code Review
@@ -16,6 +15,27 @@ description: Revisão de código com checklist estruturado e scoring por confian
 # Code Review
 
 Skill para revisão de código com abordagem sistemática e multi-dimensional.
+
+## Implementação
+
+```typescript
+import { CodeReviewSkill, skillRunner } from '@doutor/skills';
+
+const reviewSkill = new CodeReviewSkill({
+  checkSecurity: true,
+  checkPerformance: true,
+  checkTyping: true,
+  confidenceThreshold: 50,
+});
+
+skillRunner.register(reviewSkill);
+
+const result = await skillRunner.execute('Code Review', {
+  workingDirectory: '/project',
+  diff: '...', // diff do git
+  files: ['src/auth.ts', 'src/api.ts'],
+});
+```
 
 ## Checklist de Review
 
@@ -89,3 +109,10 @@ Ao reportar issues, classifique cada uma:
 \`\`\`
 ```
 
+## Princípios SOLID Aplicados
+
+- **S** - Cada item de review verifica um aspecto específico
+- **O** - Novas categorias de review não modificam existentes
+- **L** - Todas as categorias seguem a mesma interface
+- **I** - Interfaces pequenas e focadas
+- **D** - Depende de abstrações (ISkill), não concretudes
