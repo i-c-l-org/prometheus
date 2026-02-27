@@ -1,21 +1,6 @@
 [
   {
     "role": "user",
-    "content": "Execução CLI: diagnosticar --export",
-    "timestamp": "2026-02-27T20:16:03.845Z"
-  },
-  {
-    "role": "user",
-    "content": "Execução CLI: diagnosticar --help",
-    "timestamp": "2026-02-27T20:17:47.192Z"
-  },
-  {
-    "role": "user",
-    "content": "Execução CLI: diagnosticar --auto-fix",
-    "timestamp": "2026-02-27T20:17:53.547Z"
-  },
-  {
-    "role": "user",
     "content": "Execução CLI: diagnosticar --exclude=tipo-literal-inline-complexo,type-alias-inline-complexo,interface-inline-exportada",
     "timestamp": "2026-02-27T20:19:28.948Z"
   },
@@ -98,5 +83,20 @@
     "role": "user",
     "content": "Execução CLI: diagnosticar",
     "timestamp": "2026-02-27T20:53:40.888Z"
+  },
+  {
+    "role": "user",
+    "content": "Execução CLI: formatar --write",
+    "timestamp": "2026-02-27T21:37:33.855Z"
+  },
+  {
+    "role": "user",
+    "content": "Execução CLI: formatar --write",
+    "timestamp": "2026-02-27T21:38:52.698Z"
+  },
+  {
+    "role": "user",
+    "content": "Execução CLI: diagnosticar --export",
+    "timestamp": "2026-02-27T21:39:13.412Z"
   }
 ]
