@@ -1,6 +1,6 @@
 import { config } from '../../config/config.js';
-import { LogContextConfiguracao, LogMensagens } from '../../messages/log/log-messages.js';
-import { ICONES_FEEDBACK } from '../../messages/ui/icons.js';
+import { LogContextConfiguracao, LogMensagens } from './log-messages.js';
+import { ICONES_FEEDBACK } from '../ui/icons.js';
 import { isJsonMode } from '../../../shared/helpers/json-mode.js';
 class LogEngineAdaptativo {
     static instance;

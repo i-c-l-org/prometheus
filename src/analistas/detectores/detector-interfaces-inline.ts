@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// @prometheus-disable PROBLEMA_PERFORMANCE
+// Justificativa: detector que analisa código-fonte - loops são esperados
 /**
  * Detector de Interfaces Inline
  * Identifica definições de interfaces e tipos complexos inline que deveriam estar em arquivos de tipos

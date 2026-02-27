@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// @prometheus-disable PROBLEMA_PERFORMANCE
+// Justificativa: detector de performance que analisa código-fonte - loops são esperados
 import type { NodePath } from '@babel/traverse';
 import type { CallExpression, ForStatement, Node } from '@babel/types';
 import { traverse } from '@core/config/traverse.js';

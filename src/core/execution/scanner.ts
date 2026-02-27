@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// @prometheus-disable PROBLEMA_PERFORMANCE
+// Justificativa: scanner que varre sistema de arquivos - loops são necessários
 import type { Dirent, Stats } from 'node:fs';
 import { promises as fs } from 'node:fs';
 

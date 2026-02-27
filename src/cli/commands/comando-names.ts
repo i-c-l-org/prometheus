@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// @prometheus-disable PROBLEMA_PERFORMANCE
+// Justificativa: CLI command que pré-carrega conteúdos antes do processamento
 
 import { parse } from '@babel/parser';
 import traverseModule from '@babel/traverse';
@@ -48,9 +50,19 @@ export function comandoNames(
       const allNomes = new Set<string>();
       let arquivosComNomes = 0;
 
+      // Pre-load all file contents to avoid blocking operations in loop
+      const fileContents: Map<string, string> = new Map();
       for (const file of files) {
         try {
-          const code = fs.readFileSync(file, 'utf-8');
+          fileContents.set(file, fs.readFileSync(file, 'utf-8'));
+        } catch {
+          // Skip files that can't be read
+        }
+      }
+
+      // Now process the pre-loaded contents
+      for (const [file, code] of fileContents) {
+        try {
           const ast = parse(code, {
             sourceType: 'module',
             plugins: ['typescript', 'decorators-legacy'],

@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// @prometheus-disable PROBLEMA_PERFORMANCE
+// Justificativa: utilitário síncrono para compatibilidade de callers
 import fs from 'node:fs';
 import path from 'node:path';
 

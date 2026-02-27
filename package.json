@@ -62,11 +62,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/i-c-l-5-5-5/prometheus.git",
+    "url": "git+https://github.com/i-c-l-org/prometheus.git",
     "issues": {
-      "url": "https://github.com/i-c-l-5-5-5/prometheus/issues"
+      "url": "https://github.com/i-c-l-org/prometheus/issues"
     },
-    "homepage": "https://github.com/i-c-l-5-5-5/prometheus#readme"
+    "homepage": "https://github.com/i-c-l-org/prometheus#readme"
   },
   "files": [
     "dist",

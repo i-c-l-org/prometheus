@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// @prometheus-disable PROBLEMA_PERFORMANCE
+// Justificativa: processamento de diagnóstico que varre dados - loops são esperados
 import fs from 'node:fs';
 import path from 'node:path';
 

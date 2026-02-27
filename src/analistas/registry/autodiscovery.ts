@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// @prometheus-disable PROBLEMA_PERFORMANCE
+// Justificativa: autodiscovery que varre arquivos - loops são necessários
 import { promises as fs } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 

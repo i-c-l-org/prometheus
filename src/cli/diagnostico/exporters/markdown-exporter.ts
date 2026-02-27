@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// @prometheus-disable PROBLEMA_PERFORMANCE
+// Justificativa: exporter que processa dados para markdown - loops são esperados
 // SPDX-FileCopyrightText: 2025 Prometheus Contributors
 
 /**

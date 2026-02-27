@@ -1,0 +1,38 @@
+{
+  "name": "@doutor/skills",
+  "version": "1.0.0",
+  "description": "Framework de skills com Strategy Pattern para agentes de IA",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "engines": {
+    "node": "24.12.0"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "vitest",
+    "lint": "eslint src --ext .ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "skills",
+    "ai",
+    "agents",
+    "strategy-pattern",
+    "solid"
+  ],
+  "author": "Doutor/Prometheus",
+  "license": "MIT-0",
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "vitest": "^1.0.0"
+  }
+}

@@ -1,0 +1,57 @@
+version: "1.0.0"
+description: "Framework de skills com Strategy Pattern"
+
+skills:
+  - name: "Code Review"
+    slug: "code-review"
+    description: "Revisão de código com checklist estruturado e scoring por confiança"
+    phases: 4
+    tags:
+      - review
+      - quality
+      - security
+    enabled: true
+
+  - name: "Feature Development"
+    slug: "feature-dev"
+    description: "Workflow estruturado em 7 fases para desenvolvimento de features"
+    phases: 7
+    tags:
+      - development
+      - workflow
+    enabled: true
+
+  - name: "Commit Workflow"
+    slug: "commit-workflow"
+    description: "Conventional Commits, mensagens padronizadas e workflow git"
+    phases: 4
+    tags:
+      - git
+      - commits
+    enabled: true
+
+  - name: "Security Check"
+    slug: "security-check"
+    description: "Checklist de segurança para código"
+    phases: 1
+    tags:
+      - security
+    enabled: true
+
+  - name: "Project Setup"
+    slug: "project-setup"
+    description: "Setup de novo projeto Node/TypeScript"
+    phases: 1
+    tags:
+      - setup
+      - node
+    enabled: true
+
+  - name: "PR Review"
+    slug: "pr-review"
+    description: "Review de pull requests"
+    phases: 1
+    tags:
+      - review
+      - pr
+    enabled: true

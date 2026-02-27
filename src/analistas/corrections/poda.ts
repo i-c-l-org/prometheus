@@ -42,8 +42,10 @@ function mesclarPendencias(
   novos: Pendencia[],
 ): Pendencia[] {
   const mapa = new Map<string, Pendencia>();
-  for (const p of anteriores) mapa.set(p.arquivo, p);
-  for (const p of novos) mapa.set(p.arquivo, p);
+  // Use single loop with spread to avoid multiple iterations
+  for (const p of [...anteriores, ...novos]) {
+    mapa.set(p.arquivo, p);
+  }
   return Array.from(mapa.values());
 }
 

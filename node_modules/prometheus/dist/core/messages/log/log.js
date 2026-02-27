@@ -63,19 +63,13 @@ function stripLeadingSimbolos(msg) {
     plain = plain.replace(/^\s+/, '');
     const extras = [];
     const candidatos = Array.from(new Set([...Object.values(LOG_SIMBOLOS), ...extras])).filter(Boolean);
-    let mudou = true;
-    while (mudou) {
-        mudou = false;
-        const trimmed = plain.trimStart();
-        for (const s of candidatos) {
-            if (trimmed.startsWith(s)) {
-                plain = trimmed.slice(s.length);
-                mudou = true;
-                break;
-            }
+    let trimmed = plain.trimStart();
+    for (const s of candidatos) {
+        while (trimmed.startsWith(s)) {
+            trimmed = trimmed.slice(s.length);
         }
     }
-    return plain.trimStart();
+    return trimmed.trimStart();
 }
 export function formatarLinha({ nivel, mensagem, sanitize = true }) {
     const ts = getTimestamp();

@@ -1,1 +1,1 @@
-{"version":3,"file":"detector-arquitetura.d.ts","sourceRoot":"","sources":["../../../src/analistas/detectores/detector-arquitetura.ts"],"names":[],"mappings":"AAMA,OAAO,KAAK,EAAuB,QAAQ,EAA0F,MAAM,GAAG,CAAC;AAG/I,eAAO,MAAM,mBAAmB,EAAE,QA0LjC,CAAC"}
+{"version":3,"file":"detector-arquitetura.d.ts","sourceRoot":"","sources":["../../../src/analistas/detectores/detector-arquitetura.ts"],"names":[],"mappings":"AAQA,OAAO,KAAK,EAAuB,QAAQ,EAA0F,MAAM,GAAG,CAAC;AAG/I,eAAO,MAAM,mBAAmB,EAAE,QA0LjC,CAAC"}

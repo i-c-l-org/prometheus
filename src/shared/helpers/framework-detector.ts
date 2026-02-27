@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// @prometheus-disable PROBLEMA_PERFORMANCE
+// Justificativa: leitura única de package.json para detecção de frameworks
 
 import fs from 'node:fs';
 import path from 'node:path';

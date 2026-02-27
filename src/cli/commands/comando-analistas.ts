@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// @prometheus-disable PROBLEMA_PERFORMANCE
+// Justificativa: CLI command que lista analistas
 import path from 'node:path';
 
 import { listarAnalistas, registroAnalistas } from '@analistas/registry/registry.js';

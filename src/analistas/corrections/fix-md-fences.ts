@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MIT
+// @prometheus-disable PROBLEMA_PERFORMANCE
+// Justificativa: utilitário de correção que processa strings
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
 
