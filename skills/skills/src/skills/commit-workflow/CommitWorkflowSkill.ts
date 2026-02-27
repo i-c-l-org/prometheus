@@ -4,7 +4,7 @@ import { COMMIT_TYPES, formatCommitMessage, type CommitMessage, CommitType } fro
 export class CommitWorkflowSkill implements ISkill {
   readonly name = 'Commit Workflow';
   readonly description = 'Conventional Commits, mensagens padronizadas e workflow git estruturado';
-  
+
   readonly metadata: ISkillMetadata = {
     version: '1.0.0',
     author: 'Doutor/Prometheus',
@@ -55,7 +55,7 @@ export class CommitWorkflowSkill implements ISkill {
 
   async execute(context: ISkillContext): Promise<ISkillResult> {
     const output = this.buildDocumentation();
-    
+
     return {
       success: true,
       output,
@@ -68,19 +68,19 @@ export class CommitWorkflowSkill implements ISkill {
 
   validateCommitMessage(message: string): { valid: boolean; errors: string[] } {
     const errors: string[] = [];
-    
+
     const lines = message.split('\n');
     const header = lines[0];
-    
+
     const pattern = /^(feat|fix|refactor|docs|style|test|chore|perf|ci|revert)(?:\(([^)]+)\))?!?: .+$/;
     if (!pattern.test(header)) {
       errors.push('Header não segue o padrão conventional commits');
     }
-    
+
     if (header.length > 72) {
       errors.push('Header excede 72 caracteres');
     }
-    
+
     return { valid: errors.length === 0, errors };
   }
 

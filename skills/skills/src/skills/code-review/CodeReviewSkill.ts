@@ -4,7 +4,7 @@ import { ReviewCategory, type CodeReviewConfig, DEFAULT_REVIEW_CONFIG, formatRev
 export class CodeReviewSkill implements ISkill {
   readonly name = 'Code Review';
   readonly description = 'Revisão de código com checklist estruturado e scoring por confiança para filtrar falsos positivos';
-  
+
   readonly metadata: ISkillMetadata = {
     version: '1.0.0',
     author: 'Doutor/Prometheus',
@@ -63,13 +63,13 @@ export class CodeReviewSkill implements ISkill {
 
   async execute(context: ISkillContext): Promise<ISkillResult> {
     const { diff, files } = context;
-    
+
     const reviewItems: ReviewItem[] = [];
-    
+
     if (diff) {
       reviewItems.push(...this.analyzeDiff(diff));
     }
-    
+
     if (files?.length) {
       for (const file of files) {
         reviewItems.push(...this.analyzeFile(file));
@@ -94,7 +94,7 @@ export class CodeReviewSkill implements ISkill {
       '',
       `## Itens de Review`,
       '',
-      filteredItems.length > 0 
+      filteredItems.length > 0
         ? filteredItems.map(formatReviewItem).join('\n\n')
         : 'Nenhum problema encontrado.',
     ].join('\n');

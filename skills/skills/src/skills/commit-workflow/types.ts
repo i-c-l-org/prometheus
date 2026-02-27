@@ -83,16 +83,16 @@ export function formatCommitMessage(msg: CommitMessage): string {
   const scope = msg.scope ? `(${msg.scope})` : '';
   const breaking = msg.isBreaking ? '!' : '';
   const header = `${msg.type}${scope}${breaking}: ${msg.description}`;
-  
+
   const parts = [header];
-  
+
   if (msg.body) {
     parts.push('', msg.body);
   }
-  
+
   if (msg.footer) {
     parts.push('', msg.footer);
   }
-  
+
   return parts.join('\n');
 }

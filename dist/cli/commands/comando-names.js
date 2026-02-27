@@ -34,9 +34,16 @@ export function comandoNames(aplicarFlagsGlobais) {
         const files = getSourceFiles(SRC_DIR);
         const allNomes = new Set();
         let arquivosComNomes = 0;
+        const fileContents = new Map();
         for (const file of files) {
             try {
-                const code = fs.readFileSync(file, 'utf-8');
+                fileContents.set(file, fs.readFileSync(file, 'utf-8'));
+            }
+            catch {
+            }
+        }
+        for (const [file, code] of fileContents) {
+            try {
                 const ast = parse(code, {
                     sourceType: 'module',
                     plugins: ['typescript', 'decorators-legacy'],

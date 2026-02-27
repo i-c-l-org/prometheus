@@ -43,30 +43,20 @@ export function gerarRelatorioJson(dados, options = {}) {
         }
         return mapped;
     });
+    let pkgInfo = {};
+    try {
+        pkgInfo = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'package.json'), 'utf-8'));
+    }
+    catch {
+    }
     const relatorio = {
         metadata: dados.metadata || {
             timestamp: new Date().toISOString(),
             schemaVersion: '1.0.0',
             modo: 'full',
             flags: [],
-            prometheusVersion: (() => {
-                try {
-                    const pkg = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'package.json'), 'utf-8'));
-                    return pkg.version || 'unknown';
-                }
-                catch {
-                    return 'unknown';
-                }
-            })(),
-            projectNome: (() => {
-                try {
-                    const pkg = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'package.json'), 'utf-8'));
-                    return pkg.name || 'unknown';
-                }
-                catch {
-                    return 'unknown';
-                }
-            })()
+            prometheusVersion: pkgInfo.version || 'unknown',
+            projectNome: pkgInfo.name || 'unknown'
         },
         stats: dados.stats || {
             arquivosAnalisados: 0,

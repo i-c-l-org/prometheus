@@ -1,7 +1,102 @@
 [
   {
     "role": "user",
+    "content": "Execução CLI: diagnosticar --export",
+    "timestamp": "2026-02-27T20:16:03.845Z"
+  },
+  {
+    "role": "user",
+    "content": "Execução CLI: diagnosticar --help",
+    "timestamp": "2026-02-27T20:17:47.192Z"
+  },
+  {
+    "role": "user",
+    "content": "Execução CLI: diagnosticar --auto-fix",
+    "timestamp": "2026-02-27T20:17:53.547Z"
+  },
+  {
+    "role": "user",
+    "content": "Execução CLI: diagnosticar --exclude=tipo-literal-inline-complexo,type-alias-inline-complexo,interface-inline-exportada",
+    "timestamp": "2026-02-27T20:19:28.948Z"
+  },
+  {
+    "role": "user",
+    "content": "Execução CLI: diagnosticar --exclude=tipo-literal-inline-complexo,type-alias-inline-complexo,interface-inline-exportada,problemas-teste,problema-documentacao",
+    "timestamp": "2026-02-27T20:26:31.808Z"
+  },
+  {
+    "role": "user",
+    "content": "Execução CLI: diagnosticar --exclude=tipo-literal-inline-complexo,type-alias-inline-complexo,interface-inline-exportada,problemas-teste,problema-documentacao --json",
+    "timestamp": "2026-02-27T20:27:33.862Z"
+  },
+  {
+    "role": "user",
+    "content": "Execução CLI: diagnosticar --exclude=tipo-literal-inline-complexo,type-alias-inline-complexo,interface-inline-exportada,problemas-teste,problema-documentacao",
+    "timestamp": "2026-02-27T20:29:39.067Z"
+  },
+  {
+    "role": "user",
+    "content": "Execução CLI: diagnosticar --exclude=tipo-literal-inline-complexo,type-alias-inline-complexo,interface-inline-exportada,problemas-teste,problema-documentacao",
+    "timestamp": "2026-02-27T20:30:25.416Z"
+  },
+  {
+    "role": "user",
+    "content": "Execução CLI: diagnosticar --exclude=tipo-literal-inline-complexo,type-alias-inline-complexo,interface-inline-exportada,problemas-teste,problema-documentacao",
+    "timestamp": "2026-02-27T20:34:12.729Z"
+  },
+  {
+    "role": "user",
+    "content": "Execução CLI: diagnosticar --exclude=tipo-literal-inline-complexo,type-alias-inline-complexo,interface-inline-exportada,problemas-teste,problema-documentacao",
+    "timestamp": "2026-02-27T20:40:23.294Z"
+  },
+  {
+    "role": "user",
+    "content": "Execução CLI: diagnosticar --exclude=tipo-literal-inline-complexo,type-alias-inline-complexo,interface-inline-exportada,problemas-teste,problema-documentacao",
+    "timestamp": "2026-02-27T20:41:11.452Z"
+  },
+  {
+    "role": "user",
+    "content": "Execução CLI: diagnosticar --exclude=tipo-literal-inline-complexo,type-alias-inline-complexo,interface-inline-exportada,problemas-teste,problema-documentacao --json",
+    "timestamp": "2026-02-27T20:41:55.026Z"
+  },
+  {
+    "role": "user",
+    "content": "Execução CLI: diagnosticar --exclude=tipo-literal-inline-complexo,type-alias-inline-complexo,interface-inline-exportada,problemas-teste,problema-documentacao --export",
+    "timestamp": "2026-02-27T20:42:26.161Z"
+  },
+  {
+    "role": "user",
+    "content": "Execução CLI: diagnosticar --exclude=tipo-literal-inline-complexo,type-alias-inline-complexo,interface-inline-exportada,problemas-teste,problema-documentacao --export",
+    "timestamp": "2026-02-27T20:45:16.181Z"
+  },
+  {
+    "role": "user",
+    "content": "Execução CLI: diagnosticar --exclude=tipo-literal-inline-complexo,type-alias-inline-complexo,interface-inline-exportada,problemas-teste,problema-documentacao",
+    "timestamp": "2026-02-27T20:45:55.396Z"
+  },
+  {
+    "role": "user",
     "content": "Execução CLI: diagnosticar",
-    "timestamp": "2026-02-26T18:37:29.595Z"
+    "timestamp": "2026-02-27T20:46:47.821Z"
+  },
+  {
+    "role": "user",
+    "content": "Execução CLI: diagnosticar",
+    "timestamp": "2026-02-27T20:47:33.008Z"
+  },
+  {
+    "role": "user",
+    "content": "Execução CLI: diagnosticar",
+    "timestamp": "2026-02-27T20:50:09.914Z"
+  },
+  {
+    "role": "user",
+    "content": "Execução CLI: formatar --write",
+    "timestamp": "2026-02-27T20:52:07.476Z"
+  },
+  {
+    "role": "user",
+    "content": "Execução CLI: diagnosticar",
+    "timestamp": "2026-02-27T20:53:40.888Z"
   }
 ]

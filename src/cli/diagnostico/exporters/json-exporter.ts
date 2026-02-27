@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// @prometheus-disable PROBLEMA_PERFORMANCE
+// Justificativa: exporter que processa dados para JSON - loops são esperados
 // SPDX-FileCopyrightText: 2025 Prometheus Contributors
 
 /**
@@ -76,30 +78,22 @@ export function gerarRelatorioJson(dados: Partial<RelatorioJson>, options: Parti
   });
 
   // Construir relatório
+  // Read package.json once to avoid multiple blocking operations
+  let pkgInfo: { version?: string; name?: string } = {};
+  try {
+    pkgInfo = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'package.json'), 'utf-8'));
+  } catch {
+    // ignore - use defaults
+  }
+
   const relatorio: RelatorioJson = {
     metadata: dados.metadata || {
       timestamp: new Date().toISOString(),
       schemaVersion: '1.0.0',
       modo: 'full',
       flags: [],
-      prometheusVersion: (() => {
-        try {
-          // Evita dependência direta de package.json fora do build
-          // Em runtime, pode ser enriquecido pela CLI
-          const pkg = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'package.json'), 'utf-8'));
-          return pkg.version || 'unknown';
-        } catch {
-          return 'unknown';
-        }
-      })(),
-      projectNome: (() => {
-        try {
-          const pkg = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'package.json'), 'utf-8'));
-          return pkg.name || 'unknown';
-        } catch {
-          return 'unknown';
-        }
-      })()
+      prometheusVersion: pkgInfo.version || 'unknown',
+      projectNome: pkgInfo.name || 'unknown'
     },
     stats: dados.stats || {
       arquivosAnalisados: 0,

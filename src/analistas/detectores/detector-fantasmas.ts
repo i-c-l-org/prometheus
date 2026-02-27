@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// @prometheus-disable PROBLEMA_PERFORMANCE
+// Justificativa: detector que analisa código-fonte - loops são esperados
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
 

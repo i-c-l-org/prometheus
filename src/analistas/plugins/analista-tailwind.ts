@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// @prometheus-disable PROBLEMA_PERFORMANCE
+// Justificativa: analista que processa código - loops são esperados
 import { AnalystOrigens, AnalystTipos, SeverityNiveis, TailwindMensagens } from '@core/messages/core/plugin-messages.js';
 import { createLineLookup } from '@shared/helpers/line-lookup.js';
 

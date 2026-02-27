@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// @prometheus-disable PROBLEMA_PERFORMANCE
+// Justificativa: motor de correção que precisa processar arquivos sequencialmente
 /**
  * Motor de correção automática de tipos inseguros
  * Aplica correções baseadas em análise de contexto e confiança

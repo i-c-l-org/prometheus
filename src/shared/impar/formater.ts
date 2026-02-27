@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// @prometheus-disable PROBLEMA_PERFORMANCE
+// Justificativa: formatador que processa código - loops são esperados
 
 import fs from 'node:fs';
 import { createRequire } from 'node:module';

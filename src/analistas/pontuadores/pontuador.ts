@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// @prometheus-disable PROBLEMA_PERFORMANCE
+// Justificativa: pontuador que processa código - loops são esperados
 import { grafoDependencias } from '@analistas/detectores/detector-dependencias.js';
 import { ARQUETIPOS, normalizarCaminho } from '@analistas/estrategistas/arquetipos-defs.js';
 

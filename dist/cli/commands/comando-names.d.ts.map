@@ -1,1 +1,1 @@
-{"version":3,"file":"comando-names.d.ts","sourceRoot":"","sources":["../../../src/cli/commands/comando-names.ts"],"names":[],"mappings":"AASA,OAAO,EAAE,OAAO,EAAE,MAAM,WAAW,CAAC;AAMpC,wBAAgB,YAAY,CAC1B,mBAAmB,EAAE,CAAC,IAAI,EAAE,MAAM,CAAC,MAAM,EAAE,OAAO,CAAC,KAAK,IAAI,GAC3D,OAAO,CAiFT"}
+{"version":3,"file":"comando-names.d.ts","sourceRoot":"","sources":["../../../src/cli/commands/comando-names.ts"],"names":[],"mappings":"AAWA,OAAO,EAAE,OAAO,EAAE,MAAM,WAAW,CAAC;AAMpC,wBAAgB,YAAY,CAC1B,mBAAmB,EAAE,CAAC,IAAI,EAAE,MAAM,CAAC,MAAM,EAAE,OAAO,CAAC,KAAK,IAAI,GAC3D,OAAO,CA2FT"}

@@ -1,6 +1,6 @@
 import { config } from '../../config/config.js';
-import { logEngine } from '../../messages/log/log-engine.js';
-import { LogMensagens } from '../../messages/log/log-messages.js';
+import { logEngine } from './log-engine.js';
+import { LogMensagens } from './log-messages.js';
 export const logAnalistas = {
     ultimoProgressoGlobal: 0,
     contadorArquivos: 0,

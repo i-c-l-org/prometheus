@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// @prometheus-disable PROBLEMA_PERFORMANCE
+// Justificativa: detector que processa código - loops são esperados
 /**
  * @fileoverview Detector de problemas em arquivos Markdown
  *

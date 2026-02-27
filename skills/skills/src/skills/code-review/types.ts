@@ -37,7 +37,7 @@ export const DEFAULT_REVIEW_CONFIG: CodeReviewConfig = {
 export function formatReviewItem(item: ReviewItem): string {
   const level = getConfidenceLevel(item.confidence);
   const emoji = getConfidenceEmoji(level);
-  
+
   return `
 ### [${emoji}] ${item.title}
 

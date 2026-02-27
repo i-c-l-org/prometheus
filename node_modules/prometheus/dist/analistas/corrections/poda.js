@@ -19,10 +19,9 @@ function gerarPendencias(fantasmas, agora) {
 }
 function mesclarPendencias(anteriores, novos) {
     const mapa = new Map();
-    for (const p of anteriores)
+    for (const p of [...anteriores, ...novos]) {
         mapa.set(p.arquivo, p);
-    for (const p of novos)
-        mapa.set(p.arquivo, p);
+    }
     return Array.from(mapa.values());
 }
 function dividirPendencias(pendencias, reativar, _agora) {

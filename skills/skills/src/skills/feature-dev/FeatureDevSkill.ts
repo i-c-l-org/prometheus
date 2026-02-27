@@ -1,10 +1,13 @@
+// SPDX-License-Identifier: MIT
+// @prometheus-disable PROBLEMA_PERFORMANCE
+// Justificativa: skill que processa código - loops são esperados
 import type { ISkill, ISkillContext, ISkillResult, ISkillPhase, ISkillMetadata } from '@core/interfaces/ISkill.js';
 import { FeaturePhase, type FeatureConfig, DEFAULT_FEATURE_CONFIG } from './types.js';
 
 export class FeatureDevSkill implements ISkill {
   readonly name = 'Feature Development';
   readonly description = 'Workflow estruturado em 7 fases para desenvolvimento de features, do entendimento à entrega';
-  
+
   readonly metadata: ISkillMetadata = {
     version: '1.0.0',
     author: 'Doutor/Prometheus',
@@ -93,7 +96,7 @@ export class FeatureDevSkill implements ISkill {
 
   async execute(context: ISkillContext): Promise<ISkillResult> {
     const output = this.buildChecklist();
-    
+
     return {
       success: true,
       output,

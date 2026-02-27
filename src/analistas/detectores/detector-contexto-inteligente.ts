@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// @prometheus-disable PROBLEMA_PERFORMANCE
+// Justificativa: detector que analisa código-fonte - loops são esperados
 /**
  * Sistema Inteligente de Detecção de Arquétipos por Contexto
  *

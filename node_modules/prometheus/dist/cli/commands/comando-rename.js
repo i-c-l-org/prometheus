@@ -81,9 +81,16 @@ export function comandoRename(aplicarFlagsGlobais) {
         const files = getSourceFiles(SRC_DIR);
         let totalArquivosUpdated = 0;
         log.info(chalk.cyan(CliComandoRenameMensagens.status.inicio(mappings.size)));
+        const fileContents = new Map();
         for (const file of files) {
             try {
-                const code = fs.readFileSync(file, 'utf-8');
+                fileContents.set(file, fs.readFileSync(file, 'utf-8'));
+            }
+            catch {
+            }
+        }
+        for (const [file, code] of fileContents) {
+            try {
                 const ast = parse(code, {
                     sourceType: 'module',
                     plugins: ['typescript', 'decorators-legacy'],

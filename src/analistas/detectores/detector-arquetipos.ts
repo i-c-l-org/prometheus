@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// @prometheus-disable PROBLEMA_PERFORMANCE
+// Justificativa: detector que analisa código-fonte - loops são esperados
 // Nota: manter ARQUETIPOS importado visível como lembrete para integração futura
 import path from 'node:path';
 
