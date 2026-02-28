@@ -147,20 +147,20 @@ function gerarIndice(
     dados.ocorrencias &&
     dados.ocorrencias.length > 0
   ) {
-    itens.push('- [🔍 Ocorrências](#-ocorrências)');
+    itens.push('- [Ocorrencias](#-ocorrencias)');
   }
   if (dados.sugestoes && dados.sugestoes.length > 0) {
-    itens.push('- [💡 Sugestões](#-sugestões)');
+    itens.push('- [Sugestoes](#-sugestoes)');
   }
 
-  return `## Índice\n\n${itens.join('\n')}`;
+  return `## Indice\n\n${itens.join('\n')}`;
 }
 
 function gerarSecaoStats(
   stats: NonNullable<DadosRelatorioMarkdown['stats']>,
   linguagens?: DadosRelatorioMarkdown['linguagens'],
 ): string {
-  let md = '## 📊 Estatísticas\n\n';
+  let md = '## Estatisticas\n\n';
 
   // Tabela principal
   md += '| Métrica | Valor |\n';
@@ -298,7 +298,7 @@ function gerarSecaoOcorrencias(
   ocorrencias: Ocorrencia[],
   opts: MarkdownExportOptions,
 ): string {
-  let md = '## 🔍 Ocorrências\n\n';
+  let md = '## Ocorrencias\n\n';
 
   // Limitar se necessário
   let lista = ocorrencias;

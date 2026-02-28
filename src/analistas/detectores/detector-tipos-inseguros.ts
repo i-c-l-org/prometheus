@@ -110,11 +110,11 @@ const ANALISTA: Analista = {
       // Adicionar contexto adicional baseado no arquivo
       let contextoAdicional = '';
       if (fullCaminho?.includes('tipos/')) {
-        contextoAdicional = ' | ⚠️  Arquivo de tipos - impacta toda base de código';
+        contextoAdicional = ' | [AVISO] Arquivo de tipos - impacta toda base de codigo';
       } else if (fullCaminho?.includes('core/') || fullCaminho?.includes('shared/')) {
-        contextoAdicional = ' | ⚠️  Módulo core/shared - usado por muitos componentes';
+        contextoAdicional = ' | [AVISO] Modulo core/shared - usado por muitos componentes';
       }
-      const mensagemCompleta = `${mensagem} | 💡 ${sugestao}${contextoAdicional} | 🔍 Revisão manual obrigatória`;
+      const mensagemCompleta = `${mensagem} | [SUGESTAO] ${sugestao}${contextoAdicional} | [REVISAO] Revisao manual obrigatoria`;
 
       // Verifica se regra está suprimida para este arquivo
       if (shouldSuppressOccurrence('tipo-inseguro-any', relPath)) {
@@ -158,7 +158,7 @@ const ANALISTA: Analista = {
       } else {
         sugestao = 'Substitua por tipo específico ou use unknown com validação runtime';
       }
-      const mensagemCompleta = `${mensagem} | 💡 ${sugestao} | 🚨 CRÍTICO: Type safety completamente desabilitado | 🔍 Revisão manual obrigatória`;
+      const mensagemCompleta = `${mensagem} | [SUGESTAO] ${sugestao} | [CRITICO] CRITICO: Type safety completamente desabilitado | [REVISAO] Revisao manual obrigatoria`;
 
       // Verifica se regra está suprimida para este arquivo
       if (shouldSuppressOccurrence('tipo-inseguro-any-assertion', relPath)) {
@@ -187,7 +187,7 @@ const ANALISTA: Analista = {
       }
       const linha = src.substring(0, position).split('\n').length;
       const lineContext = src.split('\n')[linha - 1]?.trim() || '';
-      const mensagemCompleta = "Type casting '<any>' (sintaxe legada) desabilita type safety | 💡 Use sintaxe 'as' moderna e tipo específico | 🚨 CRÍTICO: Migrar para sintaxe moderna e tipo correto | 🔍 Revisão manual obrigatória";
+      const mensagemCompleta = "Type casting '<any>' (sintaxe legada) desabilita type safety | [SUGESTAO] Use sintaxe 'as' moderna e tipo especifico | [CRITICO] CRITICO: Migrar para sintaxe moderna e tipo correto | [REVISAO] Revisao manual obrigatoria";
 
       // Verifica se regra está suprimida para este arquivo
       if (shouldSuppressOccurrence('tipo-inseguro-any-cast', relPath)) {
@@ -263,7 +263,7 @@ const ANALISTA: Analista = {
         if (categorizacao.sugestao) {
           mensagem += ` | ✏️  ${categorizacao.sugestao}`;
         }
-        mensagem += ` | 🔍 Revisão manual obrigatória`;
+        mensagem += ` | [REVISAO] Revisao manual obrigatoria`;
       }
 
       // Verifica se regra está suprimida para este arquivo

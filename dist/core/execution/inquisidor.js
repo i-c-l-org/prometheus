@@ -9,16 +9,16 @@ import { ocorrenciaParseErro } from '../../types/index.js';
 import { executarInquisicao as executarExecucao, registrarUltimasMetricas } from './executor.js';
 import { scanRepository } from './scanner.js';
 const SIMBOLOS_ALTERNATIVA = {
-    info: 'ℹ️',
-    sucesso: '✅',
-    erro: '❌',
-    aviso: '⚠️',
-    debug: '🐞',
-    fase: '🔶',
-    passo: '▫️',
-    scan: '🔍',
-    guardian: '🛡️',
-    pasta: '📂'
+    info: '[i]',
+    sucesso: '[OK]',
+    erro: '[ERRO]',
+    aviso: '[AVISO]',
+    debug: '[DEBUG]',
+    fase: '[FASE]',
+    passo: '[PASSO]',
+    scan: '[SCAN]',
+    guardian: '[GUARD]',
+    pasta: '[DIR]'
 };
 const S = typeof log.simbolos === 'object' ? log.simbolos : SIMBOLOS_ALTERNATIVA;
 const __infoDestaque = (mensagem) => {

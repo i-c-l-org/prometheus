@@ -7,9 +7,9 @@ export const CliComandoAtualizarMensagens = {
         falhaFlags: (erro) => `Falha ao aplicar flags no comando atualizar: ${erro}`
     },
     status: {
-        inicio: '\n🔄 Iniciando processo de atualização...\n',
-        guardianOk: (iconeSucesso) => `${iconeSucesso} Guardian: integridade validada. Prosseguindo atualização.`,
-        guardianAviso: '🌀 Guardian gerou novo baseline ou detectou alterações. Prosseguindo com cautela.',
+        inicio: '\n[ATUALIZANDO] Iniciando processo de atualizacao...\n',
+        guardianOk: (iconeSucesso) => `${iconeSucesso} Guardian: integridade validada. Prosseguindo atualizacao.`,
+        guardianAviso: '[AVISO] Guardian gerou novo baseline ou detectou alteracoes. Prosseguindo com cautela.',
         guardianDica: 'Recomendado: `prometheus guardian --diff` e `prometheus guardian --accept-baseline` antes de atualizar.'
     }
 };
