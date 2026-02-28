@@ -1,7 +1,8 @@
 import type { NodePath } from '@babel/traverse';
 import type { Node } from '@babel/types';
-import type { ContextoExecucao, Estatisticas, TecnicaAplicarResultado } from '../../types/index.js';
-export declare const estatisticasUsoGlobal: Estatisticas;
+import type { ContextoExecucao, TecnicaAplicarResultado } from '../../types/index.js';
+export { estatisticasUsoGlobal } from '../../shared/stats.js';
+export type { Estatisticas } from '../../types/index.js';
 export declare const analistaPadroesUso: {
     nome: string;
     global: boolean;

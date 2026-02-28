@@ -1,4 +1,4 @@
-import { estatisticasUsoGlobal } from '../analistas/js-ts/analista-padroes-uso.js';
+import { estatisticasUsoGlobal } from '../shared/stats.js';
 import chalk from '../core/config/chalk-safe.js';
 import { config } from '../core/config/config.js';
 import { log, logRelatorio, RelatorioMensagens } from '../core/messages/index.js';

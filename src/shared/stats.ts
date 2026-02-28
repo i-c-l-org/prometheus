@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT-0
-import type { Estatisticas } from '@core/types/comum/utils.js';
+import type { Estatisticas } from '@';
 
 export type { Estatisticas };
 
@@ -12,3 +12,6 @@ export const createEstatisticas = (): Estatisticas => ({
   evals: {},
   withs: {}
 });
+
+// Estatísticas globais compartilhadas entre analistas e relatorios
+export const estatisticasUsoGlobal: Estatisticas = createEstatisticas();

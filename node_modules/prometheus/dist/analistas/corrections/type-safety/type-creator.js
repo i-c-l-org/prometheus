@@ -40,7 +40,7 @@ export function isSameType(type1, type2) {
 }
 function generateTypeFileContent(analysis, sourceFilePath) {
     const date = new Date().toISOString();
-    return `// SPDX-License-Identifier: MIT
+    return `// SPDX-License-Identifier: MIT-0
 /**
  * Tipo gerado automaticamente
  * Origem: ${sourceFilePath}
@@ -65,7 +65,7 @@ async function addExportToIndex(domain, fileNome) {
         await fs.appendFile(indexCaminho, `${exportStatement}\n`, 'utf-8');
     }
     catch {
-        const header = `// SPDX-License-Identifier: MIT
+        const header = `// SPDX-License-Identifier: MIT-0
 /**
  * Exports do domínio ${domain}
  */

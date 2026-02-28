@@ -4,15 +4,9 @@ import { PadroesUsoMensagens } from '../../core/messages/analistas/analista-padr
 import { detectarContextoProjeto } from '../../shared/contexto-projeto.js';
 import { garantirArray, incrementar } from '../../shared/helpers/helpers-analistas.js';
 import { criarOcorrencia, ocorrenciaErroAnalista } from '../../types/index.js';
-export const estatisticasUsoGlobal = {
-    requires: {},
-    consts: {},
-    exports: {},
-    vars: {},
-    lets: {},
-    evals: {},
-    withs: {}
-};
+export { estatisticasUsoGlobal } from '../../shared/stats.js';
+import { estatisticasUsoGlobal as _estatisticas } from '../../shared/stats.js';
+const estatisticasUsoGlobal = _estatisticas;
 export const analistaPadroesUso = {
     nome: 'analista-padroes-uso',
     global: false,

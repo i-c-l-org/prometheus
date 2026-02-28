@@ -38,5 +38,15 @@
     "role": "user",
     "content": "Execução CLI: licencas disclaimer verify",
     "timestamp": "2026-02-28T11:44:11.885Z"
+  },
+  {
+    "role": "user",
+    "content": "Execução CLI: diagnosticar",
+    "timestamp": "2026-02-28T11:52:11.884Z"
+  },
+  {
+    "role": "user",
+    "content": "Execução CLI: formatar --write",
+    "timestamp": "2026-02-28T11:52:49.357Z"
   }
 ]
