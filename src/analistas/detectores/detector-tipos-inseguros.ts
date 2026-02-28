@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 /**
  * Detector de tipos inseguros (any e unknown) - Versão Inteligente
  * Identifica uso de any e unknown com análise contextual avançada

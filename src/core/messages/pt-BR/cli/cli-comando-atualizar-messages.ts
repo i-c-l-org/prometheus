@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 
 export const CliComandoAtualizarMensagens = {
   descricao: 'Atualiza o Prometheus se a integridade estiver preservada',

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 // CLI wrapper around the license-auditor functionality migrated from `implantar/licensas`.
 // The original package exported a simple node script; here we integrate into the main Commander
 // program and convert to TypeScript.

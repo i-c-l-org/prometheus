@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 

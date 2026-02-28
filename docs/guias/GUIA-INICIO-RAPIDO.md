@@ -1,6 +1,6 @@
 # 🚀 Guia de Início Rápido do Prometheus
 
-> Proveniência e Autoria: Este documento integra o projeto Prometheus (licença MIT).
+> Proveniência e Autoria: Este documento integra o projeto Prometheus (licença MIT-0).
 > Última atualização: 25 de fevereiro de 2026
 
 ---
@@ -28,7 +28,7 @@ node --version  # deve ser v24.x
 
 ```bash
 # Clone o repositório
-git clone https://github.com/i-c-l-5-5-5/prometheus.git
+git clone https://github.com/i-c-l-org/prometheus.git
 cd prometheus
 
 # Instale as dependências e compile
@@ -53,7 +53,7 @@ npx prometheus diagnosticar
 
 ```bash
 # Requer Node.js 24+
-npx github:i-c-l-5-5-5/prometheus diagnosticar --help
+npx github:i-c-l-org/prometheus diagnosticar --help
 ```
 
 ---
@@ -233,4 +233,4 @@ WORKER_POOL_MAX_WORKERS=4 prometheus diagnosticar
 
 ---
 
-**Versão:** 0.4.0 | **Licença:** MIT
+**Versão:** 0.4.0 | **Licença:** MIT-0

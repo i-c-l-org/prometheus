@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 import { AnalystOrigens, AnalystTipos, CssInJsMensagens, SeverityNiveis } from '@core/messages/core/plugin-messages.js';
 
 import type { Ocorrencia } from '@';

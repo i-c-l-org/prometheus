@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 import type { FileEntry, RegistroIntegridade, ResultadoVerificacao } from '@';
 
 import { gerarSnapshotDoConteudo } from './hash.js';

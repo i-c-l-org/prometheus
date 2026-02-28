@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 /**
  * Helpers para processamento de flags e opções CLI
  */

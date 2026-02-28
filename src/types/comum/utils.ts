@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 
 // Pequeno utilitário de tipo para isBabelNode esperado por alguns analisadores.
 export interface BabelNode {

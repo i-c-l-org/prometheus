@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 import type { NodePath } from '@babel/traverse';
 import type { Comment } from '@babel/types';
 import { TodoComentariosMensagens } from '@core/messages/analistas/analista-todo-comments-messages.js';

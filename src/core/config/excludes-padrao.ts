@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 /**
  * Configuração centralizada dos padrões de exclusão do Prometheus
  *

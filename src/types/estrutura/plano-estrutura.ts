@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 // Tipos relacionados a plano de reorganização estrutural (extraídos de tipos.ts para reduzir acoplamento)
 
 export interface PlanoMoverItem {

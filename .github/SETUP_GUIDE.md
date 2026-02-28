@@ -1,3 +1,11 @@
+---
+Proveniência e Autoria: Este documento integra o projeto Prometheus (licença MIT-0).
+Nada aqui implica cessão de direitos morais/autorais.
+Conteúdos de terceiros não licenciados de forma compatível não devem ser incluídos.
+Referências a materiais externos devem ser linkadas e reescritas com palavras próprias.
+---
+
+
 # GitHub Actions & Repository Setup Guide
 
 ## ⚠️ Required Manual Configuration
@@ -85,3 +93,4 @@ https://github.com/{org}/{repo}/actions
 | Auto Approve | Dependabot PR |
 | Setup Labels | Manual trigger |
 | Setup Branch | Manual trigger |
+

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 /**
  * Tipos centralizados para sistema de versionamento de schema
  * Consolidação de: src/core/schema/version.ts e versão anterior

@@ -1,4 +1,12 @@
 ---
+Proveniência e Autoria: Este documento integra o projeto Prometheus (licença MIT-0).
+Nada aqui implica cessão de direitos morais/autorais.
+Conteúdos de terceiros não licenciados de forma compatível não devem ser incluídos.
+Referências a materiais externos devem ser linkadas e reescritas com palavras próprias.
+---
+
+
+---
 name: 🔒 Security Vulnerability
 about: Report a security vulnerability in Prometheus
 title: '[SECURITY] '
@@ -77,3 +85,4 @@ Instead, please follow our security policy: https://github.com/i-c-l-org/prometh
 - CVE ID (if applicable):
 - Related CVEs:
 - Related Security Advisories:
+

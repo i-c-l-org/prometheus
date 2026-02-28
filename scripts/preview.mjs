@@ -1,11 +1,11 @@
 ﻿// SPDX-License-Identifier: MIT
-// Gera a pasta preview-i-c-l-5-5-5/ contendo build, docs e um package.json de produção
+// Gera a pasta preview-i-c-l-org/ contendo build, docs e um package.json de produção
 import fs from 'fs/promises';
 import path from 'node:path';
 import { execSync } from 'node:child_process';
 
 const ROOT = process.cwd();
-const OUT_DIR = path.join(ROOT, 'preview-i-c-l-5-5-5');
+const OUT_DIR = path.join(ROOT, 'preview-i-c-l-org');
 const DIST = path.join(ROOT, 'dist');
 const DOCS = path.join(ROOT, 'docs');
 const PKG_PATH = path.join(ROOT, 'package.json');
@@ -103,7 +103,7 @@ async function synthesizeProdPackageJson() {
       '.': './dist/bin/cli.js',
     },
     bin: {
-      'i-c-l-5-5-5': './dist/bin/index.js',
+      'i-c-l-org': './dist/bin/index.js',
     },
     engines: pkg.engines || { node: '>=24.0.4' },
     preferGlobal: true,
@@ -175,7 +175,7 @@ async function insertProvenienciaInPreview() {
         await fs.writeFile(f, `${aviso}\n\n${c.trimStart()}\n`, 'utf-8');
       }
     }
-console.log('[preview] Aviso de proveniência inserido nos .md de preview-i-c-l-5-5-5.'); 
+console.log('[preview] Aviso de proveniência inserido nos .md de preview-i-c-l-org.'); 
   } catch (e) {
     console.warn('[preview] Aviso de proveniência não inserido:', e?.message || e);
   }
@@ -201,8 +201,8 @@ console.log('[preview] copiando arquivos de raiz...');
     'LICENSE',
     'LICENSE.md',
     'THIRD-PARTY-NOTICES.txt',
-    'i-c-l-5-5-5.config.json',
-    'i-c-l-5-5-5.config.safe.json',
+    'i-c-l-org.config.json',
+    'i-c-l-org.config.safe.json',
     'tsconfig.json',
     'tsconfig.eslint.json',
     'package-lock.json',
@@ -217,10 +217,10 @@ console.log('[preview] gerando package.json de produção...');
   const prodPkg = await synthesizeProdPackageJson();
   await fs.writeFile(path.join(OUT_DIR, 'package.json'), JSON.stringify(prodPkg, null, 2), 'utf-8');
 
-  console.log('[preview] gerando i-c-l-5-5-5.repo.arquetipo.json (exemplo)...');
+  console.log('[preview] gerando i-c-l-org.repo.arquetipo.json (exemplo)...');
   const arq = generateRepoArquetipoExample();
   await fs.writeFile(
-    path.join(OUT_DIR, 'i-c-l-5-5-5.repo.arquetipo.json'),
+    path.join(OUT_DIR, 'i-c-l-org.repo.arquetipo.json'),
     JSON.stringify(arq, null, 2),
     'utf-8',
   );
@@ -237,12 +237,12 @@ Este diretório foi gerado pelo script preview para revisão do que seria public
 - Este arquivo não será incluído em publicação real; serve apenas como aviso/guia de revisão.
 
 Conteúdo adicional incluído:
-- i-c-l-5-5-5.repo.arquetipo.json (exemplo de arquétipo de repositório para você editar)
+- i-c-l-org.repo.arquetipo.json (exemplo de arquétipo de repositório para você editar)
 
 Data/Horário de geração: ${new Date().toISOString()}
 `;
   await fs.writeFile(path.join(OUT_DIR, 'PREVIEW.md'), previewNote, 'utf-8');
-console.log('[preview] pronto. Veja a pasta preview-i-c-l-5-5-5/.'); 
+console.log('[preview] pronto. Veja a pasta preview-i-c-l-org/.'); 
 }
 
 main().catch((e) => {

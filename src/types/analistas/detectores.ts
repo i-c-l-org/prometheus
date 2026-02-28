@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 
 // Tipos permissivos para detectores — preferimos segurança de compilação agora
 // e refinaremos os tipos por detector no futuro.

@@ -6,7 +6,7 @@ import path from 'node:path';
 const COVERAGE_PATH = path.resolve(process.cwd(), 'coverage', 'coverage-final.json');
 const DEFAULT_THRESHOLD = 90; // porcentagem mínima por métrica (fallback)
 const EXCLUDE_PATH = path.resolve(process.cwd(), 'scripts', 'coverage-exclude.json');
-const CONFIG_PATH = path.resolve(process.cwd(), 'i-c-l-5-5-5.config.json');
+const CONFIG_PATH = path.resolve(process.cwd(), 'i-c-l-org.config.json');
 
 /**
 
@@ -318,7 +318,7 @@ async function resolveThresholds() {
     };
   }
 
-  // 2) Config i-c-l-5-5-5.config.json: coverageGate { lines, functions, branches, statements }
+  // 2) Config i-c-l-org.config.json: coverageGate { lines, functions, branches, statements }
   try {
     const raw = await fs.readFile(CONFIG_PATH, 'utf8');
     const cfg = JSON.parse(raw);

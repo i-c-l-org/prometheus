@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 
 export const CliComandoRenameMensagens = {
   descricao: 'Aplica as renomeações de variáveis baseadas no arquivo(s) de mapeamento em names/.',

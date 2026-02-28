@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 
 /**
  * Utilitário para detectar contexto inteligente de projetos

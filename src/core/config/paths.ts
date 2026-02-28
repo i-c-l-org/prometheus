@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 // Centraliza padrões e utilidades de caminhos para evitar hardcodes dispersos
 
 export const SRC_RAIZ = 'src';

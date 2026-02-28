@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 /**
  * Comando fix-types - Corrige tipos inseguros (any/unknown)
  * Aplica correções automáticas baseadas em análise de uso e confiança

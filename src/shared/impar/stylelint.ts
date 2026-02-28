@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 /**
  * Lint de CSS interno do Prometheus (inspirado em linters de CSS do ecossistema).
  *

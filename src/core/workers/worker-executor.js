@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 /**
  * Executor de worker para processamento paralelo de arquivos
  * Este arquivo é executado em threads separadas pelos Worker Threads

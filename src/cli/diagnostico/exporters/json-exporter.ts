@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 // @prometheus-disable PROBLEMA_PERFORMANCE
 // Justificativa: exporter que processa dados para JSON - loops são esperados
 // SPDX-FileCopyrightText: 2025 Prometheus Contributors

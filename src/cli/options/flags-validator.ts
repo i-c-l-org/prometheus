@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 /**
  * 🎯 Validação e Normalização de Flags do Comando Diagnosticar
  *

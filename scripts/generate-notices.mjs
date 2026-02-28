@@ -268,7 +268,7 @@ async function main() {
 
   let results = null;
   // 1) Tenta ler JSON pré-gerado
-  const cachePath = path.join(ROOT, '.i-c-l-5-5-5', 'licenses.json');
+  const cachePath = path.join(ROOT, '.i-c-l-org', 'licenses.json');
   try {
     const buf = await fs.readFile(cachePath, 'utf-8');
     results = JSON.parse(buf);
@@ -312,7 +312,7 @@ async function main() {
 
   // Cacheia JSON para futuras execuções sem rede
   try {
-    const dir = path.join(ROOT, '.i-c-l-5-5-5');
+    const dir = path.join(ROOT, '.i-c-l-org');
     await fs.mkdir(dir, { recursive: true });
     await fs.writeFile(path.join(dir, 'licenses.json'), JSON.stringify(results, null, 2), 'utf-8');
   } catch {}

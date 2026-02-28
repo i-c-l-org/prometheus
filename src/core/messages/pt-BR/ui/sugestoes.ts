@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 import { createI18nMessages, i18n } from '@shared/helpers/i18n.js';
 
 // @prometheus-disable tipo-literal-inline-complexo

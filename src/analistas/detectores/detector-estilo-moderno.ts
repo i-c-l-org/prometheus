@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 import type { NodePath } from '@babel/traverse';
 import type { CallExpression, Node, VariableDeclarator } from '@babel/types';
 import { traverse } from '@core/config/traverse.js';

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 /**
  * Tipos para sistema de mensagens e relatórios
  * Consolidação de: src/core/messages/filtro-config.ts, relatorio-templates.ts e versão anterior

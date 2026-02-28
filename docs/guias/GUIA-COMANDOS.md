@@ -1,6 +1,6 @@
 # 📚 Guia Completo de Comandos do Prometheus
 
-> Proveniência e Autoria: Este documento integra o projeto Prometheus (licença MIT).
+> Proveniência e Autoria: Este documento integra o projeto Prometheus (licença MIT-0).
 > Última atualização: 25 de fevereiro de 2026
 
 ## 🎯 Visão Geral

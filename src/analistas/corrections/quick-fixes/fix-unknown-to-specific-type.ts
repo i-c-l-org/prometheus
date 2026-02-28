@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 /**
  * Quick Fix: Replace unknown with specific types
  * Mais conservador que fix-any - requer confiança >= 90%

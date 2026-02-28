@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 /**
  * Tipos para processamento de comandos de diagnóstico
  * Nota: OpcoesProcessamentoDiagnostico e ResultadoProcessamentoDiagnostico

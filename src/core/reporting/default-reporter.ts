@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 import { DetectorArquiteturaMensagens } from '@core/messages/analistas/detector-arquitetura-messages.js';
 
 import type { Ocorrencia, ReportEvent } from '@';

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 // @prometheus-disable tipo-inseguro-unknown tipo-literal-inline-complexo
 // Justificativa: unknown é usado para tipagem defensiva de erros e módulos dinâmicos
 import { promises as fs } from 'node:fs';

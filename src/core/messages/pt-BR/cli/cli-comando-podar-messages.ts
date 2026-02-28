@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 
 import { ICONES_COMANDO } from '../ui/icons.js';
 import { CliCommonMensagens } from './cli-common-messages.js';

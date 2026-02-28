@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 import { ARQUETIPOS } from '@analistas/estrategistas/arquetipos-defs.js';
 import { scoreArquetipo } from '@analistas/pontuadores/pontuador.js';
 

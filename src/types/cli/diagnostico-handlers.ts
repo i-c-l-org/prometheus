@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 /**
  * Tipos para handlers de diagnóstico (Guardian, Arquetipo, Auto-Fix)
  */

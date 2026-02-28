@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 // Wrapper para uso seguro de chalk em ESM/CJS e ambientes de bundling/SSR
 // Objetivos:
 // - Fornecer API estável com funções obrigatórias (não opcionais) para evitar 'possibly undefined'.

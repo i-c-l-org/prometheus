@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 import type { Analista, ConfiguracaoPontuacaoZelador, IntlComDisplayNames, Ocorrencia, ProblemaPontuacao } from '@';
 import { criarOcorrencia } from '@';
 

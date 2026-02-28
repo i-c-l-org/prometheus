@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 // @prometheus-disable tipo-literal-inline-complexo
 // Justificativa: tipos inline para helpers de mensagens
 /**

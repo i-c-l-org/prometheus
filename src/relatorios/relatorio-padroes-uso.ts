@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 // import { log } from '@nucleo/constelacao/log.js';
 
 import {

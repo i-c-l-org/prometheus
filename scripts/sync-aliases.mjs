@@ -479,14 +479,14 @@ async function generateAliasDocumentation() {
   const tsPaths = await getAliasPaths('typescript');
   const aliasList = Object.keys(tsPaths).map(k => k.replace(/\*$/, ''));
   
-  const docContent = `# Sistema de Aliases do i-c-l-5-5-5
+  const docContent = `# Sistema de Aliases do i-c-l-org
 
 > **ARQUIVO GERADO AUTOMATICAMENTE**  
 > Use \`npm run sync-aliases\` para atualizar
 
 ## Visão Geral
 
-O i-c-l-5-5-5 utiliza um sistema centralizado de aliases TypeScript para simplificar imports e manter consistência em todo o projeto.
+O i-c-l-org utiliza um sistema centralizado de aliases TypeScript para simplificar imports e manter consistência em todo o projeto.
 
 ## Aliases Disponíveis
 

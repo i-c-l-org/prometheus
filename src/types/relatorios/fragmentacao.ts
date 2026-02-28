@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 /**
  * Tipos para fragmentação de relatórios
  * Originalmente em: src/shared/data-processing/fragmentar-relatorio.ts

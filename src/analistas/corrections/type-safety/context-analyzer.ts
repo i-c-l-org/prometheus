@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 // @prometheus-disable problema-documentacao
 // Justificativa: funções estão tipadas, detector está identificando falsos positivos
 /**

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 import { ExcecoesMensagens } from '@core/messages/core/excecoes-messages.js';
 import { log, logCore } from '@core/messages/index.js';
 

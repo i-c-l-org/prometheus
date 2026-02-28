@@ -13,7 +13,7 @@ async function listMarkdown(dir) {
   for (const e of entries) {
     const p = path.join(dir, e.name);
     if (e.isDirectory()) {
-      if (/^(node_modules|dist|coverage|pre-public|preview-i-c-l-5-5-5|\.git)$/i.test(e.name)) continue;
+      if (/^(node_modules|dist|coverage|pre-public|preview-i-c-l-org|\.git)$/i.test(e.name)) continue;
       out.push(...(await listMarkdown(p)));
     } else if (e.isFile() && e.name.toLowerCase().endsWith('.md')) {
       out.push(p);

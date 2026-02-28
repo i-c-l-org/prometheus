@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 // @prometheus-disable PROBLEMA_PERFORMANCE
 // Justificativa: inquisidor principal que processa análise de código - loops são esperados
 import { promises as fs } from 'node:fs';

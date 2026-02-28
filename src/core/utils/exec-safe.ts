@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 // @prometheus-disable PROBLEMA_PERFORMANCE
 // Justificativa: esta função é intencionalmente síncrona para executar comandos shell
 import { execSync, type ExecSyncOptions } from 'node:child_process';

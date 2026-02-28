@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 // src/analistas/analista-padroes-uso.ts
 import type { NodePath } from '@babel/traverse';
 import type { Node } from '@babel/types';

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 /**
  * Analisador de uso de variáveis via AST Babel
  * Detecta padrões de uso para inferir tipos corretos

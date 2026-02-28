@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 /**
  * @fileoverview Registry centralizado para operações de leitura/escrita de arquivos JSON
  *

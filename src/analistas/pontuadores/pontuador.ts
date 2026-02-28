@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 // @prometheus-disable PROBLEMA_PERFORMANCE
 // Justificativa: pontuador que processa código - loops são esperados
 import { grafoDependencias } from '@analistas/detectores/detector-dependencias.js';

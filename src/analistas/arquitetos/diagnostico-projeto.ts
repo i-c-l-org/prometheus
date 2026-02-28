@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 import type { DiagnosticoProjeto, SinaisProjeto } from '@';
 
 // Níveis de confiança para detecção de tipos de projeto

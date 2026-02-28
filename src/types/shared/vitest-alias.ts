@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 /**
  * @fileoverview Tipos para configuração de aliases do Vitest
  */

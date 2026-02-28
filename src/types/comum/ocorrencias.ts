@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 
 export type OcorrenciaNivel = 'erro' | 'aviso' | 'info' | 'sucesso';
 

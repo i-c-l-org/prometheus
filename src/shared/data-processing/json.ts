@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 /**
  * Utilidades de JSON: escape Unicode e stringificação segura para consumidores legados.
  *

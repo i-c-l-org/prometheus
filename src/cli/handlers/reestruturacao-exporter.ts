@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 /**
  * Handler para exportação de relatórios de reestruturação
  * Consolida lógica duplicada de geração de relatórios Markdown e JSON

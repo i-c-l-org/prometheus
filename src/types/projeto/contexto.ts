@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 /**
  * Tipos para detecção de contexto de projetos
  * Originalmente em: src/shared/contexto-projeto.ts

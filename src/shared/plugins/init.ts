@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 import corePlugin from './core-plugin.js';
 import { getGlobalRegistry } from './registry.js';
 

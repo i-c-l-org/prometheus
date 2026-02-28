@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 // Analistas de melhorias e correções automáticas (unificado)
 // Resolve analistas de correção automática dinamicamente para compatibilidade com múltiplas formas de export
 // analistaFantasma not exported from js-ts/fantasma; that module provides detectarFantasmas used by zeladores

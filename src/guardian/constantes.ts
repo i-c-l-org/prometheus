@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 import { PROMETHEUS_ARQUIVOS } from '@core/registry/paths.js';
 
 /**

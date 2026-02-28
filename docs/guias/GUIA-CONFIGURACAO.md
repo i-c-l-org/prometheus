@@ -1,6 +1,6 @@
 # ⚙️ Guia de Configuração do Prometheus
 
-> Proveniência e Autoria: Este documento integra o projeto Prometheus (licença MIT).
+> Proveniência e Autoria: Este documento integra o projeto Prometheus (licença MIT-0).
 > Última atualização: 15 de janeiro de 2026
 
 ---
