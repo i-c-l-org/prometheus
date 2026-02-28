@@ -1,7 +1,6 @@
 node_modules
 .prometheus
 .skills
-.opencode
 dist
 coverage
 *.log
