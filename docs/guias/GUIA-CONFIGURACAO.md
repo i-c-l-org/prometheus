@@ -1,24 +1,24 @@
-# ⚙️ Guia de Configuração do Prometheus
+# Guia de Configuracao do Prometheus
 
-> Proveniência e Autoria: Este documento integra o projeto Prometheus (licença MIT-0).
-> Última atualização: 15 de janeiro de 2026
+> Proveniencia e Autoria: Este documento integra o projeto Prometheus (licenca MIT-0).
+> Ultima atualizacao: 28 de fevereiro de 2026
 
 ---
 
-## 📋 Índice
+## Indice
 
-1. [Visão Geral](#visão-geral)
-2. [Arquivos de Configuração](#arquivos-de-configuração)
-3. [Variáveis de Ambiente](#variáveis-de-ambiente)
+1. [Visao Geral](#visao-geral)
+2. [Arquivos de Configuracao](#arquivos-de-configuracao)
+3. [Variaveis de Ambiente](#variaveis-de-ambiente)
 4. [Filtros Include/Exclude](#filtros-includeexclude)
-5. [Configuração Granular de Regras](#configuração-granular-de-regras)
-6. [Configuração por Ambiente](#configuração-por-ambiente)
-7. [Exemplos Práticos](#exemplos-práticos)
+5. [Configuracao Granular de Regras](#configuracao-granular-de-regras)
+6. [Configuracao por Ambiente](#configuracao-por-ambiente)
+7. [Exemplos Praticos](#exemplos-praticos)
 8. [Troubleshooting](#troubleshooting)
 
 ---
 
-## Visão Geral
+## Visao Geral
 
 O Prometheus oferece um sistema flexível de configuração que permite adaptar a análise às necessidades específicas de cada projeto. A configuração pode ser feita através de:
 
@@ -468,12 +468,12 @@ prometheus diagnosticar --debug --scan-only
 ### Armadilhas Comuns
 
 ```bash
-# ❌ Errado - apenas nível raiz de src/
-# ❌ Errado - apenas nível raiz de src/
+# ERRADO - apenas nivel raiz de src/
+# ERRADO - apenas nivel raiz de src/
 prometheus diagnosticar --include "src/*.ts"
 
-# ✅ Correto - recursivo em src/
-# ✅ Correto - recursivo em src/
+# CORRETO - recursivo em src/
+# CORRETO - recursivo em src/
 prometheus diagnosticar --include "src/**/*.ts"
 ```
 

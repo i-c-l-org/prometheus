@@ -21,7 +21,7 @@ jobs:
           SPONSOR_TIER: ${{ github.event.sponsorship.tier.name }}
           SPONSOR_EMAIL: ${{ github.event.sponsorship.sponsor.email }}
         run: |
-          echo "🎉 Thank you to our new sponsor: $SPONSOR_LOGIN"
+          echo "[SPONSOR] Thank you to our new sponsor: $SPONSOR_LOGIN"
           echo "Tier: $SPONSOR_TIER"
           echo "Email: $SPONSOR_EMAIL"
 
@@ -42,8 +42,8 @@ jobs:
               await github.rest.issues.create({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                title: `🏆 New Sponsor: ${sponsor.login}`,
-                body: `## 🎉 New Sponsor!\n\n**Thank you ${sponsor.login} for your support!**\n\n- **Tier**: ${tier.name} ($${tier.monthly_price_in_cents / 100}/month)\n- **Message**: ${context.payload.sponsorship.message || 'No message'}\n\nYour support helps us continue developing Prometheus!`,
+                title: `[SPONSOR] New Sponsor: ${sponsor.login}`,
+                body: `## New Sponsor!\n\n**Thank you ${sponsor.login} for your support!**\n\n- **Tier**: ${tier.name} ($${tier.monthly_price_in_cents / 100}/month)\n- **Message**: ${context.payload.sponsorship.message || 'No message'}\n\nYour support helps us continue developing Prometheus!`,
                 labels: ['sponsor']
               });
               console.log('Sponsor issue created successfully');

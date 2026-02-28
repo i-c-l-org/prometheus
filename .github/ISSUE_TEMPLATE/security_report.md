@@ -1,20 +1,19 @@
 ---
-Proveniência e Autoria: Este documento integra o projeto Prometheus (licença MIT-0).
-Nada aqui implica cessão de direitos morais/autorais.
-Conteúdos de terceiros não licenciados de forma compatível não devem ser incluídos.
-Referências a materiais externos devem ser linkadas e reescritas com palavras próprias.
+Proveniencia e Autoria: Este documento integra o projeto Prometheus (licenca MIT-0).
+Nada aqui implica cessao de direitos morais/autorais.
+Conteudos de terceiros nao licenciados de forma compativel nao devem ser incluidos.
+Referencias a materiais externos devem ser linkadas e reescritas com palavras proprias.
 ---
 
 
 ---
-name: 🔒 Security Vulnerability
+name: "[SECURITY] Security Vulnerability"
 about: Report a security vulnerability in Prometheus
 title: '[SECURITY] '
 labels: security, needs triage
 assignees: ''
----
 
-## ⚠️ Security Notice
+## Security Notice
 
 <!-- DO NOT include sensitive information in public issues -->
 

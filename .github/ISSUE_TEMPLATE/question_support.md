@@ -1,24 +1,23 @@
 ---
-Proveniência e Autoria: Este documento integra o projeto Prometheus (licença MIT-0).
-Nada aqui implica cessão de direitos morais/autorais.
-Conteúdos de terceiros não licenciados de forma compatível não devem ser incluídos.
-Referências a materiais externos devem ser linkadas e reescritas com palavras próprias.
+Proveniencia e Autoria: Este documento integra o projeto Prometheus (licenca MIT-0).
+Nada aqui implica cessao de direitos morais/autorais.
+Conteudos de terceiros nao licenciados de forma compativel nao devem ser incluidos.
+Referencias a materiais externos devem ser linkadas e reescritas com palavras proprias.
 ---
 
 
 ---
-name: ❓ Question / Support
+name: "[QUESTION] Question / Support"
 about: Ask a question or get help with using Prometheus
 title: '[QUESTION] '
 labels: question, needs triage
 assignees: ''
----
 
-## ❓ Question Summary
+## Question Summary
 
 <!-- Brief summary of your question -->
 
-## 📋 Description
+## Description
 
 <!-- Detailed description of your question or issue -->
 
@@ -30,14 +29,14 @@ assignees: ''
 
 <!-- List any steps you've already taken to solve the problem -->
 
-## 🔧 Environment
+## Environment
 
 - **OS**: <!-- e.g., Ubuntu 22.04, Windows 11, macOS Sonoma -->
 - **Node.js Version**: <!-- e.g., 24.12.0 -->
 - **Prometheus Version**: <!-- e.g., 0.4.0 -->
 - **Package Manager**: <!-- npm, yarn, pnpm -->
 
-## 📖 Relevant Information
+## Relevant Information
 
 ### Configuration Files
 
@@ -59,11 +58,11 @@ assignees: ''
 // Add any error messages here
 ```
 
-## 📎 Additional Context
+## Additional Context
 
 <!-- Add any other relevant context -->
 
-## 🔗 Related Links
+## Related Links
 
 - Documentation: <!-- Link to relevant docs -->
 - Related Issue: <!-- Link to related issues -->

@@ -9,7 +9,7 @@ updates:
       timezone: UTC
     open-pull-requests-limit: 10
     commit-message:
-      prefix: ⬆️
+      prefix: "[DEPS]"
       include: scope
     labels:
       - dependencies
@@ -48,7 +48,7 @@ updates:
       timezone: UTC
     open-pull-requests-limit: 5
     commit-message:
-      prefix: ⬆️
+      prefix: "[DEPS]"
       include: scope
     labels:
       - dependencies
@@ -63,7 +63,7 @@ updates:
       timezone: UTC
     open-pull-requests-limit: 5
     commit-message:
-      prefix: 🔧
+      prefix: "[CI]"
       include: scope
     labels:
       - dependencies

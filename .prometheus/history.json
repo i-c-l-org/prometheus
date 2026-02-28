@@ -58,5 +58,20 @@
     "role": "user",
     "content": "Execução CLI: diagnosticar",
     "timestamp": "2026-02-28T12:05:11.129Z"
+  },
+  {
+    "role": "user",
+    "content": "Execução CLI: --help",
+    "timestamp": "2026-02-28T12:08:37.033Z"
+  },
+  {
+    "role": "user",
+    "content": "Execução CLI: diagnosticar",
+    "timestamp": "2026-02-28T12:18:05.082Z"
+  },
+  {
+    "role": "user",
+    "content": "Execução CLI: formatar --write",
+    "timestamp": "2026-02-28T12:26:12.699Z"
   }
 ]

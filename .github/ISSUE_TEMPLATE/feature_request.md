@@ -1,24 +1,23 @@
 ---
-Proveniência e Autoria: Este documento integra o projeto Prometheus (licença MIT-0).
-Nada aqui implica cessão de direitos morais/autorais.
-Conteúdos de terceiros não licenciados de forma compatível não devem ser incluídos.
-Referências a materiais externos devem ser linkadas e reescritas com palavras próprias.
+Proveniencia e Autoria: Este documento integra o projeto Prometheus (licenca MIT-0).
+Nada aqui implica cessao de direitos morais/autorais.
+Conteudos de terceiros nao licenciados de forma compativel nao devem ser incluidos.
+Referencias a materiais externos devem ser linkadas e reescritas com palavras proprias.
 ---
 
 
 ---
-name: ✨ Feature Request
+name: "[FEAT] Feature Request"
 about: Suggest a new feature or improvement for Prometheus
 title: '[FEATURE] '
 labels: enhancement, needs triage
 assignees: ''
----
 
-## ✨ Feature Summary
+## Feature Summary
 
 <!-- A brief summary of the feature you're proposing -->
 
-## 🎯 Problem or Motivation
+## Problem or Motivation
 
 <!-- Describe the problem or motivation behind this feature request -->
 
@@ -26,7 +25,7 @@ assignees: ''
 
 <!-- What currently limits users? What workaround exists (if any)? -->
 
-## 📝 Proposed Solution
+## Proposed Solution
 
 <!-- Describe your proposed solution in detail -->
 
@@ -45,28 +44,28 @@ assignees: ''
 // prometheus <command> <subcommand> [options]
 ```
 
-## 🤔 Alternatives Considered
+## Alternatives Considered
 
 <!-- Describe any alternative solutions you've considered -->
 
-## 📋 Requirements Checklist
+## Requirements Checklist
 
 - [ ] This feature aligns with the project's goals
 - [ ] The feature is achievable within the project's scope
 - [ ] I or someone else is willing to help implement this feature
 
-## 🔒 Security Considerations
+## Security Considerations
 
 <!-- Does this feature have any security implications? -->
 
-## 📚 Documentation Needs
+## Documentation Needs
 
 - [ ] Update README
 - [ ] Update CLI documentation
 - [ ] Add usage examples
 - [ ] No documentation changes needed
 
-## 💻 Technical Notes
+## Technical Notes
 
 <!-- Any technical implementation notes or considerations -->
 
@@ -74,7 +73,7 @@ assignees: ''
 
 <!-- Link to any related issues or PRs -->
 
-## 🎉 Would you like to help implement this?
+## Would you like to help implement this?
 
 - [ ] Yes, I'd like to implement this feature
 - [ ] Yes, but I need some guidance

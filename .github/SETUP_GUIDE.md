@@ -1,14 +1,14 @@
 ---
-Proveniência e Autoria: Este documento integra o projeto Prometheus (licença MIT-0).
-Nada aqui implica cessão de direitos morais/autorais.
-Conteúdos de terceiros não licenciados de forma compatível não devem ser incluídos.
-Referências a materiais externos devem ser linkadas e reescritas com palavras próprias.
+Proveniencia e Autoria: Este documento integra o projeto Prometheus (licenca MIT-0).
+Nada aqui implica cessao de direitos morais/autorais.
+Conteudos de terceiros nao licenciados de forma compativel nao devem ser incluidos.
+Referencias a materiais externos devem ser linkadas e reescritas com palavras proprias.
 ---
 
 
 # GitHub Actions & Repository Setup Guide
 
-## ⚠️ Required Manual Configuration
+## Required Manual Configuration
 
 ### 1. NPM Token (for publishing packages)
 
@@ -45,17 +45,17 @@ https://github.com/{org}/{repo}/settings/branches
 1. Click "Add branch protection rule"
 2. Enter branch name pattern: `main` (or `dev`)
 3. Enable:
-   - ✅ Require a pull request before merging
-   - ✅ Require approvals (1)
-   - ✅ Require code owner reviews
-   - ✅ Require status checks to pass before merging
+   - [OK] Require a pull request before merging
+   - [OK] Require approvals (1)
+   - [OK] Require code owner reviews
+   - [OK] Require status checks to pass before merging
      - CI / Build
      - CI / Lint
      - CI / TypeCheck
      - CI / Test
-   - ✅ Require branches to be up to date
-   - ✅ Require linear history
-   - ✅ Include administrators
+   - [OK] Require branches to be up to date
+   - [OK] Require linear history
+   - [OK] Include administrators
 
 ### 4. Labels
 
@@ -72,7 +72,7 @@ https://github.com/{org}/{repo}/labels
 After pushing, make sure to enable the workflows in:
 https://github.com/{org}/{repo}/actions
 
-## 📋 Quick Setup Checklist
+## Quick Setup Checklist
 
 - [ ] Add `NPM_TOKEN` secret (for npm publishing)
 - [ ] Configure branch protection on `main` and `dev`
@@ -80,7 +80,7 @@ https://github.com/{org}/{repo}/actions
 - [ ] Enable all workflows in Actions tab
 - [ ] Update CODEOWNERS with actual usernames
 
-## 🔧 Workflow Triggers
+## Workflow Triggers
 
 | Workflow | Trigger |
 |----------|---------|

@@ -1,8 +1,8 @@
 ---
-Proveniência e Autoria: Este documento integra o projeto Prometheus (licença MIT-0).
-Nada aqui implica cessão de direitos morais/autorais.
-Conteúdos de terceiros não licenciados de forma compatível não devem ser incluídos.
-Referências a materiais externos devem ser linkadas e reescritas com palavras próprias.
+Proveniencia e Autoria: Este documento integra o projeto Prometheus (licenca MIT-0).
+Nada aqui implica cessao de direitos morais/autorais.
+Conteudos de terceiros nao licenciados de forma compativel nao devem ser incluidos.
+Referencias a materiais externos devem ser linkadas e reescritas com palavras proprias.
 ---
 
 
@@ -12,16 +12,16 @@ Referências a materiais externos devem ser linkadas e reescritas com palavras p
 
 ## Type of Change
 
-- [ ] 🐛 Bug fix (non-breaking change which fixes an issue)
-- [ ] ✨ New feature (non-breaking change which adds functionality)
-- [ ] 💥 Breaking change (fix or feature that would cause existing functionality to not work as expected)
-- [ ] 📝 Documentation update
-- [ ] 🎨 Style change (formatting, naming)
-- [ ] ♻️ Code refactoring (no functional changes)
-- [ ] ⚡ Performance improvement
-- [ ] 🧪 Test addition or update
-- [ ] 🔧 Build/CI change
-- [ ] ⬆️ Dependency update
+- [ ] [BUG] Bug fix (non-breaking change which fixes an issue)
+- [ ] [FEAT] New feature (non-breaking change which adds functionality)
+- [ ] [BREAK] Breaking change (fix or feature that would cause existing functionality to not work as expected)
+- [ ] [DOCS] Documentation update
+- [ ] [STYLE] Style change (formatting, naming)
+- [ ] [REFACTOR] Code refactoring (no functional changes)
+- [ ] [PERF] Performance improvement
+- [ ] [TEST] Test addition or update
+- [ ] [CI] Build/CI change
+- [ ] [DEPS] Dependency update
 
 ## Checklist
 
