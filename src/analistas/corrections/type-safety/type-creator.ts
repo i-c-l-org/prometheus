@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 /**
  * Sistema de criação de arquivos de tipos
  * Cria tipos no diretório configurado (conventions.typesDirectory) com organização correta
@@ -79,7 +79,7 @@ export function isSameType(type1: ExistingType, type2: string): boolean {
  */
 function generateTypeFileContent(analysis: TypeAnalysis, sourceFilePath: string): string {
   const date = new Date().toISOString();
-  return `// SPDX-License-Identifier: MIT
+  return `// SPDX-License-Identifier: MIT-0
 /**
  * Tipo gerado automaticamente
  * Origem: ${sourceFilePath}
@@ -115,7 +115,7 @@ async function addExportToIndex(domain: string, fileNome: string): Promise<void>
     await fs.appendFile(indexCaminho, `${exportStatement}\n`, 'utf-8');
   } catch {
     // Criar index.ts se não existir
-    const header = `// SPDX-License-Identifier: MIT
+    const header = `// SPDX-License-Identifier: MIT-0
 /**
  * Exports do domínio ${domain}
  */

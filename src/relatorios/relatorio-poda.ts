@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 import { RelatorioMensagens } from '@core/messages/index.js';
 import { salvarEstado } from '@shared/persistence/persistencia.js';
 

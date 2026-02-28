@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 import { grafoDependencias } from '@analistas/detectores/detector-dependencias.js';
 import type { NodePath } from '@babel/traverse';
 import type { Node } from '@babel/types';

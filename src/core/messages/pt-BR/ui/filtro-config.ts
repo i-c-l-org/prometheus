@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 /**
  * Configurações centralizadas para o filtro inteligente de relatórios
  * Define prioridades, agrupamentos e categorização de problemas

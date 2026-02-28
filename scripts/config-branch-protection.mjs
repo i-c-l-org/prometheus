@@ -62,7 +62,7 @@ function apiRequest(method, path, body) {
     hostname: 'api.github.com',
     path,
     headers: {
-      'User-Agent': 'i-c-l-5-5-5-branch-protection-script',
+      'User-Agent': 'i-c-l-org-branch-protection-script',
       Accept: 'application/vnd.github+json',
       Authorization: `Bearer ${token}`,
     },
@@ -175,7 +175,7 @@ function desiredPayload() {
 async function applyProtection() {
   const path = `/repos/${owner}/${repo}/branches/${branch}/protection`;
   const body = JSON.stringify(desiredPayload());
-  const dir = mkdtempSync(join(tmpdir(), 'i-c-l-5-5-5-bp-'));
+  const dir = mkdtempSync(join(tmpdir(), 'i-c-l-org-bp-'));
   const file = join(dir, 'body.json');
   writeFileSync(file, body, 'utf8');
   // Usa --input para evitar problemas de aspas em shells diferentes
@@ -199,7 +199,7 @@ async function setMergeRules() {
     squash_merge_commit_title: 'PR_TITLE',
     squash_merge_commit_message: 'PR_BODY',
   });
-  const dir = mkdtempSync(join(tmpdir(), 'i-c-l-5-5-5-bp-'));
+  const dir = mkdtempSync(join(tmpdir(), 'i-c-l-org-bp-'));
   const file = join(dir, 'repo.json');
   writeFileSync(file, body, 'utf8');
   if (hasGh()) {

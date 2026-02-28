@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 import { mapaReversao } from '@analistas/corrections/mapa-reversao.js';
 import { ExitCode, sair } from '@cli/helpers/exit-codes.js';
 import { CliComandoReverterMensagens } from '@core/messages/cli/cli-comando-reverter-messages.js';

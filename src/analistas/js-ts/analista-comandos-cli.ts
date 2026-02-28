@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 // @prometheus-disable tipo-inseguro-unknown
 // @prometheus-disable PROBLEMA_PERFORMANCE
 // Justificativa: unknown é usado para manipulação segura de nós AST com tipagem defensiva

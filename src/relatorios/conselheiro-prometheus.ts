@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 import { logConselheiro } from '@core/messages/index.js';
 
 import type { ConselhoContextoPrometheus } from '@';

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 import type { FiltrosConfig, Ocorrencia, OcorrenciaParseErro } from '@';
 
 // Re-exporta o tipo para compatibilidade

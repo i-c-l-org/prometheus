@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 import type { AlinhamentoItemDiagnostico } from '@';
 
 // Re-exporta para compatibilidade com nome original

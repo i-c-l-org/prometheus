@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 // Declaração mínima para xxhashjs usada no projeto
 declare module 'xxhashjs' {
   interface Hash64 {

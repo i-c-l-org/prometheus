@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 /**
  * @fileoverview Gerenciamento centralizado de caminhos para arquivos JSON do Prometheus
  *

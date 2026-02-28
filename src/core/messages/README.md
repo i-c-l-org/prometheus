@@ -1,4 +1,4 @@
-> Proveniência e Autoria: Este documento integra o projeto Prometheus (licença MIT).
+> Proveniência e Autoria: Este documento integra o projeto Prometheus (licença MIT-0).
 
 # Sistema de Mensagens Centralizado do Prometheus
 

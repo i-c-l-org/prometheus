@@ -1,6 +1,6 @@
 # Prometheus CLI
 
-> Proveniência e Autoria: Este documento integra o projeto Prometheus (licença MIT).
+> Proveniência e Autoria: Este documento integra o projeto Prometheus (licença MIT-0).
 > Nada aqui implica cessão de direitos morais/autorais.
 > Conteúdos de terceiros não licenciados de forma compatível não devem ser incluídos.
 > Referências a materiais externos devem ser linkadas e reescritas com palavras próprias.
@@ -9,13 +9,13 @@
 
 ## 🌟 Status do Projeto
 
-**Versão Atual:** 0.4.0 | **Node.js:** >=24.12.0 | **Licença:** MIT
+**Versão Atual:** 0.4.0 | **Node.js:** >=24.12.0 | **Licença:** MIT-0
 
-[![Stars](https://img.shields.io/github/stars/i-c-l-5-5-5/prometheus?style=social)](https://github.com/i-c-l-5-5-5/prometheus/stargazers)
-[![Forks](https://img.shields.io/github/forks/i-c-l-5-5-5/prometheus?style=social)](https://github.com/i-c-l-5-5-5/prometheus/network/members)
-[![Issues](https://img.shields.io/github/issues/i-c-l-5-5-5/prometheus)](https://github.com/i-c-l-5-5-5/prometheus/issues)
-[![Contributors](https://img.shields.io/github/contributors/i-c-l-5-5-5/prometheus)](https://github.com/i-c-l-5-5-5/prometheus/graphs/contributors)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/i-c-l-5-5-5/prometheus/blob/main/CONTRIBUTING.md)
+[![Stars](https://img.shields.io/github/stars/i-c-l-org/prometheus?style=social)](https://github.com/i-c-l-org/prometheus/stargazers)
+[![Forks](https://img.shields.io/github/forks/i-c-l-org/prometheus?style=social)](https://github.com/i-c-l-org/prometheus/network/members)
+[![Issues](https://img.shields.io/github/issues/i-c-l-org/prometheus)](https://github.com/i-c-l-org/prometheus/issues)
+[![Contributors](https://img.shields.io/github/contributors/i-c-l-org/prometheus)](https://github.com/i-c-l-org/prometheus/graphs/contributors)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/i-c-l-org/prometheus/blob/main/CONTRIBUTING.md)
 
 ## 🚀 Demo Rápido
 
@@ -48,7 +48,7 @@ Prometheus é uma CLI modular para analisar, diagnosticar e manter projetos (JS/
 
 ```bash
 # Clone o repositório
-git clone https://github.com/i-c-l-5-5-5/prometheus.git
+git clone https://github.com/i-c-l-org/prometheus.git
 cd prometheus
 
 # Instale dependências e compile
@@ -62,7 +62,7 @@ node dist/bin/index.js diagnosticar --json
 **Windows (PowerShell):**
 
 ```powershell
-git clone https://github.com/i-c-l-5-5-5/prometheus.git; cd prometheus; npm install; npm run build; node dist/bin/index.js diagnosticar --json
+git clone https://github.com/i-c-l-org/prometheus.git; cd prometheus; npm install; npm run build; node dist/bin/index.js diagnosticar --json
 ```
 
 ### Instalação Global (Opcional)
@@ -762,5 +762,5 @@ prometheus diagnosticar --json
 ``
 MIT. Avisos de terceiros: `THIRD-PARTY-NOTICES.txt`.
 ``
-### i-c-l-5-5-5
+### i-c-l-org
 ````

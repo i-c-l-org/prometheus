@@ -132,7 +132,7 @@ jobs:
             await github.rest.issues.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: `🚀 Release ${release.tag_name} Published!`,
-              body: `## 🎉 New Release: **${release.tag_name}**\n\n${release.body}\n\n---\n\n**Download:** ${release.html_url}\n\n---\n_This issue was automatically created by the Release workflow._`,
+              title: `[RELEASE] Release ${release.tag_name} Published!`,
+              body: `## New Release: ${release.tag_name}\n\n${release.body}\n\n---\n\n**Download:** ${release.html_url}\n\n---\n_This issue was automatically created by the Release workflow._`,
               labels: ['release']
             });

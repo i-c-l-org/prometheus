@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 import type { ClassDeclaration, ImportDeclaration, Program, Statement, TSEnumDeclaration, TSInterfaceDeclaration, TSTypeAliasDeclaration, VariableDeclaration } from '@babel/types';
 
 import type { ArquetipoEstruturaDef, FileEntryWithAst, PackageJson, ResultadoDeteccaoArquetipo, SinaisProjetoAvancados } from '@';

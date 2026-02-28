@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 /**
  * Configuração centralizada do sistema de pontuação de arquétipos
  * Valores ajustáveis para otimizar detecção e resiliência

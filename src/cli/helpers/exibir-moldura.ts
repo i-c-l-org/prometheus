@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 /**
  * Helper para exibição segura de molduras (blocos formatados)
  * Fornece fallback para ambientes onde log.bloco não está disponível

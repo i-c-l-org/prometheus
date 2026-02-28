@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 /**
  * Wrapper para analistas que adiciona suporte automático a supressões inline
  */

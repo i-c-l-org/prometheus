@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 /**
  * Sistema de supressão inline para o Prometheus
  * Permite desabilitar regras específicas usando comentários no código

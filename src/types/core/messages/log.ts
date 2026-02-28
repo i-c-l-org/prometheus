@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 
 export type Nivel = 'info' | 'sucesso' | 'erro' | 'aviso' | 'debug';
 export interface FormatOptions {

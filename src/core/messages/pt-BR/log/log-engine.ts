@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 /**
  * Engine de logs adaptativos que se ajusta ao contexto do projeto
  * Detecta automaticamente complexidade e adapta verbosidade

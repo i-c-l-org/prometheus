@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 
 /**
  * Whitelist de magic constants conhecidos de frameworks populares.

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 // @prometheus-disable tipo-literal-inline-complexo
 // @prometheus-disable PROBLEMA_PERFORMANCE
 // Justificativa: tipos inline para opções de comando CLI são locais e não precisam de extração

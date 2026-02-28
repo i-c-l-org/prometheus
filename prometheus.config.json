@@ -1,5 +1,5 @@
 {
-  "LANGUAGE": "pt-BR",
+  "LANGUAGE": "en",
   "INCLUDE_EXCLUDE_RULES": {
     "globalExcludeGlob": [
       "node_modules/**",

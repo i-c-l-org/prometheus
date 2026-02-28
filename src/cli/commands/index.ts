@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 /**
  * Ponto de entrada único para todos os comandos da CLI do Prometheus.
  *

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 /**
  * Tipos para detecção inteligente de contexto e arquétipos
  * Consolidação de múltiplas versões

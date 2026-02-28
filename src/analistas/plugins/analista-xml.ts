@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 import { AnalystOrigens, AnalystTipos, SeverityNiveis, XmlMensagens } from '@core/messages/core/plugin-messages.js';
 import { createLineLookup } from '@shared/helpers/line-lookup.js';
 import { maskXmlNonCode } from '@shared/helpers/masking.js';

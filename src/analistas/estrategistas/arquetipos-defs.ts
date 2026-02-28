@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 import type { ArquetipoEstruturaDef } from '@';
 
 export const ARQUETIPOS: ArquetipoEstruturaDef[] = [

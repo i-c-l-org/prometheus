@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 // @prometheus-disable PROBLEMA_PERFORMANCE
 // Justificativa: inquisidor principal que processa análise de código - loops são esperados
 import { promises as fs } from 'node:fs';
@@ -17,16 +17,16 @@ import { executarInquisicao as executarExecucao, registrarUltimasMetricas } from
 import { scanRepository } from './scanner.js';
 // Fallback de símbolos para cenários de teste onde o mock de log não inclui `simbolos`.
 const SIMBOLOS_ALTERNATIVA: SimbolosLog = {
-  info: 'ℹ️',
-  sucesso: '✅',
-  erro: '❌',
-  aviso: '⚠️',
-  debug: '🐞',
-  fase: '🔶',
-  passo: '▫️',
-  scan: '🔍',
-  guardian: '🛡️',
-  pasta: '📂'
+  info: '[i]',
+  sucesso: '[OK]',
+  erro: '[ERRO]',
+  aviso: '[AVISO]',
+  debug: '[DEBUG]',
+  fase: '[FASE]',
+  passo: '[PASSO]',
+  scan: '[SCAN]',
+  guardian: '[GUARD]',
+  pasta: '[DIR]'
 };
 const S: SimbolosLog = typeof (log as unknown as {
   simbolos?: SimbolosLog;

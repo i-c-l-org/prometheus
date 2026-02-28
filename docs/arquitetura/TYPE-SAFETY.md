@@ -1,6 +1,6 @@
 # 🔒 Sistema de Type Safety do Prometheus
 
-> Proveniência e Autoria: Este documento integra o projeto Prometheus (licença MIT).
+> Proveniência e Autoria: Este documento integra o projeto Prometheus (licença MIT-0).
 > Documentação atualizada em: 29 de novembro de 2025
 
 ## 📋 Visão Geral

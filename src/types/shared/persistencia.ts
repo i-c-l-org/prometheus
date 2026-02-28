@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 // @prometheus-disable problema-documentacao
 // Justificativa: types com any são propositais para tipagem genérica de wrappers
 /**

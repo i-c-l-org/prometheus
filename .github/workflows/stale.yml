@@ -29,13 +29,13 @@ jobs:
 
             ---
 
-            > 💡 **Tip**: If you want to keep this issue open, please comment with a relevant update showing that you still need this feature or are actively working on it.
+            > [TIP] If you want to keep this issue open, please comment with a relevant update showing that you still need this feature or are actively working on it.
           close-issue-message: |
-            This issue has been automatically closed due to inactivity. If you still need this feature or want to reopen it, please feel free to do so.
+            This issue has to inactivity. If you still need this been automatically closed due feature or want to reopen it, please feel free to do so.
 
             ---
 
-            > 💡 To prevent automatic closure in the future, ensure you engage with the issue by providing updates.
+            > [TIP] To prevent automatic closure in the future, ensure you engage with the issue by providing updates.
 
           only-labels: ''
           exempt-issue-labels: 'pinned,security,bug,enhancement,feature,high-priority,documentation'
@@ -49,13 +49,13 @@ jobs:
 
             ---
 
-            > 💡 **Tip**: If you want to keep this PR open, please comment with updates or address review comments.
+            > [TIP] If you want to keep this PR open, please comment with updates or address review comments.
           close-pr-message: |
             This pull request has been automatically closed due to inactivity. If you want to reopen it, please do so or contact maintainers.
 
             ---
 
-            > 💡 To prevent automatic closure, please address review comments or update the PR.
+            > [TIP] To prevent automatic closure, please address review comments or update the PR.
           exempt-pr-labels: 'pinned,security,do-not-merge,work-in-progress'
 
           # Operations

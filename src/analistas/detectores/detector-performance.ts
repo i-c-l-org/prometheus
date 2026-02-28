@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 // @prometheus-disable PROBLEMA_PERFORMANCE
 // Justificativa: detector de performance que analisa código-fonte - loops são esperados
 import type { NodePath } from '@babel/traverse';

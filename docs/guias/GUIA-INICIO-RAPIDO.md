@@ -1,7 +1,7 @@
-# 🚀 Guia de Início Rápido do Prometheus
+# Guia de Inicio Rapido do Prometheus
 
-> Proveniência e Autoria: Este documento integra o projeto Prometheus (licença MIT).
-> Última atualização: 25 de fevereiro de 2026
+> Proveniencia e Autoria: Este documento integra o projeto Prometheus (licenca MIT-0).
+> Ultima atualizacao: 28 de fevereiro de 2026
 
 ---
 
@@ -28,7 +28,7 @@ node --version  # deve ser v24.x
 
 ```bash
 # Clone o repositório
-git clone https://github.com/i-c-l-5-5-5/prometheus.git
+git clone https://github.com/i-c-l-org/prometheus.git
 cd prometheus
 
 # Instale as dependências e compile
@@ -53,7 +53,7 @@ npx prometheus diagnosticar
 
 ```bash
 # Requer Node.js 24+
-npx github:i-c-l-5-5-5/prometheus diagnosticar --help
+npx github:i-c-l-org/prometheus diagnosticar --help
 ```
 
 ---
@@ -66,30 +66,30 @@ Execute o comando básico no diretório do seu projeto:
 prometheus diagnosticar
 ```
 
-O Prometheus irá:
+O Prometheus ira:
 
-1. 📁 **Varrer** todos os arquivos do projeto
-2. 🔍 **Analisar** código em busca de problemas
-3. 📊 **Exibir** um resumo com ocorrências encontradas
+1. [VARRER] Todos os arquivos do projeto
+2. [ANALISAR] Codigo em busca de problemas
+3. [EXIBIR] Resumo com ocorrencias encontradas
 
-### Saída Típica
+### Saida Tipica
 
 ```
-✅ Varredura concluída: 120 arquivos em 15 diretórios
+[OK] Varredura concluida: 120 arquivos em 15 diretorios
 
-📊 Resumo das 25 ocorrências:
+[RESUMO] Resumo das 25 ocorrencias:
 
-  📋 Principais tipos:
-     • problemas-teste: 18
-     • tipo-inseguro-any: 4
-     • problema-documentacao: 3
+  Principais tipos:
+     - problemas-teste: 18
+     - tipo-inseguro-any: 4
+     - problema-documentacao: 3
 
-  📁 Top arquivos:
-     • src/services/api.ts (5)
-     • src/utils/helpers.ts (3)
-     • tests/unit/api.test.ts (2)
+  Top arquivos:
+     - src/services/api.ts (5)
+     - src/utils/helpers.ts (3)
+     - tests/unit/api.test.ts (2)
 
-✔ Diagnóstico concluído.
+[OK] Diagnostico concluido.
 ```
 
 ---
@@ -233,4 +233,4 @@ WORKER_POOL_MAX_WORKERS=4 prometheus diagnosticar
 
 ---
 
-**Versão:** 0.4.0 | **Licença:** MIT
+**Versao:** 0.4.0 | **Licenca:** MIT-0

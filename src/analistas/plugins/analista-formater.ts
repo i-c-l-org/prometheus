@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 import { AnalystOrigens, AnalystTipos, FormatadorMensagens, SeverityNiveis } from '@core/messages/core/plugin-messages.js';
 import { formatarPrettierMinimo } from '@shared/impar/formater.js';
 

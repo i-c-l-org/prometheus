@@ -1,4 +1,4 @@
-> **Proveniência e Autoria**: Este documento integra o projeto Prometheus (licença MIT).
+> **Proveniência e Autoria**: Este documento integra o projeto Prometheus (licença MIT-0).
 > Nada aqui implica cessão de direitos morais/autorais.
 > Conteúdos de terceiros não licenciados de forma compatível não devem ser incluídos.
 > Referências a materiais externos devem ser linkadas e reescritas com palavras próprias.
@@ -77,8 +77,8 @@ git checkout -b feature/sua-contribuicao-descritiva
 
 ### 🐛 Correção de Bugs
 
-- Issues com label [`bug`](https://github.com/i-c-l-5-5-5/prometheus/labels/bug)
-- Issues com label [`good-first-issue`](https://github.com/i-c-l-5-5-5/prometheus/labels/good-first-issue)
+- Issues com label [`bug`](https://github.com/i-c-l-org/prometheus/labels/bug)
+- Issues com label [`good-first-issue`](https://github.com/i-c-l-org/prometheus/labels/good-first-issue)
 - Priorize bugs críticos e regressions
 
 ### ✨ Novas Funcionalidades
@@ -305,7 +305,7 @@ Contribuições são essenciais para o crescimento do projeto! Reconhecemos noss
 
 ## 📄 Licença
 
-Ao contribuir para este projeto, você concorda que suas contribuições serão licenciadas sob a **MIT License**, conforme especificado no arquivo LICENSE deste repositório.
+Ao contribuir para este projeto, você concorda que suas contribuições serão licenciadas sob a **MIT-0 License**, conforme especificado no arquivo LICENSE deste repositório.
 
 ---
 

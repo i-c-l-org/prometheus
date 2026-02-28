@@ -1,5 +1,5 @@
-// SPDX-License-Identifier: MIT
-import { estatisticasUsoGlobal } from '@analistas/js-ts/analista-padroes-uso.js';
+// SPDX-License-Identifier: MIT-0
+import { estatisticasUsoGlobal } from '@shared/stats.js';
 import chalk from '@core/config/chalk-safe.js';
 import { config } from '@core/config/config.js';
 import { log, logRelatorio, RelatorioMensagens } from '@core/messages/index.js';

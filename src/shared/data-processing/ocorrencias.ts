@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 /**
  * Helpers utilitários para manipulação de ocorrências e métricas de analistas.
  *

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 
 /**
  * Configuração de pontuação para análise de qualidade de código

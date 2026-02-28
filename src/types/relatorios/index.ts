@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 /**
  * Tipos centralizados para relatórios
  * Todos os tipos relacionados a geração de relatórios (MD/JSON)

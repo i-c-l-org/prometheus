@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 import type { NodePath } from '@babel/traverse';
 import type { ArrowFunctionExpression, CallExpression, CatchClause, ClassMethod, FunctionDeclaration, FunctionExpression, Node, NumericLiteral, TSAnyKeyword } from '@babel/types';
 import { config } from '@core/config/config.js';

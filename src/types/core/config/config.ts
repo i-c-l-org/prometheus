@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 /**
  * Tipos para configuração do Prometheus
  * Consolidação de: src/core/config/auto/*, src/core/config/*.ts

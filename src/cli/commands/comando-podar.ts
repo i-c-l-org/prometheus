@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 
 import { removerArquivosOrfaos } from '@analistas/corrections/poda.js';
 // Registro de analistas será carregado dinamicamente para permitir injeção de dependências

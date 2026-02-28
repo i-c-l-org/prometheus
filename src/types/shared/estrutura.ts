@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 /**
  * Tipos para estratégias de estrutura de projeto
  * Originalmente em: src/shared/helpers/estrutura.ts

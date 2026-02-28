@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 // SPDX-FileCopyrightText: 2025 Prometheus Contributors
 
 /**

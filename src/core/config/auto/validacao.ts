@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 /**
  * Sistema de validação para correções automáticas
  * Integra com o sistema existente de detectores do Prometheus

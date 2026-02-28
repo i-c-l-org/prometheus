@@ -38,14 +38,14 @@ jobs:
               const isFirstPR = authorPrs.length === 1;
 
               const welcomeMessage = isFirstPR
-                ? `## 🎉 Welcome to Prometheus, @${AUTHOR}! \n\nThank you for your first pull request! We're excited to have your contribution. Please make sure you've read our [Contributing Guide](./CONTRIBUTING.md) and feel free to ask any questions.`
-                : `## 👋 Welcome back, @${AUTHOR}!\n\nThank you for another contribution to Prometheus! 🎉`;
+                ? `## Welcome to Prometheus, @${AUTHOR}! \n\nThank you for your first pull request! We're excited to have your contribution. Please make sure you've read our [Contributing Guide](./CONTRIBUTING.md) and feel free to ask any questions.`
+                : `## Welcome back, @${AUTHOR}!\n\nThank you for another contribution to Prometheus!`;
 
               await github.rest.issues.createComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: PR_NUMBER,
-                body: `${welcomeMessage}\n\n---\n\n**Quick tips:**\n- ✅ Tests are running: ${pull_request.head.ref}\n- 📋 Check the PR template for required information\n- 🔧 Make sure your code follows our linting rules`
+                body: `${welcomeMessage}\n\n---\n\n**Quick tips:**\n- [OK] Tests are running: ${pull_request.head.ref}\n- [INFO] Check the PR template for required information\n- [TIP] Make sure your code follows our linting rules`
               });
             }
 
@@ -58,6 +58,6 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: ISSUE_NUMBER,
-                body: `## 👋 Thanks for opening this issue, @${AUTHOR}!\n\nWe'll look into this and get back to you as soon as possible.\n\n---\n\n**Helpful tips:**\n- 📝 Include all requested information in your issue\n- 🔍 Search existing issues before creating duplicates\n- 💡 Check our [Documentation](./README.md) for more details`
+                body: `## Thanks for opening this issue, @${AUTHOR}!\n\nWe'll look into this and get back to you as soon as possible.\n\n---\n\n**Helpful tips:**\n- [INFO] Include all requested information in your issue\n- [SEARCH] Search existing issues before creating duplicates\n- [DOCS] Check our [Documentation](./README.md) for more details`
               });
             }

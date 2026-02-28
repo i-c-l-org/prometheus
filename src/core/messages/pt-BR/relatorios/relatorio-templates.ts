@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 /**
  * Templates reutilizáveis para geração de relatórios Markdown
  * Funções que geram seções completas de MD com formatação consistente

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 /**
  * Exportações centralizadas de tipos do shared
  * (Tipos movidos: contexto→projeto, fragmentacao/leitor→relatorios)

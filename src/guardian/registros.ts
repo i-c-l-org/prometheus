@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 import path from 'node:path';
 
 import { config } from '@core/config/config.js';

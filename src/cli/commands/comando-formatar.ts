@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 
 // PROMETHEUS: Revisar ocorrências 'unhandled-async' (1). Ver relatorio:
 // relatorios/prometheus-relatorio-summary-2026-02-24T22-21-50-731Z.json

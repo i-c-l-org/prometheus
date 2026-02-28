@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 import { createHash, getHashes } from 'node:crypto';
 
 import type { SnapshotArquivo } from '@';

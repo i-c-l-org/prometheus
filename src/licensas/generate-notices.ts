@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 import { exec as _exec, execFile as _execFile } from 'node:child_process';
 import fs from 'node:fs/promises';
 import path from 'node:path';

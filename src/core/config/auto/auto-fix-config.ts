@@ -1,6 +1,6 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 // Merged auto-fix configuration: keep compatibility with both older
 // AUTO_FIX_CONFIG_DEFAULTS and the newer DEFAULT_AUTO_FIX_CONFIG surface.
 

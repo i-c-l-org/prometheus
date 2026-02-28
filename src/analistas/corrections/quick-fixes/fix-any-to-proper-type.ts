@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 /**
  * Quick Fix: Replace any with proper types
  * Analisa uso de `any` e infere/cria tipos corretos

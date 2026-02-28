@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 /**
  * Sistema Centralizado de Prefixos e Cores ANSI (sem emojis)
  *

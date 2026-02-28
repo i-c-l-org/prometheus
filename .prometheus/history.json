@@ -1,102 +1,77 @@
 [
   {
     "role": "user",
-    "content": "Execução CLI: diagnosticar --exclude=tipo-literal-inline-complexo,type-alias-inline-complexo,interface-inline-exportada",
-    "timestamp": "2026-02-27T20:19:28.948Z"
+    "content": "Execução CLI: formatar --write",
+    "timestamp": "2026-02-28T11:33:47.945Z"
   },
   {
     "role": "user",
-    "content": "Execução CLI: diagnosticar --exclude=tipo-literal-inline-complexo,type-alias-inline-complexo,interface-inline-exportada,problemas-teste,problema-documentacao",
-    "timestamp": "2026-02-27T20:26:31.808Z"
+    "content": "Execução CLI: licencas disclaimer add",
+    "timestamp": "2026-02-28T11:42:16.669Z"
   },
   {
     "role": "user",
-    "content": "Execução CLI: diagnosticar --exclude=tipo-literal-inline-complexo,type-alias-inline-complexo,interface-inline-exportada,problemas-teste,problema-documentacao --json",
-    "timestamp": "2026-02-27T20:27:33.862Z"
+    "content": "Execução CLI: licencas disclaimer verify",
+    "timestamp": "2026-02-28T11:42:55.709Z"
   },
   {
     "role": "user",
-    "content": "Execução CLI: diagnosticar --exclude=tipo-literal-inline-complexo,type-alias-inline-complexo,interface-inline-exportada,problemas-teste,problema-documentacao",
-    "timestamp": "2026-02-27T20:29:39.067Z"
+    "content": "Execução CLI: licencas notices generate",
+    "timestamp": "2026-02-28T11:43:13.829Z"
   },
   {
     "role": "user",
-    "content": "Execução CLI: diagnosticar --exclude=tipo-literal-inline-complexo,type-alias-inline-complexo,interface-inline-exportada,problemas-teste,problema-documentacao",
-    "timestamp": "2026-02-27T20:30:25.416Z"
+    "content": "Execução CLI: licencas scan",
+    "timestamp": "2026-02-28T11:43:19.238Z"
   },
   {
     "role": "user",
-    "content": "Execução CLI: diagnosticar --exclude=tipo-literal-inline-complexo,type-alias-inline-complexo,interface-inline-exportada,problemas-teste,problema-documentacao",
-    "timestamp": "2026-02-27T20:34:12.729Z"
+    "content": "Execução CLI: licencas disclaimer add",
+    "timestamp": "2026-02-28T11:43:25.207Z"
   },
   {
     "role": "user",
-    "content": "Execução CLI: diagnosticar --exclude=tipo-literal-inline-complexo,type-alias-inline-complexo,interface-inline-exportada,problemas-teste,problema-documentacao",
-    "timestamp": "2026-02-27T20:40:23.294Z"
+    "content": "Execução CLI: licencas disclaimer add",
+    "timestamp": "2026-02-28T11:44:10.550Z"
   },
   {
     "role": "user",
-    "content": "Execução CLI: diagnosticar --exclude=tipo-literal-inline-complexo,type-alias-inline-complexo,interface-inline-exportada,problemas-teste,problema-documentacao",
-    "timestamp": "2026-02-27T20:41:11.452Z"
-  },
-  {
-    "role": "user",
-    "content": "Execução CLI: diagnosticar --exclude=tipo-literal-inline-complexo,type-alias-inline-complexo,interface-inline-exportada,problemas-teste,problema-documentacao --json",
-    "timestamp": "2026-02-27T20:41:55.026Z"
-  },
-  {
-    "role": "user",
-    "content": "Execução CLI: diagnosticar --exclude=tipo-literal-inline-complexo,type-alias-inline-complexo,interface-inline-exportada,problemas-teste,problema-documentacao --export",
-    "timestamp": "2026-02-27T20:42:26.161Z"
-  },
-  {
-    "role": "user",
-    "content": "Execução CLI: diagnosticar --exclude=tipo-literal-inline-complexo,type-alias-inline-complexo,interface-inline-exportada,problemas-teste,problema-documentacao --export",
-    "timestamp": "2026-02-27T20:45:16.181Z"
-  },
-  {
-    "role": "user",
-    "content": "Execução CLI: diagnosticar --exclude=tipo-literal-inline-complexo,type-alias-inline-complexo,interface-inline-exportada,problemas-teste,problema-documentacao",
-    "timestamp": "2026-02-27T20:45:55.396Z"
+    "content": "Execução CLI: licencas disclaimer verify",
+    "timestamp": "2026-02-28T11:44:11.885Z"
   },
   {
     "role": "user",
     "content": "Execução CLI: diagnosticar",
-    "timestamp": "2026-02-27T20:46:47.821Z"
-  },
-  {
-    "role": "user",
-    "content": "Execução CLI: diagnosticar",
-    "timestamp": "2026-02-27T20:47:33.008Z"
-  },
-  {
-    "role": "user",
-    "content": "Execução CLI: diagnosticar",
-    "timestamp": "2026-02-27T20:50:09.914Z"
+    "timestamp": "2026-02-28T11:52:11.884Z"
   },
   {
     "role": "user",
     "content": "Execução CLI: formatar --write",
-    "timestamp": "2026-02-27T20:52:07.476Z"
+    "timestamp": "2026-02-28T11:52:49.357Z"
   },
   {
     "role": "user",
     "content": "Execução CLI: diagnosticar",
-    "timestamp": "2026-02-27T20:53:40.888Z"
+    "timestamp": "2026-02-28T12:01:52.760Z"
+  },
+  {
+    "role": "user",
+    "content": "Execução CLI: diagnosticar",
+    "timestamp": "2026-02-28T12:05:11.129Z"
+  },
+  {
+    "role": "user",
+    "content": "Execução CLI: --help",
+    "timestamp": "2026-02-28T12:08:37.033Z"
+  },
+  {
+    "role": "user",
+    "content": "Execução CLI: diagnosticar",
+    "timestamp": "2026-02-28T12:18:05.082Z"
   },
   {
     "role": "user",
     "content": "Execução CLI: formatar --write",
-    "timestamp": "2026-02-27T21:37:33.855Z"
-  },
-  {
-    "role": "user",
-    "content": "Execução CLI: formatar --write",
-    "timestamp": "2026-02-27T21:38:52.698Z"
-  },
-  {
-    "role": "user",
-    "content": "Execução CLI: diagnosticar --export",
-    "timestamp": "2026-02-27T21:39:13.412Z"
+    "timestamp": "2026-02-28T12:26:12.699Z"
   }
 ]

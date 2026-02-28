@@ -1,28 +1,31 @@
-# 📚 Guia Completo de Comandos do Prometheus
+# Guia Completo de Comandos do Prometheus
 
-> Proveniência e Autoria: Este documento integra o projeto Prometheus (licença MIT).
-> Última atualização: 25 de fevereiro de 2026
+> Proveniencia e Autoria: Este Documento integra o projeto Prometheus (licenca MIT-0).
+> Ultima atualizacao: 28 de fevereiro de 2026
 
-## 🎯 Visão Geral
+## Visao Geral
 
 O Prometheus oferece diversos comandos para análise, diagnóstico e manutenção de projetos. Este guia detalha cada comando, suas opções e casos de uso.
 
 **Requisitos:** Node.js >=24.12.0
 
-## 📋 Índice de Comandos
+## Indice de Comandos
 
-1. [diagnosticar](#diagnosticar) - Análise completa do projeto
-2. [guardian](#guardian) - Verificação de integridade
-3. [podar](#podar) - Remoção de arquivos órfãos
-4. [reestruturar](#reestruturar) - Reorganização de estrutura
-5. [formatar](#formatar) - Formatação de código
-6. [fix-types](#fix-types) - Correção de tipos inseguros
-7. [metricas](#metricas) - Visualização de métricas
-8. [perf](#perf) - Análise de performance
-9. [analistas](#analistas) - Catálogo de analistas
-10. [otimizar-svg](#otimizar-svg) - Otimização de SVGs
-11. [atualizar](#atualizar) - Atualização segura
-12. [reverter](#reverter) - Reversão de mudanças
+1. [diagnosticar](#diagnosticar) - Analise completa do projeto
+2. [guardian](#guardian) - Verificacao de integridade
+3. [podar](#podar) - Remocao de arquivos orfaos
+4. [reestruturar](#reestruturar) - Reorganizacao de estrutura
+5. [formatar](#formatar) - Formatacao de codigo
+6. [fix-types](#fix-types) - Correcao de tipos inseguros
+7. [metricas](#metricas) - Visualizacao de metricas
+8. [perf](#perf) - Analise de performance
+9. [analistas](#analistas) - Catalogo de analistas
+10. [otimizar-svg](#otimizar-svg) - Otimizacao de SVGs
+11. [atualizar](#atualizar) - Atualizacao segura
+12. [reverter](#reverter) - Reversion de mudancas
+13. [licencas](#licencas) - Ferramentas de licenca
+14. [names](#names) - Extracao de nomes
+15. [rename](#rename) - Renomeacao em massa
 
 ---
 
@@ -621,20 +624,141 @@ prometheus reverter limpar --force
 
 ---
 
-## histórico
+## licencas
 
-Utilitários globais para gerenciar o histórico de interações do Prometheus.
+Ferramentas para gerenciamento de licencas e disclaimers.
+
+### Uso Basico
+
+```bash
+# Escaneamento de licencas de dependencias
+prometheus licencas scan
+
+# Gerar arquivo de avisos de terceiros
+prometheus licencas notices generate
+
+# Adicionar disclaimer a arquivos markdown
+prometheus licencas disclaimer add
+
+# Verificar se todos os arquivos tem disclaimer
+prometheus licencas disclaimer verify
+```
+
+### Opcoes
+
+```bash
+# Scan
+prometheus licencas scan --root ./meu-projeto
+
+# Notices
+prometheus licencas notices generate --output THIRD-PARTY-NOTICES.md
+
+# Disclaimer
+prometheus licencas disclaimer add --dry-run
+prometheus licencas disclaimer add --disclaimer-path docs/meu-aviso.md
+```
+
+### Exemplos
+
+```bash
+# Verificar licencas do projeto
+prometheus licencas scan --json
+
+# Gerar avisos de terceiros
+prometheus licencas notices generate --root .
+
+# Verificar disclaimers
+prometheus licencas disclaimer verify
+```
+
+---
+
+## names
+
+Extrai nomes de variaveis e funcoes para mapeamento de traducao.
+
+### Uso Basico
+
+```bash
+# Extrair todos os nomes
+prometheus names
+```
+
+### Opcoes
+
+```bash
+# Formato JSON
+prometheus names --json
+
+# Include padrao
+prometheus names --include "src/**/*.ts"
+
+# Modo legado (gera names/name.txt tambem)
+prometheus names --legacy
+```
+
+### Exemplos
+
+```bash
+# Gerar mapeamento de nomes
+prometheus names --json > names.json
+
+# Extrair de pasta especifica
+prometheus names --include "src/utils/**/*.ts"
+```
+
+---
+
+## rename
+
+Aplica renomeacoes em massa baseadas em arquivos de mapeamento.
+
+### Uso Basico
+
+```bash
+# Aplicar renomeacoes do names/
+prometheus rename
+
+# Renomear de arquivo especifico
+prometheus rename --file meu-mapeamento.txt
+```
+
+### Opcoes
+
+```bash
+# Modo dry-run
+prometheus rename --dry-run
+
+# Forcar sobrescrita
+prometheus rename --force
+```
+
+### Exemplos
+
+```bash
+# Preview de renomeacoes
+prometheus rename --dry-run
+
+# Aplicar renomeacoes
+prometheus rename
+```
+
+---
+
+## historico
+
+Utilitarios globais para gerenciar o historico de interacoes do Prometheus.
 
 ### Flags
 
 ```bash
-prometheus --historico         # Exibe resumo do histórico
-prometheus --limpar-historico  # Limpa o histórico persistido
+prometheus --historico         # Exibe resumo do historico
+prometheus --limpar-historico  # Limpa o historico persistido
 ```
 
-O histórico é persistido em `~/.prometheus/history.json`. Cada execução do CLI registra os argumentos usados.
+O historico e persistido em `~/.prometheus/history.json`. Cada execucao do CLI registra os argumentos usados.
 
-## 🌍 Variáveis de Ambiente Globais
+## Variaveis de Ambiente Globais
 
 Aplicam-se a todos os comandos:
 
@@ -661,7 +785,7 @@ export PONTUACAO_FATOR_ESCALA=2.0
 
 ---
 
-## 🎯 Workflows Comuns
+## Workflows Comuns
 
 ### Workflow de Desenvolvimento
 
@@ -722,9 +846,9 @@ prometheus guardian --accept
 
 ---
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
-### Erro: "Comando não encontrado"
+### Erro: "Comando nao encontrado"
 
 ```bash
 # Recompilar
@@ -761,14 +885,14 @@ prometheus diagnosticar --include "src/**" --exclude "**/*.test.*"
 
 ---
 
-## 📖 Referências
+## Referencias
 
 - [README Principal](../README.md)
 - [Sistema de Type Safety](TYPE-SAFETY-SYSTEM.md)
 - [Filtros Include/Exclude](GUIA_FILTROS_PROMETHEUS.md)
-- [Configuração Local](CONFIGURAR-PROMETHEUS-LOCAL.md)
+- [Configuracao Local](CONFIGURAR-PROMETHEUS-LOCAL.md)
 
 ---
 
-**Última atualização:** 25 de fevereiro de 2026
-**Versão:** 0.4.0
+**Ultima atualizacao:** 28 de fevereiro de 2026
+**Versao:** 0.4.0

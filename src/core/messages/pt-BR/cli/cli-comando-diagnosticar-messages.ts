@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 import { createI18nMessages } from '@shared/helpers/i18n.js';
 
 export const CliComandoDiagnosticarMensagens = createI18nMessages({

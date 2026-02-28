@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 /**
  * Tipos para sistema de Type Safety Auto-Fix
  * Suporta análise e correção inteligente de tipos `any` e `unknown`

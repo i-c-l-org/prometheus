@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 // Utilitários de mascaramento que preservam quebras de linha para manter o cálculo de linhas estável.
 
 /**

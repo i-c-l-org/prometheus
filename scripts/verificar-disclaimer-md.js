@@ -93,7 +93,7 @@ const files = stdout
     (f) =>
       f !== 'docs/partials/AVISO-PROVENIENCIA.md' &&
       !f.startsWith('pre-public/') &&
-      !f.startsWith('preview-i-c-l-5-5-5/'),
+      !f.startsWith('preview-i-c-l-org/'),
   );
 
 const marker = /Proveni[eê]ncia e Autoria/i;

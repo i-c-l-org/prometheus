@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 // Bootstrap do binário: registra o loader ESM programaticamente e importa ./cli.js
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';

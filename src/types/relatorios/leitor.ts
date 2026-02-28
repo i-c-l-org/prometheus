@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 /**
  * Tipos para leitura de relatórios versionados
  * Originalmente em: src/shared/helpers/leitor-relatorio.ts

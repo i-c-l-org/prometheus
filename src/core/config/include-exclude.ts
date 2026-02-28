@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT-0
 /**
  * Helper centralizado para lógica de include/exclude dinâmica SIMPLIFICADA.
  *
