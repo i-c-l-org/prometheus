@@ -1,7 +1,6 @@
 node_modules
 .prometheus
 .skills
-.opencode
 dist
 coverage
 *.log
@@ -27,4 +26,3 @@ coverage
 *.dll
 *.so
 *.dylib
-# o porque eu n~ao sei, mas quis por isso tudo em um arquivo .gitignore

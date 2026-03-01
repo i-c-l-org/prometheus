@@ -30,11 +30,25 @@ export const ReactMensagens = createI18nMessages({
 export const ReactHooksMensagens = createI18nMessages({
   useEffectNoDeps: 'useEffect sem array de dependências (avalie deps para evitar loops).',
   memoCallbackNoDeps: 'Hook sem array de dependências (useMemo/useCallback).',
-  hookInConditional: 'Hook declarado dentro de condicional (quebra Rules of Hooks).'
+  hookInConditional: 'Hook declarado dentro de condicional (quebra Rules of Hooks).',
+  missingMemo: 'Função em render sem React.memo pode causar re-renders desnecessários.',
+  missingUseCallback: 'Handler em JSX sem useCallback pode causar re-renders desnecessários.',
+  staleClosure: 'Possível stale closure em useEffect/useCallback - variável capturada pode estar desatualizada.',
+  missingKey: 'Elemento em map sem key única (evite usar índice).',
+  useEffectEmptyDeps: 'useEffect com array de dependências vazio [] executa apenas uma vez (equivale a componentDidMount).',
+  setStateInRender: 'setState dentro de render pode causar loop infinito.',
+  missingReactImport: 'React import ausente em arquivo JSX (necessário para fragmentos, hooks).'
 }, {
   useEffectNoDeps: 'useEffect without dependency array (evaluate deps to avoid loops).',
   memoCallbackNoDeps: 'Hook without dependency array (useMemo/useCallback).',
-  hookInConditional: 'Hook declared inside conditional (breaks Rules of Hooks).'
+  hookInConditional: 'Hook declared inside conditional (breaks Rules of Hooks).',
+  missingMemo: 'Function in render without React.memo may cause unnecessary re-renders.',
+  missingUseCallback: 'Handler in JSX without useCallback may cause unnecessary re-renders.',
+  staleClosure: 'Possible stale closure in useEffect/useCallback - captured variable may be outdated.',
+  missingKey: 'Element in map without unique key (avoid using index).',
+  useEffectEmptyDeps: 'useEffect with empty dependency array [] runs only once (equivalent to componentDidMount).',
+  setStateInRender: 'setState in render may cause infinite loop.',
+  missingReactImport: 'React import missing in JSX file (required for fragments, hooks).'
 });
 
   /* -------------------------- MENSAGENS TAILWIND -------------------------- */

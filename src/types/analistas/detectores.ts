@@ -166,10 +166,23 @@ export interface ProblemaSeguranca {
     | 'path-traversal'
     | 'hardcoded-secrets'
     | 'unhandled-async'
-    | 'unhandled-async-event';
+    | 'unhandled-async-event'
+    | 'sql-injection'
+    | 'command-injection'
+    | 'xxe'
+    | 'insecure-deserialization'
+    | 'catastrophic-regex'
+    | 'weak-random'
+    | 'insecure-cookie'
+    | 'missing-csrf'
+    | 'hardcoded-ip'
+    | 'jwt-weak'
+    | 'tar-pit'
+    | 'bypass-security';
   descricao: string;
   severidade: 'baixa' | 'media' | 'alta' | 'critica';
   linha: number;
+  coluna?: number;
   sugestao: string;
 }
 

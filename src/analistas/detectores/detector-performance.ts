@@ -3,6 +3,7 @@
 // Justificativa: detector de performance que analisa código-fonte - loops são esperados
 import type { NodePath } from '@babel/traverse';
 import type { CallExpression, ForStatement, Node } from '@babel/types';
+import { config } from '@core/config/config.js';
 import { traverse } from '@core/config/traverse.js';
 import { DetectorAgregadosMensagens } from '@core/messages/analistas/detector-agregados-messages.js';
 import { detectarContextoProjeto } from '@shared/contexto-projeto.js';
@@ -11,10 +12,22 @@ import { filtrarOcorrenciasSuprimidas } from '@shared/helpers/suppressao.js';
 import type { Analista, Ocorrencia, ProblemaPerformance } from '@';
 import { criarOcorrencia } from '@';
 
+const LIMITE_PERFORMANCE = config.ANALISE_LIMITES?.PERFORMANCE ?? {
+  MAX_LOOPS_ANNIDED: 2,
+  MAX_BLOCKING_OPS: 0,
+  MAX_MEMORY_LEAKS: 0,
+  MAX_N_PLUS_ONE: 0,
+  MAX_INEFFICIENT_SPREAD: 0,
+  MAX_LARGE_BUNDLE: 0,
+  MAX_CONSOLE_LOG: 10,
+  MAX_IGNORAR_TESTES: true
+};
+
 export const analistaDesempenho: Analista = {
   nome: 'performance',
   categoria: 'performance',
   descricao: 'Detecta problemas de performance e otimizações possíveis',
+  limites: LIMITE_PERFORMANCE,
   test: (relPath: string): boolean => {
     return /\.(js|jsx|ts|tsx|mjs|cjs)$/.test(relPath);
   },
@@ -70,11 +83,108 @@ export const analistaDesempenho: Analista = {
     }
   }
 };
+function detectarConsoleEmProducao(linha: string, numeroLinha: number, problemas: ProblemaPerformance[]): void {
+  const consolePatterns = [
+    /console\.(log|debug|info|warn|error)\s*\(/,
+  ];
+  const ignoreComments = /\/\/\s*prometheus-ignore|\/\*\s*prometheus-ignore/i;
+
+  for (const pattern of consolePatterns) {
+    if (pattern.test(linha) && !ignoreComments.test(linha)) {
+      problemas.push({
+        tipo: 'console-in-production',
+        descricao: 'Console.log/info/debug em código pode vazar informações em produção',
+        impacto: 'baixo',
+        linha: numeroLinha,
+        coluna: linha.indexOf('console') + 1,
+        sugestao: 'Remova console.log em produção ou use biblioteca de logging condicional'
+      });
+      return;
+    }
+  }
+}
+
+function detectarMemoryLeakClosure(linha: string, numeroLinha: number, problemas: ProblemaPerformance[]): void {
+  const patterns = [
+    /addEventListener\s*\(/,
+    /setInterval\s*\(/,
+    /setTimeout\s*\(/,
+  ];
+
+  for (const pattern of patterns) {
+    if (pattern.test(linha)) {
+      problemas.push({
+        tipo: 'potential-memory-leak',
+        descricao: 'Timer ou listener sem cleanup pode causar vazamento de memória',
+        impacto: 'medio',
+        linha: numeroLinha,
+        coluna: linha.indexOf(pattern.source.replace(/\\/g, '')) + 1,
+        sugestao: 'Certifique-se de remover o listener/timer no unmount do componente'
+      });
+      return;
+    }
+  }
+}
+
+function detectarDOMManipulation(linha: string, numeroLinha: number, problemas: ProblemaPerformance[]): void {
+  const domPatterns = [
+    /\.innerHTML\s*=/,
+    /\.outerHTML\s*=/,
+    /document\.write\s*\(/,
+    /createElement\s*\(.*\)\.appendChild/,
+  ];
+
+  for (const pattern of domPatterns) {
+    if (pattern.test(linha)) {
+      const match = linha.match(pattern);
+      const matchStr = match ? match[0] : '';
+      problemas.push({
+        tipo: 'inefficient-dom',
+        descricao: 'Manipulação direta de DOM pode causar reflows/repaints desnecessários',
+        impacto: 'medio',
+        linha: numeroLinha,
+        coluna: linha.indexOf(matchStr) + 1,
+        sugestao: 'Use fragment ou batch operações DOM para minimizar reflows'
+      });
+      return;
+    }
+  }
+}
+
+function detectarInefficientArray(linha: string, numeroLinha: number, problemas: ProblemaPerformance[]): void {
+  const patterns = [
+    { regex: /\.forEach\s*\(/, tipo: 'inefficient-array', descricao: 'forEach é mais lento que for loop tradicional', sugestao: 'Use for...of ou for loop clássico para melhor performance' },
+    { regex: /\.filter\s*\([^)]*\)\s*\.\s*map\s*\(/, tipo: 'double-iteration', descricao: 'filter seguido de map faz duas iterações', sugestao: 'Use map com condicional ou reduce para uma única iteração' },
+    { regex: /\.sort\s*\(\s*\([^)]*\)\s*=>\s*\w+\.\w+\s*-\s*\w+\.\w+\s*\)/, tipo: 'inefficient-sort', descricao: 'Função de sort sem memoization pode ser lenta em grandes listas', sugestao: 'Considere usar sort fora do render ou com useMemo' },
+  ];
+
+  for (const p of patterns) {
+    if (p.regex.test(linha)) {
+      problemas.push({
+        tipo: p.tipo,
+        descricao: p.descricao,
+        impacto: 'baixo',
+        linha: numeroLinha,
+        coluna: linha.indexOf(p.regex.source.replace(/\\/g, '').split('(')[0]) + 1,
+        sugestao: p.sugestao
+      });
+      return;
+    }
+  }
+}
+
 function detectarPadroesPerformance(src: string, problemas: ProblemaPerformance[], relPath: string): void {
   const linhas = src.split('\n');
   let dentroLoop = 0;
+
   linhas.forEach((linha, index) => {
     const numeroLinha = index + 1;
+
+    // Novas detecções de performance
+    detectarConsoleEmProducao(linha, numeroLinha, problemas);
+    detectarMemoryLeakClosure(linha, numeroLinha, problemas);
+    detectarDOMManipulation(linha, numeroLinha, problemas);
+    detectarInefficientArray(linha, numeroLinha, problemas);
 
     // Detectar entrada de loops
     if (/\b(for|while)\s*\(/.test(linha)) {

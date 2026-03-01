@@ -270,6 +270,37 @@ export function isUsadoEmRegistroDinamico(src: string, importName: string): bool
   return padroesRegistro.some(padrao => new RegExp(padrao).test(src));
 }
 
+const NODE_BUILTINS = new Set([
+  'assert', 'async_hooks', 'buffer', 'child_process', 'cluster', 'console',
+  'constants', 'crypto', 'dgram', 'dns', 'domain', 'events', 'fs', 'http',
+  'http2', 'https', 'inspector', 'module', 'net', 'os', 'path', 'perf_hooks',
+  'process', 'punycode', 'querystring', 'readline', 'repl', 'stream',
+  'string_decoder', 'sys', 'timers', 'tls', 'trace_events', 'tty', 'url',
+  'util', 'v8', 'vm', 'wasi', 'worker_threads', 'zlib'
+]);
+
+export function isNodeBuiltin(modulo: string): boolean {
+  const nome = modulo.startsWith('@') ? modulo.split('/').slice(0, 2).join('/') : modulo.split('/')[0];
+  return NODE_BUILTINS.has(nome);
+}
+
+function obterDependenciasPackageJson(contexto?: ContextoExecucao): Set<string> | undefined {
+  if (!contexto) return undefined;
+  const packageJson = contexto.arquivos.find(f => f.relPath === 'package.json');
+  if (!packageJson?.content) return undefined;
+  try {
+    const pkg = JSON.parse(packageJson.content);
+    return new Set([
+      ...Object.keys(pkg.dependencies || {}),
+      ...Object.keys(pkg.devDependencies || {}),
+      ...Object.keys(pkg.peerDependencies || {}),
+      'node'
+    ]);
+  } catch {
+    return undefined;
+  }
+}
+
 /**
  * Analisa dependências do arquivo (import/require), detecta padrões problemáticos e atualiza grafo global.
  * Retorna ocorrências para imports/require suspeitos, mistos, circulares, etc.
@@ -284,6 +315,7 @@ export const detectorDependencias = {
     const ocorrencias: Ocorrencia[] = [];
     const tiposImport: Set<'import' | 'require'> = new Set();
     const arquivosExistentes = contexto ? new Set(contexto.arquivos.map(f => f.relPath)) : undefined;
+    const depsPackageJson = obterDependenciasPackageJson(contexto);
     // Conjunto de dependências (criado sob demanda quando houver refs)
     let depsSet: Set<string> | undefined = grafoDependencias.get(relPath);
 
@@ -327,6 +359,19 @@ export const detectorDependencias = {
             linha: p.node.loc?.start.line,
             coluna: p.node.loc?.start.column
           });
+          // Verificação de dependência fantasma
+          if (depsPackageJson) {
+            const nomeBaseMod = val.startsWith('@') ? val.split('/').slice(0, 2).join('/') : val.split('/')[0];
+            if (!depsPackageJson.has(nomeBaseMod) && !isNodeBuiltin(nomeBaseMod)) {
+              ocorrencias.push({
+                tipo: 'erro',
+                mensagem: `Dependência fantasma: "${nomeBaseMod}" é importado mas não está no package.json.`,
+                relPath,
+                linha: p.node.loc?.start.line,
+                coluna: p.node.loc?.start.column
+              });
+            }
+          }
         }
         // Import relativo longo
         if (val.startsWith('.') && val.split('../').length > 3) {
@@ -394,6 +439,19 @@ export const detectorDependencias = {
               linha: p.node.loc?.start.line,
               coluna: p.node.loc?.start.column
             });
+            // Verificação de dependência fantasma
+            if (depsPackageJson) {
+              const nomeBaseMod = val.startsWith('@') ? val.split('/').slice(0, 2).join('/') : val.split('/')[0];
+              if (!depsPackageJson.has(nomeBaseMod) && !isNodeBuiltin(nomeBaseMod)) {
+                ocorrencias.push({
+                  tipo: 'erro',
+                  mensagem: `Dependência fantasma: "${nomeBaseMod}" é requerido mas não está no package.json.`,
+                  relPath,
+                  linha: p.node.loc?.start.line,
+                  coluna: p.node.loc?.start.column
+                });
+              }
+            }
           }
           // Require relativo longo
           if (val.startsWith('.') && val.split('../').length > 3) {

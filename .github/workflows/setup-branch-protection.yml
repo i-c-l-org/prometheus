@@ -12,9 +12,14 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   protect:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Get Token
         id: get_token

@@ -215,6 +215,8 @@ export {
   DetectorEstiloModernoMensagens,
   DetectorEstruturaMensagens,
   DetectorInterfacesInlineMensagens,
+  DetectorSegurancaMensagens,
+  DetectorPerformanceMensagens,
   ComandosCliMensagens,
   PadroesUsoMensagens,
   TodoComentariosMensagens

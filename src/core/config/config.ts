@@ -107,6 +107,44 @@ export const configPadrao = {
       MAX_LINHAS_FUNCAO: 30,
       MAX_PARAMETROS: 4,
       MAX_NESTED_CALLBACKS: 2
+    },
+    SEGURANCA: {
+      MAX_HARDCODED_SECRETS: 0,
+      MAX_EVAL_USAGE: 0,
+      MAX_INNERHTML: 0,
+      MAX_WEAK_CRYPTO: 0,
+      MAX_UNSAFE_REGEX: 0,
+      MAX_PATH_TRAVERSAL: 0,
+      MAX_SQL_INJECTION: 0,
+      MAX_COMMAND_INJECTION: 0,
+      MAX_UNHANDLED_ASYNC: 5,
+      MAX_IGNORAR_TESTES: true
+    },
+    PERFORMANCE: {
+      MAX_LOOPS_ANNIDED: 2,
+      MAX_BLOCKING_OPS: 0,
+      MAX_MEMORY_LEAKS: 0,
+      MAX_N_PLUS_ONE: 0,
+      MAX_INEFFICIENT_SPREAD: 0,
+      MAX_LARGE_BUNDLE: 0,
+      MAX_CONSOLE_LOG: 10,
+      MAX_IGNORAR_TESTES: true
+    },
+    COMPLEXIDADE: {
+      MAX_CYCLOMATIC: 10,
+      MAX_LINHAS_ARQUIVO: 500,
+      MAX_IMPORTS: 20,
+      MAX_EXPORTS: 15
+    },
+    TESTES: {
+      MAX_DESCRIBE_VAZIO: 0,
+      MAX_IT_SEM_espera: 0,
+      MIN_ASSERTIONS: 1
+    },
+    REACT: {
+      MAX_USE_EFFECT_DEPS: 5,
+      MAX_RENDER_PERMANENT: 3,
+      MAX_INLINE_STYLE: 5
     }
   },
   ANALISE_AST_CACHE_ENABLED: true,

@@ -16,6 +16,7 @@
  * - analista-svg.ts         - Heurísticas + otimização SVG
  * - analista-python.ts      - Python
  * - analista-xml.ts         - XML (heurísticas + XXE)
+ * - analista-github-actions.ts - GitHub Actions (CI/CD)
  *
  * Detectores Especializados:
  * - detector-documentacao.ts     - Qualidade de documentação
@@ -36,6 +37,7 @@ export { analistaReactHooks } from './analista-react-hooks.js';
 export { analistaSvg } from './analista-svg.js';
 export { analistaTailwind } from './analista-tailwind.js';
 export { analistaXml } from './analista-xml.js';
+export { analistaGithubActions } from './analista-github-actions.js';
 
 // Detectores especializados
 export { analistaDocumentacao } from './detector-documentacao.js';
