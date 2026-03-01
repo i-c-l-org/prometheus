@@ -141,17 +141,40 @@ function parseHooksWithBabel(src: string, relPath: string): Msg[] | null {
       CallExpression(path: NodePath<t.CallExpression>) {
         try {
           const calleeInfo = isHookCallee(path.node.callee);
-          if (!calleeInfo) return;
-          const name = calleeInfo.name;
-          const locLine: number | undefined = path.node.loc?.start?.line;
-          if (isEffectLike(name) && path.node.arguments.length < 2) {
-            pushOnce(warn(ReactHooksMensagens.useEffectNoDeps, relPath, locLine));
+          const node = path.node;
+          const locLine: number | undefined = node.loc?.start?.line;
+
+          // Verificações de hooks
+          if (calleeInfo) {
+            const name = calleeInfo.name;
+            if (isEffectLike(name) && node.arguments.length < 2) {
+              pushOnce(warn(ReactHooksMensagens.useEffectNoDeps, relPath, locLine));
+            }
+            if (isMemoLike(name) && node.arguments.length < 2) {
+              pushOnce(warn(ReactHooksMensagens.memoCallbackNoDeps, relPath, locLine));
+            }
+            if (isAnyHook(name) && inConditionalOrLoop(path)) {
+              pushOnce(warn(ReactHooksMensagens.hookInConditional, relPath, locLine));
+            }
           }
-          if (isMemoLike(name) && path.node.arguments.length < 2) {
-            pushOnce(warn(ReactHooksMensagens.memoCallbackNoDeps, relPath, locLine));
-          }
-          if (isAnyHook(name) && inConditionalOrLoop(path)) {
-            pushOnce(warn(ReactHooksMensagens.hookInConditional, relPath, locLine));
+
+          // Detectar setState em render (possível loop infinito)
+          const callee = node.callee;
+          if (t.isMemberExpression(callee)) {
+            const obj = callee.object;
+            const prop = callee.property;
+            if (t.isIdentifier(obj) && t.isIdentifier(prop)) {
+              const propName = prop.name;
+              if ((obj.name === 'setState' || /^set[A-Z]/.test(propName))) {
+                const parent = path.getFunctionParent();
+                if (parent && (parent.node.type === 'FunctionExpression' || parent.node.type === 'ArrowFunctionExpression')) {
+                  const parentParent = parent.parent;
+                  if (parentParent && (parentParent.type === 'VariableDeclarator' || parentParent.type === 'CallExpression')) {
+                    pushOnce(warn(ReactHooksMensagens.setStateInRender, relPath, locLine));
+                  }
+                }
+              }
+            }
           }
         } catch {
           // ignora

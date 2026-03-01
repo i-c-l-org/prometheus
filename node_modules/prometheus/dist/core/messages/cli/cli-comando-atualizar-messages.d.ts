@@ -7,9 +7,9 @@ export declare const CliComandoAtualizarMensagens: {
         readonly falhaFlags: (erro: string) => string;
     };
     readonly status: {
-        readonly inicio: "\n🔄 Iniciando processo de atualização...\n";
+        readonly inicio: "\n[ATUALIZANDO] Iniciando processo de atualizacao...\n";
         readonly guardianOk: (iconeSucesso: string) => string;
-        readonly guardianAviso: "🌀 Guardian gerou novo baseline ou detectou alterações. Prosseguindo com cautela.";
+        readonly guardianAviso: "[AVISO] Guardian gerou novo baseline ou detectou alteracoes. Prosseguindo com cautela.";
         readonly guardianDica: "Recomendado: `prometheus guardian --diff` e `prometheus guardian --accept-baseline` antes de atualizar.";
     };
 };

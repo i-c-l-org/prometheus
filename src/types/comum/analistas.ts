@@ -32,7 +32,7 @@ export interface Analista extends Tecnica {
   nome: string; // obrigatório para identificação
   categoria?: string; // ex: 'complexidade', 'estrutura'
   descricao?: string; // breve resumo exibido em listagens
-  limites?: Record<string, number>; // ex: { maxLinhas: 30 }
+  limites?: Record<string, number | boolean>; // ex: { maxLinhas: 30, ignoresTestes: true }
   sempreAtivo?: boolean; // ignora filtros
 }
 

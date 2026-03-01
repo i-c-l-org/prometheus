@@ -2,6 +2,7 @@
 // @prometheus-disable seguranca vulnerabilidade-seguranca
 import type { NodePath } from '@babel/traverse';
 import type { CallExpression, NewExpression, Node } from '@babel/types';
+import { config } from '@core/config/config.js';
 import { traverse } from '@core/config/traverse.js';
 import { DetectorAgregadosMensagens } from '@core/messages/analistas/detector-agregados-messages.js';
 import { detectarContextoProjeto } from '@shared/contexto-projeto.js';
@@ -9,6 +10,19 @@ import { filtrarOcorrenciasSuprimidas } from '@shared/helpers/suppressao.js';
 
 import type { Analista,Ocorrencia, ProblemaSeguranca, ReportEvent } from '@';
 import { criarOcorrencia } from '@';
+
+const LIMITE_SEGURANCA = config.ANALISE_LIMITES?.SEGURANCA ?? {
+  MAX_HARDCODED_SECRETS: 0,
+  MAX_EVAL_USAGE: 0,
+  MAX_INNERHTML: 0,
+  MAX_WEAK_CRYPTO: 0,
+  MAX_UNSAFE_REGEX: 0,
+  MAX_PATH_TRAVERSAL: 0,
+  MAX_SQL_INJECTION: 0,
+  MAX_COMMAND_INJECTION: 0,
+  MAX_UNHANDLED_ASYNC: 5,
+  MAX_IGNORAR_TESTES: true
+};
 
 // Funções helper para detecção inteligente de segredos
 
@@ -42,6 +56,7 @@ export const analistaSeguranca: Analista = {
   nome: 'seguranca',
   categoria: 'seguranca',
   descricao: 'Detecta vulnerabilidades e práticas inseguras no código',
+  limites: LIMITE_SEGURANCA,
   test: (relPath: string): boolean => {
     return /\.(js|jsx|ts|tsx|mjs|cjs)$/.test(relPath);
   },
@@ -118,8 +133,313 @@ export const analistaSeguranca: Analista = {
     }
   }
 };
+function detectarSqlInjection(linha: string, numeroLinha: number, problemas: ProblemaSeguranca[]): void {
+  const padroesSqlInjection = [
+    /`.*\$\{.*\}.*`/,
+    /["'].*%s.*["']/,
+    /["'].*\{.*\}.*["']/,
+    /\+.*\+.*\+.*/,
+    /\.query\s*\(\s*['"`]\s*\$\{/,
+    /\.execute\s*\(\s*['"`]\s*\$\{/,
+    /SELECT.*\$\{|INSERT.*\$\{|UPDATE.*\$\{|DELETE.*\$\{/i,
+    /".*".*format.*%s/,
+    /f["'].*SELECT.*\{/,
+  ];
+  const variaveisUser = /req\.|params\.|query\.|body\.|input\.|getParam\.|postParam\./;
+
+  for (const padrao of padroesSqlInjection) {
+    if (padrao.test(linha) && variaveisUser.test(linha)) {
+      problemas.push({
+        tipo: 'sql-injection',
+        descricao: 'Possível SQL Injection - concatenação de input do usuário em query SQL',
+        severidade: 'critica',
+        linha: numeroLinha,
+        sugestao: 'Use parameterized queries ou ORM: db.query("SELECT * FROM users WHERE id = ?", [userId])'
+      });
+      return;
+    }
+  }
+}
+
+function detectarCommandInjection(linha: string, numeroLinha: number, problemas: ProblemaSeguranca[]): void {
+  const funcoesPerigosas = [
+    /exec\s*\(/,
+    /execSync\s*\(/,
+    /spawn\s*\(/,
+    /spawnSync\s*\(/,
+    /execFile\s*\(/,
+    /execFileSync\s*\(/,
+    /system\s*\(/,
+    /popen\s*\(/,
+  ];
+  const inputUsuario = /\$\{|req\.|params\.|query\.|body\.|process\.argv|input\./;
+
+  for (const fn of funcoesPerigosas) {
+    if (fn.test(linha) && inputUsuario.test(linha)) {
+      problemas.push({
+        tipo: 'command-injection',
+        descricao: 'Possível Command Injection - input do usuário passando para shell',
+        severidade: 'critica',
+        linha: numeroLinha,
+        sugestao: 'Valide e sanitize rigorosamente inputs antes de usar em comandos shell. Use lista branca de valores permitidos.'
+      });
+      return;
+    }
+  }
+}
+
+function detectarXXE(src: string, numeroLinha: number, problemas: ProblemaSeguranca[]): void {
+  const padroesXXE = [
+    /<!DOCTYPE.*SYSTEM/,
+    /<!ENTITY.*SYSTEM/,
+    /<!ENTITY.*PUBLIC/,
+    /xml.*setFeature.*XMLConstants\.FEATURE_SECURE_PROCESSING/,
+    /DocumentBuilderFactory.*disallow-doctype-decl/,
+  ];
+  const contextoXml = /parseXML|parseString|loadXML|readAsXml|XMLReader/;
+
+  for (const padrao of padroesXXE) {
+    if (padrao.test(src) && contextoXml.test(src)) {
+      problemas.push({
+        tipo: 'xxe',
+        descricao: 'Possível vulnerabilidade XXE (XML External Entity) - parser XML não seguro',
+        severidade: 'alta',
+        linha: numeroLinha,
+        sugestao: 'Desabilite processamento DTD e entidades externas no parser XML'
+      });
+      return;
+    }
+  }
+}
+
+function detectarInsecureDeserialization(linha: string, numeroLinha: number, problemas: ProblemaSeguranca[]): void {
+  const metodosInseguros = [
+    /ObjectInputStream/,
+    /readObject\s*\(/,
+    /\.unserialize\s*\(/,
+    /pickle\.load\s*\(/,
+    /yaml\.load\s*\(/,
+    /YAML\.unsafe_load/,
+    /JSON\.parse\s*\(.*unsafe/,
+  ];
+
+  for (const metodo of metodosInseguros) {
+    if (metodo.test(linha)) {
+      problemas.push({
+        tipo: 'insecure-deserialization',
+        descricao: 'Desserialização insegura pode permitir execução de código remoto',
+        severidade: 'critica',
+        linha: numeroLinha,
+        sugestao: 'Use JSON.parse ou bibliotecas de serialização segura. Valide dados antes de deserializar.'
+      });
+      return;
+    }
+  }
+}
+
+function detectarCatastrophicRegex(linha: string, numeroLinha: number, problemas: ProblemaSeguranca[]): void {
+  const padroesPerigosos = [
+    /\(\.\*\)\+/,
+    /\(\.\+\)\+/,
+    /\(\.\*\)\*/,
+    /\(\.\+\)\*/,
+    /\(\[.*\]\+\)\+/,
+    /\(\.\*\)\{.*\}/,
+    /\(\.\+\)\{.*\}/,
+    /\.\*\*|\.\+\+/,
+    /\(\s*\.\*\s*\)\+/,
+    /\(\s*\.\+\s*\)\+/,
+  ];
+  const inputDinamico = /req\.|params\.|query\.|body\.|userInput|dynamic/;
+
+  for (const padrao of padroesPerigosos) {
+    if (padrao.test(linha) && inputDinamico.test(linha)) {
+      problemas.push({
+        tipo: 'catastrophic-regex',
+        descricao: 'Regex potencialmente catastrófico (ReDoS) - padrão com backtracking exponencial',
+        severidade: 'alta',
+        linha: numeroLinha,
+        sugestao: 'Use padrões sem backtracking: (a+)+ substitua por a+, use atomic groups, ou refatore para RegExp.prototype.test()'
+      });
+      return;
+    }
+  }
+}
+
+function detectarWeakRandom(linha: string, numeroLinha: number, problemas: ProblemaSeguranca[]): void {
+  const weakRandom = [
+    /Math\.random\s*\(\s*\)/,
+    /\bMath\.random\s*\(\s*\)/,
+    /\brandom\s*\(\s*\)/,
+  ];
+  const contextoSensivel = /password|token|secret|key|uuid|session|captcha|salt|nonce|otp|auth/;
+
+  for (const random of weakRandom) {
+    if (random.test(linha) && contextoSensivel.test(linha)) {
+      problemas.push({
+        tipo: 'weak-random',
+        descricao: 'Math.random() não é criptograficamente seguro',
+        severidade: 'alta',
+        linha: numeroLinha,
+        sugestao: 'Use crypto.randomUUID() ou crypto.getRandomValues() para valores aleatórios seguros'
+      });
+      return;
+    }
+  }
+}
+
+function detectarInsecureCookie(linha: string, numeroLinha: number, problemas: ProblemaSeguranca[]): void {
+  const cookieInseguro = /cookie\s*\(\s*['"]?/i;
+  const flagsSeguranca = /secure|sameSite|httponly|path=\/|expires=/i;
+
+  if (cookieInseguro.test(linha) && !flagsSeguranca.test(linha)) {
+    problemas.push({
+      tipo: 'insecure-cookie',
+      descricao: 'Cookie definido sem flags de segurança (secure, HttpOnly, SameSite)',
+      severidade: 'media',
+      linha: numeroLinha,
+      sugestao: 'Adicione flags: Secure, HttpOnly, SameSite=Strict|Lax para proteção XSS e CSRF'
+    });
+  }
+}
+
+function detectarMissingCSRF(linha: string, numeroLinha: number, problemas: ProblemaSeguranca[]): void {
+  const endpointsMutacao = [
+    /app\.(post|put|patch|delete)\s*\(/,
+    /router\.(post|put|patch|delete)\s*\(/,
+    /router\.(post|put|patch|delete)\s*\(/,
+    /@\.(post|put|patch|delete)\s*\(/,
+    /\.route\s*\(\s*['"`](post|put|patch|delete)/i,
+  ];
+  const csrfProtection = /csrf|csrfToken|csrfProtection|xsrf|verifyCsrfToken|validateCsrfToken/;
+
+  for (const endpoint of endpointsMutacao) {
+    if (endpoint.test(linha) && !csrfProtection.test(linha)) {
+      problemas.push({
+        tipo: 'missing-csrf',
+        descricao: 'Endpoint mutativo (POST/PUT/DELETE) sem proteção CSRF explícita',
+        severidade: 'media',
+        linha: numeroLinha,
+        sugestao: 'Implemente proteção CSRF: use token anti-CSRF em formulários e validate no backend'
+      });
+      return;
+    }
+  }
+}
+
+function detectarHardcodedIP(linha: string, numeroLinha: number, problemas: ProblemaSeguranca[]): void {
+  const ipPattern = /\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b/;
+  const variavelIP = /\b(ip|server|host|endpoint|address|url)\b/i;
+
+  if (ipPattern.test(linha) && !linha.includes('//') && !linha.includes('*') && !variavelIP.test(linha)) {
+    const ip = ipPattern.exec(linha)?.[0];
+    if (ip && !ip.startsWith('127.') && !ip.startsWith('0.') && !ip.startsWith('255.')) {
+      problemas.push({
+        tipo: 'hardcoded-ip',
+        descricao: 'Endereço IP hardcoded no código',
+        severidade: 'baixa',
+        linha: numeroLinha,
+        sugestao: 'Use variáveis de ambiente para IPs/hosts: process.env.API_HOST'
+      });
+    }
+  }
+}
+
+function detectarJWTWeak(linha: string, numeroLinha: number, problemas: ProblemaSeguranca[]): void {
+  const jwtWeak = [
+    /jwt\.sign\s*\([^,)]*,\s*['"]secret['"]/i,
+    /jwt\.sign\s*\([^,)]*,\s*['"][\w-]{8,20}['"]/i,
+    /algorithm\s*:\s*['"]HS256['"]/i,
+    /ALGORITHM\s*:\s*['"]HS256['"]/i,
+  ];
+  const variavelSecreta = /secret|key|password|passphrase/;
+
+  for (const padrao of jwtWeak) {
+    if (padrao.test(linha)) {
+      problemas.push({
+        tipo: 'jwt-weak',
+        descricao: 'JWT com algoritmo fraco ou segredo hardcoded',
+        severidade: 'alta',
+        linha: numeroLinha,
+        sugestao: 'Use RS256/ES256 (assimetrico). Armazene segredo em ambiente seguro.'
+      });
+      return;
+    }
+  }
+}
+
+function detectarTarPit(linha: string, numeroLinha: number, problemas: ProblemaSeguranca[]): void {
+  const slowNetworkPatterns = [
+    /setTimeout\s*\(\s*[\s\S]{0,50}\s*5000/,
+    /sleep\s*\(\s*5000/,
+    /delay\s*\(\s*5000/,
+    /await\s+new\s+Promise.*5000/,
+    /\.timeout\s*\(\s*5000/,
+  ];
+
+  for (const pattern of slowNetworkPatterns) {
+    if (pattern.test(linha)) {
+      problemas.push({
+        tipo: 'tar-pit',
+        descricao: 'Possível proteção contra força bruta com delay excessivo que pode ser explorado',
+        severidade: 'baixa',
+        linha: numeroLinha,
+        sugestao: 'Considere usar rate limiting com limite adaptativo e CAPTCHA após tentativas falhas'
+      });
+      return;
+    }
+  }
+}
+
+function detectarBypassSecurity(linha: string, numeroLinha: number, problemas: ProblemaSeguranca[]): void {
+  const bypasses = [
+    /@ts-ignore\s*[^\n]*security/i,
+    /eslint-disable.*security/i,
+    /eslint-disable.*no-unsafe/i,
+    /nocheck/i,
+    /unchecked/i,
+    /as\s+any\s*;/,
+    /\/\/\s*skip.*security/i,
+    /\/\*\s*skip.*security/i,
+    /process\.env\.NODE_ENV\s*===\s*['"]development['"]/,
+    /if\s*\(\s*process\.env\.NODE_ENV\s*===?\s*['"]development/,
+  ];
+
+  for (const bypass of bypasses) {
+    if (bypass.test(linha)) {
+      problemas.push({
+        tipo: 'bypass-security',
+        descricao: 'Possível bypass de verificação de segurança ou checagem de ambiente',
+        severidade: 'media',
+        linha: numeroLinha,
+        sugestao: 'Remova bypasses de segurança. Verificações de ambiente devem ser consistentes.'
+      });
+      return;
+    }
+  }
+}
+
 function detectarPadroesPerigosos(src: string, relPath: string, problemas: ProblemaSeguranca[]): void {
   const linhas = src.split('\n');
+
+  linhas.forEach((linha, index) => {
+    const numeroLinha = index + 1;
+
+    detectarSqlInjection(linha, numeroLinha, problemas);
+    detectarCommandInjection(linha, numeroLinha, problemas);
+    detectarInsecureDeserialization(linha, numeroLinha, problemas);
+    detectarCatastrophicRegex(linha, numeroLinha, problemas);
+    detectarWeakRandom(linha, numeroLinha, problemas);
+    detectarInsecureCookie(linha, numeroLinha, problemas);
+    detectarMissingCSRF(linha, numeroLinha, problemas);
+    detectarHardcodedIP(linha, numeroLinha, problemas);
+    detectarJWTWeak(linha, numeroLinha, problemas);
+    detectarTarPit(linha, numeroLinha, problemas);
+    detectarBypassSecurity(linha, numeroLinha, problemas);
+  });
+
+  detectarXXE(src, 1, problemas);
+
   function isLikelyHttpHeaderName(value: string): boolean {
     const v = String(value || '').trim();
     if (!v) return false;

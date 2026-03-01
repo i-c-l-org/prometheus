@@ -7,9 +7,9 @@
 
 ---
 
-## 🌟 Status do Projeto
+## Status do Projeto
 
-**Versão Atual:** 0.4.0 | **Node.js:** >=24.12.0 | **Licença:** MIT-0
+**Versao Atual:** 0.4.0 | **Node.js:** >=24.12.0 | **Licenca:** MIT-0
 
 [![Stars](https://img.shields.io/github/stars/i-c-l-org/prometheus?style=social)](https://github.com/i-c-l-org/prometheus/stargazers)
 [![Forks](https://img.shields.io/github/forks/i-c-l-org/prometheus?style=social)](https://github.com/i-c-l-org/prometheus/network/members)
@@ -17,22 +17,22 @@
 [![Contributors](https://img.shields.io/github/contributors/i-c-l-org/prometheus)](https://github.com/i-c-l-org/prometheus/graphs/contributors)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/i-c-l-org/prometheus/blob/main/CONTRIBUTING.md)
 
-## 🚀 Demo Rápido
+## Demo Rapido
 
 ```bash
 # Teste em 30 segundos sem instalar (requer Node.js 24+)
-npx github:md-555/prometheus diagnosticar --help
+npx github:i-c-l-org/prometheus diagnosticar --help
 ```
 
-## 💡 Por que usar o Prometheus?
+## Por que usar o Prometheus?
 
-- ⚡ **Performance**: Pool de workers para análise paralela de projetos grandes
-- 🔒 **Segurança**: Guardian verifica integridade de arquivos via hashing
-- 📊 **Métricas Inteligentes**: Pontuação adaptativa baseada no tamanho do projeto
-- 🌐 **Multi-linguagem**: Suporte completo a JS/TS + suporte heurístico para tailwind/css/html/xml
-- 🌍 **Internacionalização**: Suporte nativo a Português e Inglês para mensagens, logs e relatórios
-- 🛠️ **Modular**: Sistema de analistas extensível com detecção automática de padrões
-- 📈 **CI/CD Ready**: Outputs JSON estruturados e Workflows GitHub Actions integrados
+- [PERFORMANCE] **Performance**: Pool de workers para analise paralela de projetos grandes
+- [SEGURANCA] **Seguranca**: Guardian verifica integridade de arquivos via hashing
+- [METRICAS] **Metricas Inteligentes**: Pontuacao adaptativa baseada no tamanho do projeto
+- [MULTI] **Multi-linguagem**: Suporte completo a JS/TS + suporte heuristico para tailwind/css/html/xml
+- [I18N] **Internacionalizacao**: Suporte nativo a Portugues e Ingles para mensagens, logs e relatorios
+- [MODULAR] **Modular**: Sistema de analistas extensivel com deteccao automatica de padroes
+- [CI] **CI/CD Ready**: Outputs JSON estruturados e Workflows GitHub Actions integrados
 
 ---
 
@@ -42,9 +42,9 @@ Prometheus é uma CLI modular para analisar, diagnosticar e manter projetos (JS/
 
 > Nota de cobertura: Gate local transitório configurado em **70%** (por métrica) em `prometheus.config.json` para acelerar a adição incremental de testes. No **CI Principal** o gate é forçado para **90%** via variáveis de ambiente (`COVERAGE_GATE_*`). Arquivos listados em `scripts/coverage-exclude.json` serão reintegrados gradualmente.
 
-## 🚀 Instalação e Primeiros Passos
+## Instalacao e Primeiros Passos
 
-### Instalação Rápida
+### Instalacao Rapida
 
 ```bash
 # Clone o repositório
@@ -94,22 +94,22 @@ prometheus diagnosticar --json
 prometheus guardian --diff
 ```
 
-## ✨ Capacidades
+## Capacidades
 
-- Diagnóstico de padrões & estrutura (`diagnosticar`)
-- Verificação de integridade via hashes (`guardian`)
-- Sugestão de reorganização segura (plano de reorganização)
-- Poda de arquivos órfãos (`podar`)
-- Relatórios & métricas agregadas (`metricas`)
-- Pool de Workers (paralelização por arquivo)
-- Internacionalização Completa (PT-BR/EN)
-- Integração GitHub (CI, CodeQL, Templates)
+- Diagnostico de padroes & estrutura (`diagnosticar`)
+- Verificacao de integridade via hashes (`guardian`)
+- Sugestao de reorganizacao segura (plano de reorganizacao)
+- Poda de arquivos orfaos (`podar`)
+- Relatorios & metricas agregadas (`metricas`)
+- Pool de Workers (paralelizacao por arquivo)
+- Internacionalizacao Completa (PT-BR/EN)
+- Integracao GitHub (CI, CodeQL, Templates)
 - Schema Versioning (compatibilidade backward)
-- Pontuação Adaptativa (tamanho do projeto)
+- Pontuacao Adaptativa (tamanho do projeto)
 
 ---
 
-### ✨ Principais Funcionalidades
+### Principais Funcionalidades
 
 O sistema de análise inclui uma vasta gama de analistas e detectores para uma cobertura completa do projeto:
 
@@ -146,9 +146,9 @@ Benefícios gerais:
 - Compatibilidade: filtros explícitos continuam funcionando
 - Segurança: evita análise acidental de dependências
 
-## ⚡ Flags Essenciais para Iniciantes
+## Flags Essenciais para Iniciantes
 
-### Modos de Execução
+### Modos de Execucao
 
 ```bash
 # Modo seguro (recomendado para começar)
@@ -193,7 +193,7 @@ prometheus diagnosticar --only-errors
 prometheus diagnosticar --timeout 60
 ```
 
-## 📋 Workflows de Desenvolvimento
+## Workflows de Desenvolvimento
 
 ### Desenvolvimento Local
 
@@ -232,7 +232,7 @@ prometheus guardian --diff --json
 PROMETHEUS_LANGUAGE=en prometheus diagnosticar
 ```
 
-## 🌍 Internacionalização (i18n)
+## Internacionalizacao (i18n)
 
 O Prometheus agora é totalmente bilíngue! Você pode alternar entre Português (Brasil) e Inglês para todas as saídas (terminal, logs, relatórios).
 
@@ -247,7 +247,7 @@ O Prometheus agora é totalmente bilíngue! Você pode alternar entre Português
     export PROMETHEUS_LANGUAGE=en
     ```
 
-## 🐙 Integração GitHub
+## Integracao GitHub
 
 O repositório vem pronto para colaboração profissional:
 
@@ -268,7 +268,7 @@ prometheus diagnosticar --include "src/**/*.ts" --debug
 DEBUG=* prometheus diagnosticar
 ```
 
-## 🔧 Troubleshooting Comum
+## Troubleshooting Comum
 
 ### "Comando não encontrado"
 
@@ -344,7 +344,7 @@ PONTUACAO_MODO=conservador prometheus diagnosticar
 | `names`        | Extrair nomes para tradução           | `prometheus names`                        |
 | `rename`       | Aplicar renomeação de variáveis       | `prometheus rename`                       |
 
-## 🧪 Testes
+## Testes
 
 ```bash
 npm run format:fix; npm run lint; npm test
@@ -358,7 +358,7 @@ npm run coverage && npm run coverage:gate
 
 Gate no CI: aplicado somente no workflow `CI Principal` com 90% (env). Documentação de timeout: `docs/TESTING-VITEST-TIMEOUT.md`.
 
-## 🎯 Filtros Include/Exclude (Controle o que analisar)
+## Filtros Include/Exclude (Controle o que analisar)
 
 ### Exemplos Práticos
 
@@ -403,7 +403,7 @@ prometheus diagnosticar --exclude "node_modules/**" --exclude "dist/**" --exclud
 prometheus diagnosticar --include "src/features/auth/**" --include "src/components/auth/**"
 ```
 
-## 🌍 Variáveis de Ambiente Essenciais
+## Variaveis de Ambiente Essenciais
 
 ### Performance e Paralelização
 
@@ -491,28 +491,29 @@ prometheus diagnosticar --scan-only
 
 ````
 
-## 📚 Comandos
+## Comandos
 
-- `diagnosticar` — análise completa do projeto
+- `diagnosticar` — analise completa do projeto
 - `guardian` — baseline e diff de integridade
-- `podar` — remoção segura de arquivos órfãos
-- `reestruturar` — plano de reorganização de estrutura
-- `formatar` — formatação de código (Prettier/interno)
-- `fix-types` — correção automática de tipos inseguros (any/unknown)
-- `analistas` — catálogo de analistas (`--json`, `--doc`)
-- `metricas` — histórico agregado de métricas
-- `perf` — snapshots e comparação de performance
-- `otimizar-svg` — otimização de arquivos SVG
-- `atualizar` — atualização segura com verificação de integridade
-- `reverter` — gerenciamento de mapa de reversão para reestruturação
-- `names` — extração de nomes de variáveis para mapeamento (estrutura fragmentada em `names/`, espelhando `src/`; use `--legacy` para gerar também `names/name.txt`)
-- `rename` — aplicação de renomeações em massa (lê `names/name.txt` se existir, senão agrega todos os `names/**/*.txt`)
+- `podar` — remocao segura de arquivos orfaos
+- `reestruturar` — plano de reorganizacao de estrutura
+- `formatar` — formatacao de codigo (Prettier/interno)
+- `fix-types` — correcao automatica de tipos inseguros (any/unknown)
+- `analistas` — catalogo de analistas (`--json`, `--doc`)
+- `metricas` — historico agregado de metricas
+- `perf` — snapshots e comparacao de performance
+- `otimizar-svg` — otimizacao de arquivos SVG
+- `atualizar` — atualizacao segura com verificacao de integridade
+- `reverter` — gerenciamento de mapa de reversao para reestruturacao
+- `licencas` — ferramentas de licenca e disclaimer
+- `names` — extracao de nomes de variaveis para mapeamento
+- `rename` — aplicacao de renomeacoes em massa
 
-## ⚙️ Flags globais
+## Flags globais
 
 - `--silence`, `--verbose`, `--export`, `--debug`, `--scan-only`, `--json`
 
-## 🔗 Linguagens Suportadas
+## Linguagens Suportadas
 
 - **Primário (AST Babel completo)**: `.js`, `.jsx`, `.ts`, `.tsx`, `.mjs`, `.cjs`
 - **Analisadores Específicos**: `.html`, `.css`, `.xml`, `.svg`, `.md`
@@ -520,24 +521,24 @@ prometheus diagnosticar --scan-only
 
 *Nota: Analistas que dependem de nós Babel atuam apenas em linguagens suportadas pelo Babel; demais arquivos são processados por plugins específicos quando disponíveis.*
 
-## 🔐 Segurança (Plugins)
+## Seguranca (Plugins)
 
-- Whitelist de extensões (`.js`, `.mjs`, `.cjs`, `.ts`)
-- Sanitização de paths e validação de globs
+- Whitelist de extensoes (`.js`, `.mjs`, `.cjs`, `.ts`)
+- Sanitizacao de paths e validacao de globs
 
-## 🧾 Saída JSON (Políticas)
+## Saida JSON (Politicas)
 
-- Em `--json`, logs verbosos são silenciados até a emissão do objeto final
-- Unicode fora do ASCII básico é escapado como `\uXXXX` (inclui pares substitutos para caracteres fora do BMP)
-- Quando o Guardian não é executado, retornos usam status padrão coerente (ex.: `"nao-verificado"`), mantendo o shape estável
+- Em `--json`, logs verbosos sao silenciados ate a emissao do objeto final
+- Unicode fora do ASCII basico e escapado como `\uXXXX` (inclui pares substitutos para caracteres fora do BMP)
+- Quando o Guardian nao e executado, retornos usam status padrao coerente (ex.: `"nao-verificado"`), mantendo o shape estavel
 
-## 📜 Saída `guardian --json` (Resumo)
+## Saida `guardian --json` (Resumo)
 
 ```json
 { "status": "ok|baseline-criado|baseline-aceito|alteracoes-detectadas|erro" }
-````
+``
 
-## ⚙️ Configuração
+## Configuracao
 
 Os arquivos de configuração ficam na raiz do projeto e são carregados em tempo de execução.
 
@@ -744,20 +745,20 @@ $env:COVERAGE_GATE_LINES = 90
 prometheus diagnosticar --json
 ```
 
-## 📖 Leituras Adicionais
+## Leituras Adicionais
 
-- [Documentação Completa](docs/README.md)
-- [Guia de Início Rápido](docs/guias/GUIA-INICIO-RAPIDO.md)
+- [Documentacao Completa](docs/README.md)
+- [Guia de Inicio Rapido](docs/guias/GUIA-INICIO-RAPIDO.md)
 - [Guia de Comandos](docs/guias/GUIA-COMANDOS.md)
-- [Guia de Configuração](docs/guias/GUIA-CONFIGURACAO.md)
-- [Sistema de Segurança](docs/arquitetura/SEGURANCA.md)
+- [Guia de Configuracao](docs/guias/GUIA-CONFIGURACAO.md)
+- [Sistema de Seguranca](docs/arquitetura/SEGURANCA.md)
 - [Type Safety](docs/arquitetura/TYPE-SAFETY.md)
 - [Novidades v0.3.0](docs/releases/v0.3.0.md)
 - [Novidades v0.2.0](docs/releases/v0.2.0.md)
 
 ---
 
-## 📄 Licença
+## Licenca
 
 ``
 MIT. Avisos de terceiros: `THIRD-PARTY-NOTICES.txt`.

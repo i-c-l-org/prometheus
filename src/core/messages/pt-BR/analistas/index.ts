@@ -15,3 +15,5 @@ export * from './detector-dependencias-messages.js';
 export * from './detector-estilo-moderno-messages.js';
 export * from './detector-estrutura-messages.js';
 export * from './detector-interfaces-inline-messages.js';
+export * from './detector-seguranca-messages.js';
+export * from './detector-performance-messages.js';

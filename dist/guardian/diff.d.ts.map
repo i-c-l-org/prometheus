@@ -1,1 +1,0 @@
-{"version":3,"file":"diff.d.ts","sourceRoot":"","sources":["../../src/guardian/diff.ts"],"names":[],"mappings":"AAGA,OAAO,KAAK,EAAE,kBAAkB,EAAE,MAAM,GAAG,CAAC;AAM5C,wBAAgB,aAAa,CAAC,MAAM,EAAE,MAAM,CAAC,MAAM,EAAE,MAAM,CAAC,EAAE,KAAK,EAAE,MAAM,CAAC,MAAM,EAAE,MAAM,CAAC,GAAG,kBAAkB,CA6B/G;AAMD,wBAAgB,cAAc,CAAC,KAAK,EAAE,kBAAkB,GAAG,MAAM,EAAE,CAYlE"}

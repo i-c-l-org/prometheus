@@ -70,15 +70,15 @@ function gerarIndice(opts, dados) {
     if (opts.includeOcorrencias &&
         dados.ocorrencias &&
         dados.ocorrencias.length > 0) {
-        itens.push('- [🔍 Ocorrências](#-ocorrências)');
+        itens.push('- [Ocorrencias](#-ocorrencias)');
     }
     if (dados.sugestoes && dados.sugestoes.length > 0) {
-        itens.push('- [💡 Sugestões](#-sugestões)');
+        itens.push('- [Sugestoes](#-sugestoes)');
     }
-    return `## Índice\n\n${itens.join('\n')}`;
+    return `## Indice\n\n${itens.join('\n')}`;
 }
 function gerarSecaoStats(stats, linguagens) {
-    let md = '## 📊 Estatísticas\n\n';
+    let md = '## Estatisticas\n\n';
     md += '| Métrica | Valor |\n';
     md += '|---------|-------|\n';
     md += `| Arquivos analisados | ${stats.arquivosAnalisados} |\n`;
@@ -179,7 +179,7 @@ function gerarSecaoAutoFix(autoFix) {
     return md;
 }
 function gerarSecaoOcorrencias(ocorrencias, opts) {
-    let md = '## 🔍 Ocorrências\n\n';
+    let md = '## Ocorrencias\n\n';
     let lista = ocorrencias;
     if (opts.maxOcorrencias && lista.length > opts.maxOcorrencias) {
         lista = lista.slice(0, opts.maxOcorrencias);
