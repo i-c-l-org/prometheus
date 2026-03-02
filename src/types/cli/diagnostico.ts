@@ -5,7 +5,7 @@
  * estão em processamento-diagnostico.ts
  */
 
-import type { Ocorrencia } from '../comum/ocorrencias.js';
+import type { Ocorrencia } from '../shared/types/occurrence.js';
 
 /**
  * Opções básicas de diagnóstico

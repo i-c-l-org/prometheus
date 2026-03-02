@@ -57,21 +57,21 @@ export const analistaQuickFixes: Analista = {
           linha
         });
 
-        // Adicionar campos extras como propriedades do objeto genérico
-        const ocorrenciaGenerica = ocorrencia as Ocorrencia & {
+        // Adicionar campos extras usando OcorrenciaComFix
+        const ocorrenciaComFix = ocorrencia as Ocorrencia & {
           sugestao?: string;
           quickFixId?: string;
           confidence?: number;
           category?: string;
           matchIndex?: number;
           matchLength?: number;
-        }; // OcorrenciaGenerica allows extra properties
-        ocorrenciaGenerica.sugestao = sugestao;
-        ocorrenciaGenerica.quickFixId = fixResultado.id;
-        ocorrenciaGenerica.confidence = fixResultado.confidence;
-        ocorrenciaGenerica.category = fixResultado.category;
-        ocorrenciaGenerica.matchIndex = match.index;
-        ocorrenciaGenerica.matchLength = match[0].length;
+        };
+        ocorrenciaComFix.sugestao = sugestao;
+        ocorrenciaComFix.quickFixId = fixResultado.id;
+        ocorrenciaComFix.confidence = fixResultado.confidence;
+        ocorrenciaComFix.category = fixResultado.category;
+        ocorrenciaComFix.matchIndex = match.index;
+        ocorrenciaComFix.matchLength = match[0].length;
         ocorrencias.push(ocorrencia);
       }
     }

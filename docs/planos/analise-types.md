@@ -1,3 +1,11 @@
+---
+Proveniência e Autoria: Este documento integra o projeto Prometheus (licença MIT-0).
+Nada aqui implica cessão de direitos morais/autorais.
+Conteúdos de terceiros não licenciados de forma compatível não devem ser incluídos.
+Referências a materiais externos devem ser linkadas e reescritas com palavras próprias.
+---
+
+
 # Análise da Pasta Types - Prometheus
 
 ## Visão Geral
@@ -121,6 +129,7 @@ src/types/
 ### Fase 1: Unificar Tipos Duplicados
 
 #### 1.1 ScanOptions
+
 **Criar**: `src/types/core/execution/scan.ts`
 ```typescript
 export interface ScanOptions {
@@ -133,14 +142,17 @@ export interface ScanOptions {
 **Remover**: `scanner.ts` e `ambiente.ts` (manter apenas re-export)
 
 #### 1.2 CacheValor
+
 **Manter**: apenas `core/execution/inquisidor.ts:49`
 **Remover**: `core/execution/executor.ts:17`
 
-#### 1.3 ResultadoInquisicaoCompleto  
+#### 1.3 ResultadoInquisicaoCompleto
+
 **Manter**: `core/execution/resultados.ts:22`
 **Remover**: `core/execution/inquisidor.ts:39`
 
 #### 1.4 MetricasGlobais
+
 **Unificar**: `MetricasGlobaisExecutor` + `MetricasGlobais` em único tipo
 
 ---
@@ -148,6 +160,7 @@ export interface ScanOptions {
 ### Fase 2: Criar Utilitários Compartilhados
 
 #### 2.1 Occurrence Factory
+
 **Mover de**: `comum/ocorrencias.ts`
 **Para**: `shared/types/occurrence.ts`
 
@@ -160,6 +173,7 @@ export function ocorrenciaParseErro(data: ...): OcorrenciaParseErro
 ```
 
 #### 2.2 Base Result Types
+
 **Criar**: `shared/types/resultado.ts`
 
 ```typescript
@@ -175,6 +189,7 @@ export interface ResultadoComArquivos extends ResultadoBase {
 ```
 
 #### 2.3 Config Patterns
+
 **Criar**: `shared/types/config.ts`
 
 ```typescript
@@ -229,9 +244,11 @@ Possível divisão:
 ### Fase 4: Limpar Re-exports
 
 #### 4.1 shared/index.ts
+
 Remover re-exports de `projeto/` e `relatorios/` - importações diretas.
 
 #### 4.2 index.ts principal
+
 Considerar拆分 (split) por domínio:
 - `index.ts` apenas re-exports de sub-módulos
 - Cada domínio com seu próprio `index.ts`
@@ -257,7 +274,7 @@ export interface OcorrenciaGenerica {
 }
 
 // Usar
-export type Ocorrencia = 
+export type Ocorrencia =
   | { tipo: 'erro'; mensagem: string }
   | { tipo: 'aviso'; mensagem: string; sugestao?: string }
   | { tipo: 'info'; mensagem: string };
@@ -307,3 +324,4 @@ npm run typecheck && npm run lint
 ---
 
 *Gerado em: 2026-03-01*
+

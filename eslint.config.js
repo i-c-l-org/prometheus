@@ -103,6 +103,7 @@ export default [
       'file2.ts',
       'tmp-cache-file.ts',
       '.deprecados/**',
+      '.opencode/**',
       'tests/fixtures/**',
       'pre-public/**',
       'relatorios/**',

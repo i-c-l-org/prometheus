@@ -1362,7 +1362,7 @@ export async function processarDiagnostico(opts: OpcoesProcessamentoDiagnostico)
 
             // Ocorrências limpas: apenas campos essenciais
             const ocorrenciasLimpas = dedupeOcorrencias(resultadoExecucao.ocorrencias || []).slice(0, 2000).map(oc => {
-              const ocAny = oc as Record<string, unknown>;
+              const ocAny = oc as unknown as Record<string, unknown>;
               return {
                 tipo: oc.tipo,
                 nivel: oc.nivel,
