@@ -232,6 +232,35 @@ function parseReactWithBabel(scan: string, relPath: string): Msg[] | null {
             if (/^http:\/\//i.test(firstStr)) pushOnce(warn(ReactMensagens.httpFetch, relPath, locLine));
             return;
           }
+          if (t.isIdentifier(node.callee) && (node.callee.name === 'useEffect' || node.callee.name === 'useLayoutEffect')) {
+            const depsArg = node.arguments[1];
+            if (!depsArg) {
+              pushOnce(warn(ReactMensagens.useEffectEmptyDeps, relPath, locLine));
+            } else if (t.isArrayExpression(depsArg) && depsArg.elements.length === 0) {
+              pushOnce(warn(ReactMensagens.useEffectEmptyDeps, relPath, locLine));
+            } else if (!t.isArrayExpression(depsArg)) {
+              pushOnce(warn(ReactMensagens.useEffectMissingDeps, relPath, locLine));
+            }
+            const effectFn = node.arguments[0];
+            if ((t.isArrowFunctionExpression(effectFn) || t.isFunctionExpression(effectFn)) && t.isBlockStatement(effectFn.body)) {
+              const hasAsync = effectFn.body.body.some(stmt => {
+                if (t.isFunctionDeclaration(stmt) && stmt.async) return true;
+                if (t.isVariableDeclaration(stmt)) {
+                  return stmt.declarations.some(d => {
+                    if (t.isVariableDeclarator(d) && d.init && t.isArrowFunctionExpression(d.init)) {
+                      return d.init.async;
+                    }
+                    return false;
+                  });
+                }
+                return false;
+              });
+              const hasReturn = effectFn.body.body.some(stmt => t.isReturnStatement(stmt));
+              if (hasAsync && !hasReturn) {
+                pushOnce(warn(ReactMensagens.useEffectAsyncNoCleanup, relPath, locLine));
+              }
+            }
+          }
           if (t.isMemberExpression(node.callee)) {
             const obj = node.callee.object;
             const prop = node.callee.property;
@@ -275,6 +304,13 @@ function parseReactWithBabel(scan: string, relPath: string): Msg[] | null {
               };
               if (t.isFunctionExpression(cb)) checkCallback(cb);
               if (t.isArrowFunctionExpression(cb)) checkCallback(cb);
+            }
+
+            if (propNome === 'memo') {
+              const hasSecondArg = args.length >= 2;
+              if (!hasSecondArg) {
+                pushOnce(warn(ReactMensagens.reactMemoNoCompare, relPath, locLine));
+              }
             }
           }
         } catch {
@@ -320,6 +356,24 @@ function parseReactWithBabel(scan: string, relPath: string): Msg[] | null {
           if (s.length < 24) return;
           if (/^https?:\/\//i.test(s)) return;
           pushOnce(warn(ReactMensagens.hardcodedCredential, relPath, locLine));
+        } catch {
+          // ignora
+        }
+      },
+      VariableDeclarator(path: NodePath<t.VariableDeclarator>) {
+        try {
+          const node = path.node;
+          const locLine: number | undefined = node.loc?.start?.line;
+          const init = node.init;
+          if (!init || !t.isCallExpression(init)) return;
+          const callee = init.callee;
+          if (!t.isIdentifier(callee)) return;
+          if (callee.name === 'useState' && init.arguments.length > 0) {
+            const firstArg = init.arguments[0];
+            if (t.isCallExpression(firstArg) || t.isFunctionExpression(firstArg) || t.isArrowFunctionExpression(firstArg)) {
+              pushOnce(warn(ReactMensagens.useStateInitializerExpensive, relPath, locLine));
+            }
+          }
         } catch {
           // ignora
         }

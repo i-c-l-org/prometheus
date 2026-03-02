@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT-0
+import { buildTypesRelPathPosix, getTypesDirectoryDisplay } from '@core/config/conventions.js';
 import { createI18nMessages } from '@shared/helpers/i18n.js';
 
-import { buildTypesRelPathPosix, getTypesDirectoryDisplay } from '@core/config/conventions.js';
 import { ICONES } from '../ui/icons.js';
 
 /**

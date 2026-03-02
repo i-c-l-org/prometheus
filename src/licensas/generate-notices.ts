@@ -4,6 +4,8 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { promisify } from 'node:util';
 
+import type { GenerateNoticesOptions,HeaderOptions, RenderPackageMeta } from '../types/licensas.js';
+
 const exec = promisify(_exec);
 const execFile = promisify(_execFile);
 function s(v: string | string[] | number | boolean | null | undefined): string {
@@ -11,11 +13,6 @@ function s(v: string | string[] | number | boolean | null | undefined): string {
 }
 function nl(txt: string): string {
   return txt.replace(/\r\n?|\n/g, '\n');
-}
-interface HeaderOptions {
-  projectNome: string;
-  license: string;
-  ptBr: boolean;
 }
 function header({
   projectNome,
@@ -27,14 +24,6 @@ function header({
     return ['AVISOS DE TERCEIROS', '====================', '', `${projectNome} — Licença do projeto: ${license}`, `Este arquivo lista componentes de terceiros incluídos (produção) e seus respectivos avisos/licenças.`, `Gerado em: ${now}`, '', 'Observações:', '- Este arquivo é gerado automaticamente; não edite manualmente.', '- Para atualizar, execute: npm run licenses:notice', '- Os textos de licença de terceiros são reproduzidos no idioma original para preservar validade jurídica.', ''].join('\n');
   }
   return ['THIRD-PARTY NOTICES', '====================', '', `${projectNome} — Project license: ${license}`, `This file lists third-party components included (production) and their notices/licenses.`, `Generated at: ${now}`, '', 'Notes:', '- This file is generated automatically; do not edit manually.', '- To update, run: npm run licenses:notice', '- Third-party license texts are reproduced in their original language to preserve legal validity.', ''].join('\n');
-}
-interface RenderPackageMeta {
-  licenses?: string | string[];
-  publisher?: string;
-  email?: string;
-  repository?: string;
-  licenseArquivo?: string;
-  path?: string;
 }
 async function renderPackageBlock(pkgId: string, meta: RenderPackageMeta): Promise<string> {
   const lines: string[] = [];
@@ -82,11 +71,6 @@ async function renderPackageBlock(pkgId: string, meta: RenderPackageMeta): Promi
   }
   lines.push('');
   return lines.join('\n');
-}
-export interface GenerateNoticesOptions {
-  root?: string;
-  ptBr?: boolean;
-  output?: string;
 }
 export async function generateNotices({
   root = process.cwd(),

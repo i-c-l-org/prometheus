@@ -1,12 +1,11 @@
 // SPDX-License-Identifier: MIT-0
+import { createI18nMessages } from '@shared/helpers/i18n.js';
 
-import { CliCommonMensagens } from './cli-common-messages.js';
-
-export const CliComandoDesempMensagens = {
+export const CliComandoDesempMensagens = createI18nMessages({
   descricao: 'Operações de baseline e comparação de performance sintética',
   opcoes: {
     dir: 'Diretório de snapshots',
-    json: CliCommonMensagens.opcoes.json,
+    json: 'Saída em JSON estruturado (para CI/integrações)',
     limite: 'Limite para regressão (%)'
   },
   subcomandos: {
@@ -20,6 +19,26 @@ export const CliComandoDesempMensagens = {
       erroMenosDeDois: 'Menos de dois snapshots para comparar'
     }
   },
-  tituloComparacaoSnapshots: '\n?? Comparação de snapshots de performance:\n',
+  tituloComparacaoSnapshots: '\n📸 Comparação de snapshots de performance:\n',
   tituloComparacaoSnapshotsComIcone: (icone: string) => `${icone} Comparação entre snapshots:`
-} as const;
+}, {
+  descricao: 'Baseline operations and synthetic performance comparison',
+  opcoes: {
+    dir: 'Snapshots directory',
+    json: 'Output in structured JSON (for CI/integrations)',
+    limite: 'Regression limit (%)'
+  },
+  subcomandos: {
+    baseline: {
+      descricao: 'Generates a new baseline. Uses global metrics from last execution if available.',
+      erro: (msg: string) => `Failed to generate baseline: ${msg}`
+    },
+    compare: {
+      descricao: 'Compares the last two snapshots and signals regression',
+      erroSnapshots: (msg: string) => `Failed to load snapshots: ${msg}`,
+      erroMenosDeDois: 'Less than two snapshots to compare'
+    }
+  },
+  tituloComparacaoSnapshots: '\n📸 Performance snapshot comparison:\n',
+  tituloComparacaoSnapshotsComIcone: (icone: string) => `${icone} Snapshot comparison:`
+});

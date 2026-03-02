@@ -3,8 +3,8 @@
  * License normalizer ported from original JS implementation.
  */
 
-type SpdxParseFn = (s: string) => unknown;
-type SpdxCorrectFn = (s: string) => string | null;
+import type { SpdxCorrectFn,SpdxParseFn } from '../types/licensas.js';
+
 type SpdxLicenseEntry = { name?: string } | string;
 
 let spdxParse: SpdxParseFn | null = null;

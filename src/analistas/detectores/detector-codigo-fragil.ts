@@ -8,8 +8,8 @@ import { detectarFrameworks } from '@shared/helpers/framework-detector.js';
 import { isWhitelistedConstant } from '@shared/helpers/magic-constants-whitelist.js';
 import { filtrarOcorrenciasSuprimidas } from '@shared/helpers/suppressao.js';
 
-import type { Analista, Fragilidade, Ocorrencia } from '@';
-import { criarOcorrencia } from '@';
+import type { ContextoExecucao,Fragilidade, Ocorrencia } from '@';
+import { criarAnalista, criarOcorrencia } from '@';
 
 // Cache de frameworks detectados (evita múltiplas leituras do package.json)
 let frameworksDetectados: string[] | null = null;
@@ -21,7 +21,8 @@ const LIMITES = {
   COMPLEXIDADE_COGNITIVA: 15,
   REGEX_COMPLEXA_LENGTH: 50
 } as const;
-export const analistaCodigoFragil: Analista = {
+
+export const analistaCodigoFragil = criarAnalista({
   nome: 'codigo-fragil',
   categoria: 'qualidade',
   descricao: 'Detecta padrões de código que podem levar a problemas futuros',
@@ -31,15 +32,14 @@ export const analistaCodigoFragil: Analista = {
     maxNestedCallbacks: config.ANALISE_LIMITES?.CODIGO_FRAGIL?.MAX_NESTED_CALLBACKS ?? LIMITES.CALLBACKS_ANINHADOS
   },
   test: (relPath: string): boolean => {
-    // Ignorar arquivos deprecados e abandonados
     if (/\.(deprecados?|abandonados?)\//i.test(relPath) || relPath.includes('.deprecados/') || relPath.includes('abandonados/')) {
       return false;
     }
     return /\.(js|jsx|ts|tsx|mjs|cjs)$/.test(relPath);
   },
-  aplicar: (src: string, relPath: string, ast: NodePath<Node> | null): Ocorrencia[] => {
+  aplicar: async (src: string, relPath: string, ast: NodePath<Node> | null, _fullPath?: string, _contexto?: ContextoExecucao): Promise<Ocorrencia[] | null> => {
     if (!ast || !src) {
-      return [];
+      return null;
     }
 
     // Limites efetivos (lidos dinamicamente para respeitar overrides por env/config)
@@ -250,6 +250,11 @@ export const analistaCodigoFragil: Analista = {
       // Detectar callbacks aninhados (requer análise específica)
       detectarNestedCallbacks(ast, fragilidades, maxNestedCallbacks);
 
+      // Detectar code smells avançados
+      detectarGodObjects(ast, fragilidades, 10);
+      detectarFeatureEnvy(ast, fragilidades, 5);
+      detectarDataClumps(ast, fragilidades, 3);
+
       // Gerar ocorrências por severidade
       const ocorrencias: Ocorrencia[] = [];
 
@@ -292,7 +297,8 @@ export const analistaCodigoFragil: Analista = {
       })];
     }
   }
-};
+});
+
 function detectarConsoleLog(src: string, fragilidades: Fragilidade[]): void {
   const lines = src.split('\n');
   for (let i = 0; i < lines.length; i++) {
@@ -490,4 +496,95 @@ function agruparPorSeveridade(fragilidades: Fragilidade[]): Record<string, Fragi
     acc[sev].push(frag);
     return acc;
   }, {} as Record<string, Fragilidade[]>);
+}
+
+function detectarGodObjects(ast: NodePath<Node>, fragilidades: Fragilidade[], limiteProps = 10): void {
+  traverse(ast.node, {
+    ObjectExpression(path: NodePath) {
+      const hasParent = path.findParent(p => p.isVariableDeclarator() || p.isProperty());
+      if (hasParent) {
+        const node = path.node as unknown as { properties?: unknown[]; loc?: { start: { line: number; column: number } } };
+        const props = node.properties?.length || 0;
+        if (props > limiteProps) {
+          fragilidades.push({
+            tipo: 'god-object',
+            linha: node.loc?.start.line || 0,
+            coluna: node.loc?.start.column || 0,
+            severidade: props > limiteProps * 2 ? 'alta' : 'media',
+            contexto: `Objeto com ${props} propriedades (limite: ${limiteProps}) - considere dividir em objetos menores`
+          });
+        }
+      }
+    }
+  });
+}
+
+function detectarFeatureEnvy(ast: NodePath<Node>, fragilidades: Fragilidade[], limiteAcessos = 5): void {
+  traverse(ast.node, {
+    FunctionDeclaration(path: NodePath) {
+      const node = path.node as unknown as { id?: { name?: string }; loc?: { start: { line: number } } };
+      const funName = node.id?.name || 'anonymous';
+      const body = path.get('body') as NodePath;
+      if (!body || !(body as NodePath).isBlockStatement()) return;
+
+      const objectAccesses = new Map<string, number>();
+
+      path.traverse({
+        MemberExpression(memberPath: NodePath) {
+          const memberNode = memberPath.node as unknown as { object: { type: string; name?: string } };
+          if (memberNode.object.type === 'Identifier' && memberNode.object.name) {
+            const current = objectAccesses.get(memberNode.object.name) || 0;
+            objectAccesses.set(memberNode.object.name, current + 1);
+          }
+        }
+      });
+
+      for (const [objName, count] of objectAccesses) {
+        if (objName !== funName && count > limiteAcessos) {
+          fragilidades.push({
+            tipo: 'feature-envy',
+            linha: node.loc?.start.line || 0,
+            coluna: 0,
+            severidade: 'media',
+            contexto: `Função '${funName}' acessa '${objName}' ${count} vezes - considere mover para classe/objeto de origem`
+          });
+        }
+      }
+    }
+  });
+}
+
+function detectarDataClumps(ast: NodePath<Node>, fragilidades: Fragilidade[], limiteParams = 3): void {
+  const parametrosGroups: Map<string, number> = new Map();
+
+  traverse(ast.node, {
+    FunctionDeclaration(path: NodePath) {
+      const params = (path.node as unknown as { params: unknown[] }).params || [];
+      if (params.length >= limiteParams) {
+        const paramTypes = params.map((p: unknown) => (p as unknown as { type: string }).type).join(',');
+        const current = parametrosGroups.get(paramTypes) || 0;
+        parametrosGroups.set(paramTypes, current + 1);
+      }
+    },
+    FunctionExpression(path: NodePath) {
+      const params = (path.node as unknown as { params: unknown[] }).params || [];
+      if (params.length >= limiteParams) {
+        const paramTypes = params.map((p: unknown) => (p as unknown as { type: string }).type).join(',');
+        const current = parametrosGroups.get(paramTypes) || 0;
+        parametrosGroups.set(paramTypes, current + 1);
+      }
+    }
+  });
+
+  for (const [types, count] of parametrosGroups) {
+    if (count > 2) {
+      fragilidades.push({
+        tipo: 'data-clump',
+        linha: 1,
+        coluna: 0,
+        severidade: 'baixa',
+        contexto: `Grupo de ${types.split(',').length} parâmetros aparece ${count} vezes - considere criar objeto/interface`
+      });
+    }
+  }
 }

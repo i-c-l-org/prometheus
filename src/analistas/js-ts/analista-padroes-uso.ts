@@ -7,16 +7,15 @@ import { traverse } from '@core/config/traverse.js';
 import { PadroesUsoMensagens } from '@core/messages/analistas/analista-padroes-uso-messages.js';
 import { detectarContextoProjeto } from '@shared/contexto-projeto.js';
 import { garantirArray, incrementar } from '@shared/helpers/helpers-analistas.js';
+// Uso local das estatísticas (mantido para o analista)
+import { type Estatisticas,estatisticasUsoGlobal as _estatisticas } from '@shared/stats.js';
 
 import type { ContextoExecucao, Ocorrencia, TecnicaAplicarResultado } from '@';
 import { criarOcorrencia, ocorrenciaErroAnalista } from '@';
 
 // Re-export das estatísticas globais de shared (ponto neutro para outros subsistemas)
-export { estatisticasUsoGlobal } from '@shared/stats.js';
 export type { Estatisticas } from '@';
-
-// Uso local das estatísticas (mantido para o analista)
-import { estatisticasUsoGlobal as _estatisticas, type Estatisticas } from '@shared/stats.js';
+export { estatisticasUsoGlobal } from '@shared/stats.js';
 const estatisticasUsoGlobal = _estatisticas;
 export const analistaPadroesUso = {
   nome: 'analista-padroes-uso',

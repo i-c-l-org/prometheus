@@ -5,18 +5,18 @@ import { traverse } from '@core/config/traverse.js';
 import { DetectorEstiloModernoMensagens } from '@core/messages/analistas/detector-estilo-moderno-messages.js';
 import { filtrarOcorrenciasSuprimidas } from '@shared/helpers/suppressao.js';
 
-import type { Analista, Ocorrencia } from '@';
-import { criarOcorrencia } from '@';
+import type { ContextoExecucao,Ocorrencia } from '@';
+import { criarAnalista, criarOcorrencia } from '@';
 
-export const analistaEstiloModerno: Analista = {
+export const analistaEstiloModerno = criarAnalista({
   nome: 'estilo-moderno',
   categoria: 'estetica',
   descricao: 'Refina o código com padrões e melhores práticas de 2026',
   test: (relPath: string): boolean => {
     return /\.(js|jsx|ts|tsx|mjs|cjs)$/.test(relPath);
   },
-  aplicar: (src: string, relPath: string, ast: NodePath<Node> | null): Ocorrencia[] => {
-    if (!ast || !src) return [];
+  aplicar: async (src: string, relPath: string, ast: NodePath<Node> | null, _fullPath?: string, _contexto?: ContextoExecucao): Promise<Ocorrencia[] | null> => {
+    if (!ast || !src) return null;
 
     const ocorrencias: Ocorrencia[] = [];
     const isTS = /\.(ts|tsx)$/.test(relPath);
@@ -123,4 +123,4 @@ export const analistaEstiloModerno: Analista = {
       return [];
     }
   }
-};
+});

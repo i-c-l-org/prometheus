@@ -6,19 +6,19 @@ import type { ExportNamedDeclaration, ImportDeclaration, ImportDefaultSpecifier,
 import { traverse } from '@core/config/traverse.js';
 import * as path from 'path';
 
-import type { AnaliseArquitetural, Analista, ContextoExecucao, EstatisticasArquivo, ExportInfo, ImportInfo, Ocorrencia, ReportEvent } from '@';
-import { criarOcorrencia } from '@';
+import type { AnaliseArquitetural, ContextoExecucao, EstatisticasArquivo, ExportInfo, ImportInfo, Ocorrencia, ReportEvent } from '@';
+import { criarAnalista, criarOcorrencia } from '@';
 
-export const analistaArquitetura: Analista = {
+export const analistaArquitetura = criarAnalista({
   nome: 'arquitetura',
   categoria: 'estrutura',
   descricao: 'Analisa padrões arquiteturais e detecta violações de design',
   test: (relPath: string): boolean => {
     return /\.(js|jsx|ts|tsx|mjs|cjs)$/.test(relPath);
   },
-  aplicar: async (src: string, relPath: string, ast: NodePath<Node> | null, fullCaminho?: string, contexto?: ContextoExecucao): Promise<Ocorrencia[]> => {
+  aplicar: async (src: string, relPath: string, ast: NodePath<Node> | null, fullCaminho?: string, contexto?: ContextoExecucao): Promise<Ocorrencia[] | null> => {
     if (!ast || !src || !contexto) {
-      return [];
+      return null;
     }
     try {
       // Analisar arquivo atual
@@ -195,7 +195,8 @@ export const analistaArquitetura: Analista = {
       })];
     }
   }
-};
+});
+
 function analisarArquivo(ast: NodePath<Node>, relPath: string, _src: string): EstatisticasArquivo {
   const imports: ImportInfo[] = [];
   const exports: ExportInfo[] = [];

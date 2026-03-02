@@ -21,7 +21,12 @@ export const DetectorEstruturaMensagens = createI18nMessages({
     previewGrupos,
     sufixoOcultos
   }: EntrypointsAgrupadosArgs) => sufixoOcultos && sufixoOcultos.length > 0 ? `Projeto possui múltiplos entrypoints (agrupados por diretório): ${previewGrupos} … (${sufixoOcultos} ocultos)` : `Projeto possui múltiplos entrypoints (agrupados por diretório): ${previewGrupos}`,
-  multiplosEntrypointsLista: (preview: string[], resto: number) => resto > 0 ? `Projeto possui múltiplos entrypoints: ${preview.join(', ')} … (+${resto} ocultos)` : `Projeto possui múltiplos entrypoints: ${preview.join(', ')}`
+  multiplosEntrypointsLista: (preview: string[], resto: number) => resto > 0 ? `Projeto possui múltiplos entrypoints: ${preview.join(', ')} … (+${resto} ocultos)` : `Projeto possui múltiplos entrypoints: ${preview.join(', ')}`,
+  semTestesUnitarios: 'Nenhum teste unitário detectado. Considere adicionar testes para garantir qualidade.',
+  semTestesE2E: 'Nenhum teste E2E detectado. Considere adicionar testes end-to-end.',
+  semCiCd: 'Nenhum workflow de CI/CD detectado. Considere automatizar build/test/deploy.',
+  semDockerfile: 'Nenhum Dockerfile detectado. Considere containerizar a aplicação.',
+  multiplosFrameworks: 'Múltiplos frameworks detectados no mesmo projeto. Avalie consistência.'
 }, {
   monorepoDetectado: 'Monorepo structure detected.',
   monorepoSemPackages: 'Monorepo without packages/ folder.',
@@ -37,5 +42,10 @@ export const DetectorEstruturaMensagens = createI18nMessages({
     previewGrupos,
     sufixoOcultos
   }: EntrypointsAgrupadosArgs) => sufixoOcultos && sufixoOcultos.length > 0 ? `Project has multiple entrypoints (grouped by directory): ${previewGrupos} … (${sufixoOcultos} hidden)` : `Project has multiple entrypoints (grouped by directory): ${previewGrupos}`,
-  multiplosEntrypointsLista: (preview: string[], resto: number) => resto > 0 ? `Project has multiple entrypoints: ${preview.join(', ')} … (+${resto} hidden)` : `Project has multiple entrypoints: ${preview.join(', ')}`
+  multiplosEntrypointsLista: (preview: string[], resto: number) => resto > 0 ? `Project has multiple entrypoints: ${preview.join(', ')} … (+${resto} hidden)` : `Project has multiple entrypoints: ${preview.join(', ')}`,
+  semTestesUnitarios: 'No unit tests detected. Consider adding tests to ensure quality.',
+  semTestesE2E: 'No E2E tests detected. Consider adding end-to-end tests.',
+  semCiCd: 'No CI/CD workflow detected. Consider automating build/test/deploy.',
+  semDockerfile: 'No Dockerfile detected. Consider containerizing the application.',
+  multiplosFrameworks: 'Multiple frameworks detected in the same project. Evaluate consistency.'
 });

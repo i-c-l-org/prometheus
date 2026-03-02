@@ -365,7 +365,7 @@ export const detectorDependencias = {
             if (!depsPackageJson.has(nomeBaseMod) && !isNodeBuiltin(nomeBaseMod)) {
               ocorrencias.push({
                 tipo: 'erro',
-                mensagem: `Dependência fantasma: "${nomeBaseMod}" é importado mas não está no package.json.`,
+                mensagem: DetectorDependenciasMensagens.dependenciaFantasmaImport(nomeBaseMod),
                 relPath,
                 linha: p.node.loc?.start.line,
                 coluna: p.node.loc?.start.column
@@ -445,7 +445,7 @@ export const detectorDependencias = {
               if (!depsPackageJson.has(nomeBaseMod) && !isNodeBuiltin(nomeBaseMod)) {
                 ocorrencias.push({
                   tipo: 'erro',
-                  mensagem: `Dependência fantasma: "${nomeBaseMod}" é requerido mas não está no package.json.`,
+                  mensagem: DetectorDependenciasMensagens.dependenciaFantasmaRequire(nomeBaseMod),
                   relPath,
                   linha: p.node.loc?.start.line,
                   coluna: p.node.loc?.start.column
