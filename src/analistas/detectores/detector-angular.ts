@@ -5,15 +5,16 @@ import { traverse } from '@core/config/traverse.js';
 import { DetectorAngularMensagens } from '@core/messages/analistas/detector-angular-messages.js';
 import { filtrarOcorrenciasSuprimidas } from '@shared/helpers/suppressao.js';
 
-import type { Analista, Ocorrencia } from '@';
-import { criarOcorrencia } from '@';
+import type { ContextoExecucao,Ocorrencia } from '@';
+import { criarAnalista, criarOcorrencia } from '@';
 
-export const analistaAngular: Analista = {
+export const analistaAngular = criarAnalista({
   nome: 'angular-especifico',
   categoria: 'framework',
   descricao: 'Analisa padrões específicos do ecossistema Angular (v2+)',
   test: (relPath: string) => /\.(ts|html)$/.test(relPath),
-  aplicar: (src: string, relPath: string, ast: NodePath<Node> | null): Ocorrencia[] => {
+  aplicar: async (src: string, relPath: string, ast: NodePath<Node> | null, _fullPath?: string, _contexto?: ContextoExecucao): Promise<Ocorrencia[] | null> => {
+    if (!src) return null;
     const ocorrencias: Ocorrencia[] = [];
     const isTS = relPath.endsWith('.ts');
     const isHTML = relPath.endsWith('.html');
@@ -164,4 +165,4 @@ export const analistaAngular: Analista = {
 
     return filtrarOcorrenciasSuprimidas(ocorrencias, 'angular-especifico', src);
   }
-};
+});

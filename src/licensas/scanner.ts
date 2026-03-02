@@ -6,13 +6,13 @@ import {
   findLicenseFileAsync,
   readPackageJson
 } from './fs-utils.js';
-import type { ScanOptions, ScanResult } from './licensas.js';
+import type { LicenseScanOptions, ScanResult } from './licensas.js';
 import { normalizeLicense } from './normalizer.js';
 
 export async function scan({
   root = process.cwd(),
   includeDev: _includeDev = false
-} = {} as ScanOptions): Promise<ScanResult> {
+} = {} as LicenseScanOptions): Promise<ScanResult> {
   const nmDir = path.join(root, 'node_modules');
   const result: ScanResult = {
     generatedAt: new Date().toISOString(),
@@ -97,7 +97,7 @@ async function fsStatIsDir(p: string): Promise<boolean> {
     return false;
   }
 }
-export async function scanCommand(opts: ScanOptions = {}): Promise<ScanResult> {
+export async function scanCommand(opts: LicenseScanOptions = {}): Promise<ScanResult> {
   const res = await scan(opts);
   // Removido `: unknown` e `as unknown` — res.packages já é tipado corretamente
   const problematic = res.packages.filter(p => p.license === 'UNKNOWN');

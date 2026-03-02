@@ -4,18 +4,19 @@ import type { ArrowFunctionExpression, ClassDeclaration, FunctionDeclaration, Im
 import { traverse } from '@core/config/traverse.js';
 import { DetectorConstrucoesSintaticasMensagens } from '@core/messages/analistas/detector-construcoes-sintaticas-messages.js';
 
-import { type Analista, type ConstrucaoSintatica, criarOcorrencia, type Ocorrencia } from '@';
+import type { ConstrucaoSintatica, ContextoExecucao,Ocorrencia } from '@';
+import { criarAnalista, criarOcorrencia } from '@';
 
-export const analistaConstrucoesSintaticas: Analista = {
+export const analistaConstrucoesSintaticas = criarAnalista({
   nome: 'construcoes-sintaticas',
   categoria: 'estrutura',
   descricao: 'Identifica e cataloga construções sintáticas do JavaScript/TypeScript',
   test: (relPath: string): boolean => {
     return /\.(js|jsx|ts|tsx|mjs|cjs)$/.test(relPath);
   },
-  aplicar: (src: string, relPath: string, ast: NodePath<Node> | null): Ocorrencia[] => {
+  aplicar: async (src: string, relPath: string, ast: NodePath<Node> | null, _fullPath?: string, _contexto?: ContextoExecucao): Promise<Ocorrencia[] | null> => {
     if (!ast || !src) {
-      return [];
+      return null;
     }
     const construcoes: Map<string, number> = new Map();
     const detalhes: ConstrucaoSintatica[] = [];
@@ -160,7 +161,8 @@ export const analistaConstrucoesSintaticas: Analista = {
       })];
     }
   }
-};
+});
+
 function incrementarContagem(map: Map<string, number>, key: string): void {
   map.set(key, (map.get(key) || 0) + 1);
 }

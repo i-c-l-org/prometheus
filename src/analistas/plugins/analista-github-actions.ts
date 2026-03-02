@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT-0
-import { criarAnalista, criarOcorrencia } from '@';
 import { createLineLookup } from '@shared/helpers/line-lookup.js';
+
+import { criarAnalista, criarOcorrencia } from '@';
 
 /**
  * Analista de GitHub Actions (CI/CD)

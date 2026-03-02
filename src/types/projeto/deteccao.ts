@@ -19,6 +19,9 @@ export interface SinaisProjeto {
   temCli?: boolean;
   temPrisma?: boolean;
   temPackages?: boolean;
+  temTestes?: boolean;
+  temCiCd?: boolean;
+  temDocker?: boolean;
 }
 
 export interface DiagnosticoProjeto {

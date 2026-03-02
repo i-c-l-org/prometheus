@@ -13,7 +13,11 @@ export const DetectorDependenciasMensagens = createI18nMessages({
   importUsadoRegistroDinamico: (nome: string) => `Import '${nome}' usado via registro dinâmico (heurística)`,
   usoMistoRequireImport: 'Uso misto de require e import no mesmo arquivo. Padronize para um só estilo.',
   importCircularSelf: 'Importação circular detectada: o arquivo importa a si mesmo.',
-  dependenciaCircular: (totalArquivos: number, caminhoCompleto: string) => `Dependência circular detectada (${totalArquivos} arquivo(s)): ${caminhoCompleto}`
+  dependenciaCircular: (totalArquivos: number, caminhoCompleto: string) => `Dependência circular detectada (${totalArquivos} arquivo(s)): ${caminhoCompleto}`,
+  importSemExtensao: (modulo: string) => `Import sem extensão explícita: '${modulo}'. Considere adicionar para clareza.`,
+  importHttpInseguro: (url: string) => `Import de URL HTTP (inseguro): '${url}'. Use HTTPS.`,
+  importNaoResolvido: (modulo: string) => `Módulo não resolvido: '${modulo}'. Verifique installed/typos.`,
+  duplicataDependencia: (nome: string) => `Dependência duplicada detectada: '${nome}'. Remova duplicatas.`
 }, {
   importDependenciaExterna: (val: string) => `External dependency import: '${val}'`,
   importRelativoLongo: (val: string) => `Relative import goes up too many directories: '${val}'`,
@@ -26,5 +30,9 @@ export const DetectorDependenciasMensagens = createI18nMessages({
   importUsadoRegistroDinamico: (nome: string) => `Import '${nome}' used via dynamic registry (heuristic)`,
   usoMistoRequireImport: 'Mixed use of require and import in the same file. Standardize to a single style.',
   importCircularSelf: 'Circular import detected: the file imports itself.',
-  dependenciaCircular: (totalArquivos: number, caminhoCompleto: string) => `Circular dependency detected (${totalArquivos} file(s)): ${caminhoCompleto}`
+  dependenciaCircular: (totalArquivos: number, caminhoCompleto: string) => `Circular dependency detected (${totalArquivos} file(s)): ${caminhoCompleto}`,
+  importSemExtensao: (modulo: string) => `Import without explicit extension: '${modulo}'. Consider adding for clarity.`,
+  importHttpInseguro: (url: string) => `Import from HTTP URL (insecure): '${url}'. Use HTTPS.`,
+  importNaoResolvido: (modulo: string) => `Unresolved module: '${modulo}'. Check if installed/typos.`,
+  duplicataDependencia: (nome: string) => `Duplicate dependency detected: '${nome}'. Remove duplicates.`
 });

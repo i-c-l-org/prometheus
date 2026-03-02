@@ -8,8 +8,8 @@ import { DetectorAgregadosMensagens } from '@core/messages/analistas/detector-ag
 import { detectarContextoProjeto } from '@shared/contexto-projeto.js';
 import { filtrarOcorrenciasSuprimidas } from '@shared/helpers/suppressao.js';
 
-import type { Analista,Ocorrencia, ProblemaSeguranca, ReportEvent } from '@';
-import { criarOcorrencia } from '@';
+import type { ContextoExecucao,Ocorrencia, ProblemaSeguranca, ReportEvent } from '@';
+import { criarAnalista, criarOcorrencia } from '@';
 
 const LIMITE_SEGURANCA = config.ANALISE_LIMITES?.SEGURANCA ?? {
   MAX_HARDCODED_SECRETS: 0,
@@ -52,7 +52,7 @@ function calcularEntropia(str: string): number {
   }
   return entropia;
 }
-export const analistaSeguranca: Analista = {
+export const analistaSeguranca = criarAnalista({
   nome: 'seguranca',
   categoria: 'seguranca',
   descricao: 'Detecta vulnerabilidades e práticas inseguras no código',
@@ -60,8 +60,8 @@ export const analistaSeguranca: Analista = {
   test: (relPath: string): boolean => {
     return /\.(js|jsx|ts|tsx|mjs|cjs)$/.test(relPath);
   },
-  aplicar: (src: string, relPath: string, ast: NodePath<Node> | null, _fullPath?: string, contexto?: import('@').ContextoExecucao): Ocorrencia[] => {
-    if (!src) return [];
+  aplicar: async (src: string, relPath: string, ast: NodePath<Node> | null, _fullPath?: string, contexto?: ContextoExecucao): Promise<Ocorrencia[] | null> => {
+    if (!src) return null;
     const contextoArquivo = detectarContextoProjeto({
       arquivo: relPath,
       conteudo: src,
@@ -132,7 +132,8 @@ export const analistaSeguranca: Analista = {
       })];
     }
   }
-};
+});
+
 function detectarSqlInjection(linha: string, numeroLinha: number, problemas: ProblemaSeguranca[]): void {
   const padroesSqlInjection = [
     /`.*\$\{.*\}.*`/,
@@ -352,7 +353,6 @@ function detectarJWTWeak(linha: string, numeroLinha: number, problemas: Problema
     /algorithm\s*:\s*['"]HS256['"]/i,
     /ALGORITHM\s*:\s*['"]HS256['"]/i,
   ];
-  const variavelSecreta = /secret|key|password|passphrase/;
 
   for (const padrao of jwtWeak) {
     if (padrao.test(linha)) {
@@ -419,6 +419,83 @@ function detectarBypassSecurity(linha: string, numeroLinha: number, problemas: P
   }
 }
 
+function detectarSSRF(linha: string, numeroLinha: number, problemas: ProblemaSeguranca[]): void {
+  const inputUser = /req\.|params\.|query\.|body\.|url\.|input\.|userUrl|Url\./;
+  const fetchingPatterns = [
+    /fetch\s*\(/,
+    /axios\.\w+\s*\(/,
+    /request\s*\(/,
+    /got\s*\(/,
+    /node-fetch\s*\(/,
+    /http\.\w+\s*\(/,
+  ];
+
+  for (const pattern of fetchingPatterns) {
+    if (pattern.test(linha) && inputUser.test(linha)) {
+      problemas.push({
+        tipo: 'ssrf',
+        descricao: 'Possível Server-Side Request Forgery (SSRF) - URL controlada por usuário sendo fetchada',
+        severidade: 'critica',
+        linha: numeroLinha,
+        sugestao: 'Valide e sanitize URLs, use allowlist de domínios permitidos'
+      });
+      return;
+    }
+  }
+}
+
+function detectarXSSAvancado(linha: string, numeroLinha: number, problemas: ProblemaSeguranca[]): void {
+  const xssPatterns = [
+    /innerHTML\s*=\s*[^"'=]/,
+    /\.html\s*\(\s*[^"'=]/,
+    /insertAdjacentHTML\s*\(/,
+    /document\.write\s*\(/,
+  ];
+
+  const inputUser = /req\.|params\.|query\.|body\.|input\.|user/;
+
+  for (const pattern of xssPatterns) {
+    if (pattern.test(linha) && inputUser.test(linha)) {
+      problemas.push({
+        tipo: 'xss-avancado',
+        descricao: 'Possível XSS avançado - input do usuário inserido diretamente no DOM',
+        severidade: 'critica',
+        linha: numeroLinha,
+        sugestao: 'Use textContent ou sanitize HTML com biblioteca confiável (DOMPurify)'
+      });
+      return;
+    }
+  }
+}
+
+function detectarOpenRedirect(linha: string, numeroLinha: number, problemas: ProblemaSeguranca[]): void {
+  const redirectPatterns = [
+    /location\.href\s*=/,
+    /location\.assign\s*\(/,
+    /location\.replace\s*\(/,
+    /window\.location\s*=/,
+    /res\.redirect\s*\(/,
+    /router\.push\s*\(/,
+    /Router\.push\s*\(/,
+    /Navigate\s*\(\s*\{/,
+  ];
+
+  const inputUser = /req\.|params\.|query\.|body\.|nextUrl|url\.|redirect/;
+
+  for (const pattern of redirectPatterns) {
+    if (pattern.test(linha) && inputUser.test(linha)) {
+      problemas.push({
+        tipo: 'open-redirect',
+        descricao: 'Possível Open Redirect - URL de redirecionamento controlada por usuário',
+        severidade: 'alta',
+        linha: numeroLinha,
+        sugestao: 'Valide URL contra allowlist ou relative paths apenas'
+      });
+      return;
+    }
+  }
+}
+
 function detectarPadroesPerigosos(src: string, relPath: string, problemas: ProblemaSeguranca[]): void {
   const linhas = src.split('\n');
 
@@ -427,6 +504,9 @@ function detectarPadroesPerigosos(src: string, relPath: string, problemas: Probl
 
     detectarSqlInjection(linha, numeroLinha, problemas);
     detectarCommandInjection(linha, numeroLinha, problemas);
+    detectarSSRF(linha, numeroLinha, problemas);
+    detectarXSSAvancado(linha, numeroLinha, problemas);
+    detectarOpenRedirect(linha, numeroLinha, problemas);
     detectarInsecureDeserialization(linha, numeroLinha, problemas);
     detectarCatastrophicRegex(linha, numeroLinha, problemas);
     detectarWeakRandom(linha, numeroLinha, problemas);

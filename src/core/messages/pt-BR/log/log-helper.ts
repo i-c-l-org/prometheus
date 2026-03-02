@@ -8,6 +8,7 @@
  */
 
 import { config } from '@core/config/config.js';
+
 import { logEngine } from './log-engine.js';
 import { LogMensagens } from './log-messages.js';
 

@@ -19,13 +19,7 @@ import { DetectorInterfacesInlineMensagens } from '@core/messages/analistas/dete
 
 import type { Analista, InterfaceInlineDetection, Ocorrencia } from '@';
 
-/** Ocorrência de tipo inline extraída do código (evita tipo duplicado em vários pontos). */
-interface InlineTypeOccurrence {
-  tipo: string;
-  estrutura: string;
-  linha: number;
-  contexto: string;
-}
+import type { DuplicateEntry,InlineTypeOccurrence } from '../../types/analistas/detectores.js';
 
 const ANALISTA: Analista = {
   nome: 'detector-interfaces-inline',
@@ -390,15 +384,6 @@ function extractAllInlineTypes(src: string): InlineTypeOccurrence[] {
     }
   }
   return tipos;
-}
-
-/**
- * Encontra tipos inline duplicados com base na estrutura normalizada
- */
-interface DuplicateEntry {
-  linha: number;
-  tipo: string;
-  contexto: string;
 }
 
 function findDuplicateTypes(tipos: InlineTypeOccurrence[]): Map<string, DuplicateEntry[]> {

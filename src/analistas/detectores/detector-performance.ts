@@ -9,8 +9,8 @@ import { DetectorAgregadosMensagens } from '@core/messages/analistas/detector-ag
 import { detectarContextoProjeto } from '@shared/contexto-projeto.js';
 import { filtrarOcorrenciasSuprimidas } from '@shared/helpers/suppressao.js';
 
-import type { Analista, Ocorrencia, ProblemaPerformance } from '@';
-import { criarOcorrencia } from '@';
+import type { ContextoExecucao,Ocorrencia, ProblemaPerformance } from '@';
+import { criarAnalista, criarOcorrencia } from '@';
 
 const LIMITE_PERFORMANCE = config.ANALISE_LIMITES?.PERFORMANCE ?? {
   MAX_LOOPS_ANNIDED: 2,
@@ -23,7 +23,7 @@ const LIMITE_PERFORMANCE = config.ANALISE_LIMITES?.PERFORMANCE ?? {
   MAX_IGNORAR_TESTES: true
 };
 
-export const analistaDesempenho: Analista = {
+export const analistaDesempenho = criarAnalista({
   nome: 'performance',
   categoria: 'performance',
   descricao: 'Detecta problemas de performance e otimizações possíveis',
@@ -31,8 +31,8 @@ export const analistaDesempenho: Analista = {
   test: (relPath: string): boolean => {
     return /\.(js|jsx|ts|tsx|mjs|cjs)$/.test(relPath);
   },
-  aplicar: (src: string, relPath: string, ast: NodePath<Node> | null): Ocorrencia[] => {
-    if (!src) return [];
+  aplicar: async (src: string, relPath: string, ast: NodePath<Node> | null, _fullPath?: string, _contexto?: ContextoExecucao): Promise<Ocorrencia[] | null> => {
+    if (!src) return null;
     const contextoArquivo = detectarContextoProjeto({
       arquivo: relPath,
       conteudo: src,
@@ -82,7 +82,7 @@ export const analistaDesempenho: Analista = {
       })];
     }
   }
-};
+});
 function detectarConsoleEmProducao(linha: string, numeroLinha: number, problemas: ProblemaPerformance[]): void {
   const consolePatterns = [
     /console\.(log|debug|info|warn|error)\s*\(/,
@@ -281,6 +281,45 @@ function detectarPadroesPerformance(src: string, problemas: ProblemaPerformance[
         linha: numeroLinha,
         coluna: linha.indexOf('import') + 1,
         sugestao: 'Use imports específicos: import { method } from "lodash/method"'
+      });
+    }
+
+    // JSON.parse grande sem try-catch
+    if (/JSON\.parse\s*\([^)]+\)/.test(linha) && !/\btry\b/.test(linha) && !/catch/.test(linha)) {
+      problemas.push({
+        tipo: 'json-parse-unchecked',
+        descricao: 'JSON.parse sem tratamento de erro pode causar crash',
+        impacto: 'medio',
+        linha: numeroLinha,
+        coluna: linha.indexOf('JSON.parse') + 1,
+        sugestao: 'Use try-catch: try { JSON.parse(str) } catch (e) { ... }'
+      });
+    }
+
+    // setTimeout/setInterval sem throttle em evento frequente
+    if (/\bsetTimeout\s*\(|setInterval\s*\(/.test(linha)) {
+      const eventosFrequentes = /onclick|onmousemove|onkeydown|oninput|onscroll|onresize/i;
+      if (eventosFrequentes.test(linha)) {
+        problemas.push({
+          tipo: 'missing-throttle',
+          descricao: 'Handler em evento frequente sem throttle/debounce pode causar many calls',
+          impacto: 'alto',
+          linha: numeroLinha,
+          coluna: linha.indexOf('setTimeout') + 1,
+          sugestao: 'Use throttle/debounce: lodash.throttle ou custom implementation'
+        });
+      }
+    }
+
+    // document.cookie acesso frequente
+    if (/document\.cookie\s*=/.test(linha)) {
+      problemas.push({
+        tipo: 'cookie-write-frequent',
+        descricao: 'Escrita frequente em document.cookie pode causar performance issues',
+        impacto: 'baixo',
+        linha: numeroLinha,
+        coluna: linha.indexOf('document.cookie') + 1,
+        sugestao: 'Minimize escritas em cookie, use localStorage/sessionStorage para dados maiores'
       });
     }
   });

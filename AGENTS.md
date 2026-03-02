@@ -1,3 +1,11 @@
+---
+Proveniência e Autoria: Este documento integra o projeto Prometheus (licença MIT-0).
+Nada aqui implica cessão de direitos morais/autorais.
+Conteúdos de terceiros não licenciados de forma compatível não devem ser incluídos.
+Referências a materiais externos devem ser linkadas e reescritas com palavras próprias.
+---
+
+
 # AGENTS.md - Instruções do Agente
 
 ## Visão Geral
@@ -50,6 +58,7 @@ npm run build         # Build
 
 # Prometheus CLI
 npm run diagnosticar  # Análise completa
+npm run diagnosticar -- --export # export ralatorios na pasta relatorios
 npm run formatar      # Formatação automática
 npm run guardian      # Verificação de segurança
 ```
@@ -163,3 +172,4 @@ jobs:
 - **Inglês** para comments quando necessário
 - Sempre usar `createI18nMessages` para mensagens internacionalizadas
 - Tipos: `info`, `aviso`, `erro`, `alerta`
+

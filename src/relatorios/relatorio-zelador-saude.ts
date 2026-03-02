@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT-0
-import { estatisticasUsoGlobal } from '@shared/stats.js';
 import chalk from '@core/config/chalk-safe.js';
 import { config } from '@core/config/config.js';
 import { log, logRelatorio, RelatorioMensagens } from '@core/messages/index.js';
+import { estatisticasUsoGlobal } from '@shared/stats.js';
 
 import type { LogComBloco, Ocorrencia } from '@';
 

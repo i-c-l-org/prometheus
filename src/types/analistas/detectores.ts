@@ -178,7 +178,10 @@ export interface ProblemaSeguranca {
     | 'hardcoded-ip'
     | 'jwt-weak'
     | 'tar-pit'
-    | 'bypass-security';
+    | 'bypass-security'
+    | 'ssrf'
+    | 'xss-avancado'
+    | 'open-redirect';
   descricao: string;
   severidade: 'baixa' | 'media' | 'alta' | 'critica';
   linha: number;
@@ -194,6 +197,19 @@ export interface ResultadoContexto {
   confiancaTotal: number;
   evidencias?: Array<{ tipo: string; valor: string }>;
   sugestoesMelhoria?: string[];
+}
+
+export interface InlineTypeOccurrence {
+  tipo: string;
+  estrutura: string;
+  linha: number;
+  contexto: string;
+}
+
+export interface DuplicateEntry {
+  linha: number;
+  tipo: string;
+  contexto: string;
 }
 
 export {};

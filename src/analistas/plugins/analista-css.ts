@@ -258,7 +258,13 @@ function collectCssIssuesFromPostCssAst(root: Root, relPath: string): Msg[] {
     declCount: number;
     hits: Hit[];
   }>();
-  const visit = (container: Container, ctxAtRules: string[], ctxSelectors: string[]) => {
+  const visit = (container: Container, ctxAtRules: string[], ctxSelectors: string[], depth = 0) => {
+    // Detectar nesting profundo
+    if (depth >= 3) {
+      const line = getNodeLine(container);
+      pushOnce(warn(CssMensagens.deepNesting, relPath, line));
+    }
+
     // 1) Duplicidade / !important / url(http:)
     const props: Record<string, {
       value: string;
@@ -383,7 +389,7 @@ function collectCssIssuesFromPostCssAst(root: Root, relPath: string): Msg[] {
 
         // Alguns at-rules tem bloco e nós internos; outros são só linha.
         if (at.nodes && at.nodes.length) {
-          visit(at, [...ctxAtRules, formatAtRuleContext(at)], ctxSelectors);
+          visit(at, [...ctxAtRules, formatAtRuleContext(at)], ctxSelectors, depth);
         }
         return;
       }
@@ -392,7 +398,7 @@ function collectCssIssuesFromPostCssAst(root: Root, relPath: string): Msg[] {
         // Contexto de nesting (SCSS): para regras filhas, adiciona o seletor do container atual
         // (não o seletor da regra filha), evitando misturar árvores de seletores diferentes.
         const nextSelectors = container.type === 'rule' ? [...ctxSelectors, `sel ${String((container as Rule).selector || '').trim()}`] : ctxSelectors;
-        visit(r, ctxAtRules, nextSelectors);
+        visit(r, ctxAtRules, nextSelectors, depth + 1);
       }
     });
   };

@@ -136,3 +136,11 @@ export * from './zeladores/imports.js';
 export * from './zeladores/mapa-reversao.js';
 export * from './zeladores/poda.js';
 export * from './zeladores/pontuacao.js';
+
+// Licensas
+export type {
+  DisclaimerAddResult,
+  DisclaimerVerifyResult,
+  LicenseScanOptions,
+  PackageInfo,
+  ScanResult} from './licensas.js';
