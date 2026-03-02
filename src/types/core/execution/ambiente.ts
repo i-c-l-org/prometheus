@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT-0
 
-import type { Dirent } from 'node:fs';
-
 import type { FileEntryWithAst, Ocorrencia } from '@';
 
 import type { GuardianResult } from '../../guardian/resultado.js';
+
+export type { ScanOptions } from './scan.js';
 
 export interface AmbienteExecucao {
   arquivosValidosSet: Set<string>;
@@ -46,11 +46,4 @@ export interface InquisicaoOptions {
   includeContent?: boolean;
   incluirMetadados?: boolean;
   skipExec?: boolean;
-}
-
-export interface ScanOptions {
-  includeContent?: boolean;
-  includeAst?: boolean;
-  filter?: (relPath: string, entry: Dirent) => boolean;
-  onProgress?: (msg: string) => void;
 }

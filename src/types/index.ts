@@ -30,27 +30,12 @@ export * from './cli/handlers.js';
 export * from './cli/log-extensions.js';
 export * from './cli/metricas.js';
 export * from './cli/metricas-analistas.js';
-export type {
-  FiltrosProcessados,
-  FixTypesOptions,
-  FlagsBrutas,
-  FlagsNormalizadas,
-  FormatoSaida,
-  ModoAutoFix,
-  ModoOperacao,
-  NivelLog,
-  OpcoesProcessamentoFiltros,
-  OtimizarSvgOptions,
-  PrometheusGlobalFlags,
-  ResultadoValidacao,
-  TipoLinguagemProjeto,
-} from './cli/options.js';
+export * from './cli/options.js';
 export * from './cli/processamento-diagnostico.js';
 
 // Comum
 export * from './comum/analistas.js';
 export * from './comum/file-entries.js';
-export * from './comum/ocorrencias.js';
 export * from './comum/package-json.js';
 export * from './comum/utils.js';
 
@@ -65,71 +50,60 @@ export * from './guardian/registros.js';
 export * from './guardian/resultado.js';
 export * from './guardian/snapshot.js';
 
-// Core - Re-export via core/index.ts para paths reorganizados
-export type { QuickFix } from './core/corrections/auto-fix.js';
+// Core
+export * from './core/config/config.js';
+export * from './core/config/filtros.js';
+export * from './core/messages/index.js';
+export * from './core/messages/log.js';
+export * from './core/parsing/babel-narrow.js';
+export * from './core/parsing/parser.js';
+export * from './core/parsing/plugins.js';
+export * from './core/utils/chalk.js';
+
+// Core - Execution (evitar duplicatas)
+export * from './core/execution/ambiente.js';
+export * from './core/execution/estrutura-json.js';
+export * from './core/execution/linguagens.js';
+export * from './core/execution/parse-erros.js';
+export * from './core/execution/registry.js';
+export * from './core/execution/scan.js';
+export * from './core/execution/schema.js';
+export * from './core/execution/workers.js';
+
+// Core - Execution (exports específicos para evitar duplicatas)
 export type {
+  CacheValor,
+  EstadoIncremental,
+  RegistroHistorico,
+} from './core/execution/executor.js';
+export type {
+  EstadoIncArquivo,
+  EstadoIncrementalInquisidor,
   MetricasGlobais,
   SimbolosLog,
 } from './core/execution/inquisidor.js';
-export * from './core/execution/registry.js';
-export * from './core/execution/schema.js';
-export * from './core/execution/workers.js';
-export * from './core/parsing/parser.js';
-export * from './core/utils/chalk.js';
+export * from './core/execution/resultados.js';
 
-// Core Messages (tipos que não conflitam com relatorios)
+// Core - Corrections
+export * from './core/corrections/auto-fix.js';
+
+// Core - Messages Types
 export type {
   AgrupamentoConfig,
   ConfigPrioridade,
   FiltrosConfig,
   MetadadosRelatorioEstendido,
 } from './core/messages.js';
-export * from './core/messages/index.js';
-export * from './core/messages/log.js';
-
-// Core Execution
-export * from './core/execution/ambiente.js';
-export * from './core/execution/estrutura-json.js';
-export type {
-  CacheValor,
-  EstadoIncremental,
-  MetricasGlobaisExecutor,
-  RegistroHistorico,
-} from './core/execution/executor.js';
-export type {
-  EstadoIncArquivo,
-  EstadoIncrementalInquisidor,
-} from './core/execution/inquisidor.js';
-export * from './core/execution/linguagens.js';
-export * from './core/execution/parse-erros.js';
-export * from './core/execution/resultados.js';
-
-// Core Parsing
-export * from './core/parsing/babel-narrow.js';
-export * from './core/parsing/plugins.js';
-
-// Core Config
-export * from './core/config/config.js';
-export * from './core/config/filtros.js';
 
 // Projeto
-export type { TipoProjeto } from './projeto/deteccao.js';
+export * from './projeto/contexto.js';
 export * from './projeto/deteccao.js';
 
 // Relatorios
 export * from './relatorios/index.js';
 
-// Shared - exportação centralizada
+// Shared
 export * from './shared/index.js';
-// Contexto movido para projeto/
-export * from './projeto/contexto.js';
-// Fragmentação e Leitor movidos para relatorios/
-export type {
-  FragmentOptions,
-  ManifestPart,
-  RelatorioCompleto,
-} from './relatorios/fragmentacao.js';
-export * from './relatorios/leitor.js';
 
 // Zeladores
 export * from './zeladores/imports.js';
@@ -143,4 +117,5 @@ export type {
   DisclaimerVerifyResult,
   LicenseScanOptions,
   PackageInfo,
-  ScanResult} from './licensas.js';
+  ScanResult,
+} from './licensas.js';

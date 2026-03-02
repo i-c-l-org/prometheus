@@ -184,26 +184,24 @@ export interface Conselho {
  * Estrutura de relatório completo para fragmentação
  */
 export interface RelatorioCompleto {
-  resultado?: {
-    ocorrencias?: Ocorrencia[];
-    fileEntries?: Array<{
-      relPath?: string;
-      fullCaminho?: string;
-      path?: string;
-      content?: string;
-      [k: string]: unknown;
-    }>;
-    [k: string]: unknown;
-  };
+  resultado?: ResultadoFragmentado;
   ocorrencias?: Ocorrencia[];
-  fileEntries?: Array<{
-    relPath?: string;
-    fullCaminho?: string;
-    path?: string;
-    content?: string;
-    [k: string]: unknown;
-  }>;
-  [k: string]: unknown;
+  fileEntries?: FileEntryFragmentado[];
+  extra?: Record<string, unknown>;
+}
+
+export interface ResultadoFragmentado {
+  ocorrencias?: Ocorrencia[];
+  fileEntries?: FileEntryFragmentado[];
+  extra?: Record<string, unknown>;
+}
+
+export interface FileEntryFragmentado {
+  relPath?: string;
+  fullCaminho?: string;
+  path?: string;
+  content?: string;
+  extra?: Record<string, unknown>;
 }
 
 /**
@@ -214,5 +212,5 @@ export interface ManifestPart {
   items: number;
   sizeBytes: number;
   compressed?: boolean;
-  [k: string]: unknown;
+  extra?: Record<string, unknown>;
 }

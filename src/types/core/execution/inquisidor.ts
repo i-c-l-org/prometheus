@@ -1,9 +1,7 @@
 // SPDX-License-Identifier: MIT-0
 import type { Node } from '@babel/types';
 
-import type { FileEntryWithAst, Ocorrencia } from '@';
-
-import type { GuardianResult } from '../../guardian/resultado.js';
+import type { Ocorrencia } from '@';
 
 export interface SimbolosLog {
   info: string;
@@ -20,7 +18,6 @@ export interface SimbolosLog {
 
 export interface OcorrenciaParseErro extends Omit<Ocorrencia, 'relPath'> {
   relPath?: string;
-  // Atributos específicos de erros de parsing
 }
 
 export function ocorrenciaParseErro(params: {
@@ -34,16 +31,6 @@ export function ocorrenciaParseErro(params: {
     nivel: 'erro',
     origem: params.origem,
   };
-}
-
-export interface ResultadoInquisicaoCompleto {
-  totalArquivos: number;
-  arquivosAnalisados: string[];
-  ocorrencias: Array<OcorrenciaParseErro | Ocorrencia>;
-  timestamp: number;
-  duracaoMs: number;
-  fileEntries: FileEntryWithAst[];
-  guardian: GuardianResult;
 }
 
 export type CacheValor = {

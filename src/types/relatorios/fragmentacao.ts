@@ -1,35 +1,32 @@
 // SPDX-License-Identifier: MIT-0
 /**
  * Tipos para fragmentação de relatórios
- * Originalmente em: src/shared/data-processing/fragmentar-relatorio.ts
  */
 
 import type { FileEntryWithAst } from '../comum/file-entries.js';
-import type { Ocorrencia } from '../comum/ocorrencias.js';
+import type { Ocorrencia } from '../shared/types/occurrence.js';
 
-/**
- * Entrada de arquivo flexível para fragmentação (tipo union específico)
- */
-export type FileEntryFragmentacao = FileEntryWithAst | {
+export type FileEntryFragmentacao = FileEntryWithAst | FileEntryFragmentacaoBasico;
+
+export interface FileEntryFragmentacaoBasico {
   relPath?: string;
   fullCaminho?: string;
   path?: string;
   content?: string | null;
-  [k: string]: unknown;
-};
+  extra?: Record<string, unknown>;
+}
 
-/**
- * Manifesto de fragmentação
- */
 export interface Manifest {
   generatedAt: string;
   baseNome: string;
   parts: ManifestPart[];
 }
+
 export interface FragmentOptions {
   maxOcorrenciasPerShard?: number;
   maxFileEntriesPerShard?: number;
 }
+
 export interface ManifestPart {
   file: string;
   items?: number;
@@ -41,11 +38,12 @@ export interface ManifestPart {
   index?: number;
   total?: number;
   summary?: Record<string, unknown>;
-  [k: string]: unknown;
+  extra?: Record<string, unknown>;
 }
+
 export interface RelatorioCompleto {
-  resultado?: unknown; // Pode ser ResultadoInquisicaoCompleto ou estrutura customizada
+  resultado?: unknown;
   ocorrencias?: Ocorrencia[];
   fileEntries?: FileEntryWithAst[];
-  [k: string]: unknown;
+  extra?: Record<string, unknown>;
 }

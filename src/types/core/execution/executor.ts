@@ -41,15 +41,4 @@ export type EstadoIncremental = {
   };
 };
 
-// MetricasGlobais agora vem de core/inquisidor.ts
-
-export interface MetricasGlobaisExecutor {
-  tempoAnaliseMs: number;
-  tempoParsingMs: number;
-  arquivosAnalisados: number;
-  ocorrenciasEncontradas: number;
-  astCacheHits: number;
-  astCacheMiss: number;
-}
-
 export type RegistroHistorico = MetricaExecucao & { timestamp: number };
