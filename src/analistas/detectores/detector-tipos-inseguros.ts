@@ -14,6 +14,7 @@ import { categorizarUnknown, extractVariableName, isAnyInGenericFunction, isInSt
 import type { NodePath } from '@babel/traverse';
 import type { Node } from '@babel/types';
 import { config } from '@core/config/config.js';
+import { DetectorTiposInsegurosMensagens } from '@core/messages/pt-BR/analistas/detector-tipos-inseguros-messages.js';
 import { shouldSuppressOccurrence } from '@shared/helpers/rule-config.js';
 
 import type { Analista, Ocorrencia } from '@';
@@ -177,9 +178,9 @@ const ANALISTA: Analista = {
 
   /* -------------------------- DETECTAR TIPOS INSEGUROS (Object, Function) -------------------------- */
     const tiposInseguros = [
-      { padrao: /:\s*Object\b(?!\s*\.prototype)/g, tipo: 'tipo-inseguro-object', mensagem: 'Tipo Object é muito permissivo - qualquer valor é aceito', sugestao: 'Use tipo específico: string, number[], Record<string, T>, interface específica' },
-      { padrao: /:\s*Function\b/g, tipo: 'tipo-inseguro-function', mensagem: 'Tipo Function é muito permissivo - aceita qualquer função', sugestao: 'Defina assinatura específica: (param: Tipo) => RetornoType ou use CallableType' },
-      { padrao: /:\s*\{\s*\}\s*=/g, tipo: 'tipo-inseguro-empty-object', mensagem: 'Objeto vazio {} é permissivo - não garante estrutura', sugestao: 'Defina interface ou type específico para o objeto' }
+      { padrao: /:\s*Object\b(?!\s*\.prototype)/g, tipo: 'tipo-inseguro-object', chaveMensagem: 'tipoInseguroObject', chaveSugestao: 'sugestaoObject' },
+      { padrao: /:\s*Function\b/g, tipo: 'tipo-inseguro-function', chaveMensagem: 'tipoInseguroFunction', chaveSugestao: 'sugestaoFunction' },
+      { padrao: /:\s*\{\s*\}\s*=/g, tipo: 'tipo-inseguro-empty-object', chaveMensagem: 'tipoInseguroEmptyObject', chaveSugestao: 'sugestaoEmptyObject' }
     ];
 
     for (const tipoInseguro of tiposInseguros) {
@@ -191,7 +192,7 @@ const ANALISTA: Analista = {
 
         const linha = src.substring(0, position).split('\n').length;
         const lineContext = src.split('\n')[linha - 1]?.trim() || '';
-        const mensagemCompleta = `${tipoInseguro.mensagem} | [SUGESTAO] ${tipoInseguro.sugestao} | [REVISAO] Revisao manual recomendada`;
+        const mensagemCompleta = `${DetectorTiposInsegurosMensagens[tipoInseguro.chaveMensagem as keyof typeof DetectorTiposInsegurosMensagens]()} | [SUGESTAO] ${DetectorTiposInsegurosMensagens[tipoInseguro.chaveSugestao as keyof typeof DetectorTiposInsegurosMensagens]()} | [REVISAO] ${DetectorTiposInsegurosMensagens.revisaoManual}`;
 
         if (shouldSuppressOccurrence(tipoInseguro.tipo, relPath)) continue;
         ocorrencias.push({

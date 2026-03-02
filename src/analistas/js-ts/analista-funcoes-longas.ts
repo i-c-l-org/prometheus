@@ -2,6 +2,7 @@
 import type { NodePath } from '@babel/traverse';
 import type { Node } from '@babel/types';
 import { config } from '@core/config/config.js';
+import { AnalistaFuncoesLongasMensagens } from '@core/messages/pt-BR/analistas/analista-funcoes-longas-messages.js';
 import { detectarContextoProjeto } from '@shared/contexto-projeto.js';
 
 import type { FileLike, FunctionLikeNode, Ocorrencia } from '@';
@@ -51,23 +52,23 @@ export const analistaFuncoesLongas = criarAnalista({
       const endLine = loc.end.line;
       const linhas = endLine - startLine + 1;
       if (linhas > limitesAjustados.linhas) {
-        pushOcorrencia('FUNCAO_LONGA', 'aviso', startLine, `Função com ${linhas} linhas (máx: ${limitesAjustados.linhas})`);
+        pushOcorrencia('FUNCAO_LONGA', 'aviso', startLine, AnalistaFuncoesLongasMensagens.funcaoLonga(linhas, limitesAjustados.linhas));
       }
       const paramsArr = fn.params;
       if (paramsArr && Array.isArray(paramsArr) && paramsArr.length > limitesAjustados.parametros) {
-        pushOcorrencia('MUITOS_PARAMETROS', 'aviso', startLine, `Função com muitos parâmetros (${paramsArr.length}, máx: ${limitesAjustados.parametros})`);
+        pushOcorrencia('MUITOS_PARAMETROS', 'aviso', startLine, AnalistaFuncoesLongasMensagens.muitosParametros(paramsArr.length, limitesAjustados.parametros));
       }
 
       // Verifica se a função está aninhada demais
       if (_aninhamento > limitesAjustados.aninhamento) {
-        pushOcorrencia('FUNCAO_ANINHADA', 'aviso', startLine, `Função aninhada em nível ${_aninhamento} (máx: ${limitesAjustados.aninhamento})`);
+        pushOcorrencia('FUNCAO_ANINHADA', 'aviso', startLine, AnalistaFuncoesLongasMensagens.funcaoAninhada(_aninhamento, limitesAjustados.aninhamento));
       }
 
       // Verifica se a função não tem comentário - menos rigoroso para testes
       if (fn.leadingComments == null || Array.isArray(fn.leadingComments) && fn.leadingComments.length === 0) {
         if (!contextoArquivo.isTest) {
           // Testes não precisam comentários obrigatórios
-          pushOcorrencia('FUNCAO_SEM_COMENTARIO', 'info', startLine, `Função sem comentário acima.`);
+          pushOcorrencia('FUNCAO_SEM_COMENTARIO', 'info', startLine, AnalistaFuncoesLongasMensagens.funcaoSemComentario());
         }
       }
     }

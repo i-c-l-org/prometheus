@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT-0
+import { AnalistaGithubActionsMensagens } from '@core/messages/pt-BR/analistas/analista-github-actions-messages.js';
 import { createLineLookup } from '@shared/helpers/line-lookup.js';
 
 import { criarAnalista, criarOcorrencia } from '@';
@@ -27,7 +28,7 @@ export const analistaGithubActions = criarAnalista({
         linha: 1,
         nivel: 'aviso',
         tipo: 'cicd-timeout-ausente',
-        mensagem: 'Workflow sem "timeout-minutes" definido. Jobs travados podem consumir créditos excessivos.'
+        mensagem: AnalistaGithubActionsMensagens.timeoutAusente
       }));
     }
 
@@ -38,7 +39,7 @@ export const analistaGithubActions = criarAnalista({
         linha: src.indexOf('permissions: write-all') !== -1 ? lineOf(src.indexOf('permissions: write-all')) : 1,
         nivel: 'erro',
         tipo: 'cicd-permissao-excessiva',
-        mensagem: 'Uso de "permissions: write-all" detectado. Isso viola o princípio do privilégio mínimo.'
+        mensagem: AnalistaGithubActionsMensagens.permissaoExcessiva
       }));
     }
 
@@ -50,7 +51,7 @@ export const analistaGithubActions = criarAnalista({
         linha: lineOf(src.indexOf('pull_request_target:')),
         nivel: 'erro',
         tipo: 'cicd-pr-target-perigoso',
-        mensagem: 'Uso potencial de "pull_request_target" com checkout de código não confiável.'
+        mensagem: AnalistaGithubActionsMensagens.prTargetPerigoso
       }));
     }
 
@@ -61,7 +62,7 @@ export const analistaGithubActions = criarAnalista({
         linha: 1,
         nivel: 'info',
         tipo: 'cicd-concurrency-ausente',
-        mensagem: 'Workflow sem grupo de "concurrency". Execuções simultâneas podem causar conflitos de deploy.'
+        mensagem: AnalistaGithubActionsMensagens.concurrencyAusente
       }));
     }
 
@@ -72,21 +73,21 @@ export const analistaGithubActions = criarAnalista({
         linha: lineOf(src.indexOf('actions/setup-node')),
         nivel: 'info',
         tipo: 'cicd-cache-ausente',
-        mensagem: 'setup-node detectado sem configuração de cache.'
+        mensagem: AnalistaGithubActionsMensagens.cacheAusente
       }));
     }
 
     // 6. Segurança: GITHUB_TOKEN exposto em logs
     if (/\${{\s*secrets\.\w+\s*}}/.test(src) && /\${{\s*github\.token\s*}}/.test(src)) {
-      if (src.includes('::set-output') || src.includes('$GITHUB_OUTPUT')) {
-        ocorrencias.push(criarOcorrencia({
-          relPath,
-          linha: lineOf(src.indexOf('::set-output') || src.indexOf('$GITHUB_OUTPUT')),
-          nivel: 'aviso',
-          tipo: 'cicd-token-exposto',
-          mensagem: 'GITHUB_TOKEN pode ser exposto em outputs. Use $GITHUB_OUTPUT com cuidado.'
-        }));
-      }
+        if (src.includes('::set-output') || src.includes('$GITHUB_OUTPUT')) {
+          ocorrencias.push(criarOcorrencia({
+            relPath,
+            linha: lineOf(src.indexOf('::set-output') || src.indexOf('$GITHUB_OUTPUT')),
+            nivel: 'aviso',
+            tipo: 'cicd-token-exposto',
+            mensagem: AnalistaGithubActionsMensagens.tokenExposto
+          }));
+        }
     }
 
     // 7. Segurança: set-output é Deprecated
@@ -96,7 +97,7 @@ export const analistaGithubActions = criarAnalista({
         linha: lineOf(src.indexOf('::set-output')),
         nivel: 'aviso',
         tipo: 'cicd-set-output-deprecado',
-        mensagem: 'Uso de "::set-output" detectado. Este comando está deprecated.'
+        mensagem: AnalistaGithubActionsMensagens.setOutputDeprecado
       }));
     }
 
@@ -109,7 +110,7 @@ export const analistaGithubActions = criarAnalista({
           linha: lineOf(src.indexOf(runner)),
           nivel: 'info',
           tipo: 'cicd-runner-caro',
-          mensagem: `Uso de runner "${runner}" detectado. Considere usar ubuntu-latest para reduzir custos.`
+          mensagem: AnalistaGithubActionsMensagens.runnerCaro(runner)
         }));
       }
     }

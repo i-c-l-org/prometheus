@@ -17,7 +17,9 @@ export const DetectorDependenciasMensagens = createI18nMessages({
   importSemExtensao: (modulo: string) => `Import sem extensão explícita: '${modulo}'. Considere adicionar para clareza.`,
   importHttpInseguro: (url: string) => `Import de URL HTTP (inseguro): '${url}'. Use HTTPS.`,
   importNaoResolvido: (modulo: string) => `Módulo não resolvido: '${modulo}'. Verifique installed/typos.`,
-  duplicataDependencia: (nome: string) => `Dependência duplicada detectada: '${nome}'. Remova duplicatas.`
+  duplicataDependencia: (nome: string) => `Dependência duplicada detectada: '${nome}'. Remova duplicatas.`,
+  dependenciaFantasmaImport: (nome: string) => `Dependência fantasma: "${nome}" é importado mas não está no package.json.`,
+  dependenciaFantasmaRequire: (nome: string) => `Dependência fantasma: "${nome}" é requerido mas não está no package.json.`
 }, {
   importDependenciaExterna: (val: string) => `External dependency import: '${val}'`,
   importRelativoLongo: (val: string) => `Relative import goes up too many directories: '${val}'`,
@@ -34,5 +36,7 @@ export const DetectorDependenciasMensagens = createI18nMessages({
   importSemExtensao: (modulo: string) => `Import without explicit extension: '${modulo}'. Consider adding for clarity.`,
   importHttpInseguro: (url: string) => `Import from HTTP URL (insecure): '${url}'. Use HTTPS.`,
   importNaoResolvido: (modulo: string) => `Unresolved module: '${modulo}'. Check if installed/typos.`,
-  duplicataDependencia: (nome: string) => `Duplicate dependency detected: '${nome}'. Remove duplicates.`
+  duplicataDependencia: (nome: string) => `Duplicate dependency detected: '${nome}'. Remove duplicates.`,
+  dependenciaFantasmaImport: (nome: string) => `Phantom dependency: "${nome}" is imported but not in package.json.`,
+  dependenciaFantasmaRequire: (nome: string) => `Phantom dependency: "${nome}" is required but not in package.json.`
 });
