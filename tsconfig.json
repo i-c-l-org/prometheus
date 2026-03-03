@@ -63,6 +63,9 @@
       "@types/types": [
         "./src/types/index.ts"
       ],
+      "@types/utils": [
+        "./src/types/utils/index.ts"
+      ],
       "@types/analistas": [
         "./src/types/analistas/index.ts"
       ],
