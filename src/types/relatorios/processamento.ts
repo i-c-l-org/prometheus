@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT-0
 
+import type { ContextoRelatorio } from '../utils/context.js';
 import type { Pendencia } from '../zeladores/poda.js';
 
 /**
@@ -18,16 +19,8 @@ export interface PendenciaProcessavel extends Pendencia {
   [key: string]: unknown; // permite campos adicionais dinâmicos
 }
 
-/**
- * Contexto de processamento de relatório
- */
-export interface ContextoRelatorio {
-  total: number;
-  processados: number;
-  erros: number;
-  tempo?: number;
-  [key: string]: unknown;
-}
+// Re-export consolidado
+export type { ContextoRelatorio };
 
 /**
  * Type guard para verificar se objeto é uma pendência processável

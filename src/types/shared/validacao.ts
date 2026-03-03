@@ -7,6 +7,9 @@
  * FILOSOFIA: Tolerância zero ao código frágil, sem compromissos com dependências externas
  */
 
+// Re-exportar tipos consolidados de utils para compatibilidade
+export type { ContextoRelatorio } from '../utils/context.js';
+
 /**
  * Tipo padronizado para errors em toda a aplicação
  * Use este tipo em catch blocks e error handling
@@ -201,20 +204,6 @@ export interface EntradaMapaReversao {
   conteudoAnterior?: string;
   conteudoPosterior?: string;
   hash?: string;
-}
-
-/**
- * Contexto de relatório
- */
-export interface ContextoRelatorio {
-  total: number;
-  processados: number;
-  erros: number;
-  tempo?: number;
-  avisos?: number;
-  sucessos?: number;
-  fase?: string;
-  detalhes?: string;
 }
 
 /**
