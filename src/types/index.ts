@@ -43,13 +43,6 @@ export * from './comum/utils.js';
 export * from './estrutura/arquetipos.js';
 export * from './estrutura/plano-estrutura.js';
 
-// Utils - Tipos reutilizáveis
-export * from './utils/context.js';
-export * from './utils/exports.js';
-export * from './utils/handlers.js';
-export * from './utils/resultado.js';
-export * from './utils/validacao.js';
-
 // Guardian
 export * from './guardian/baseline.js';
 export * from './guardian/integridade.js';
