@@ -1,14 +1,10 @@
+// ARQUIVO GERADO AUTOMATICAMENTE
 {
   "$schema": "https://www.schemastore.org/tsconfig",
   "compilerOptions": {
-    "target": "ES2024",
+    "target": "es2022",
     "lib": [
-      "ES2024",
-      "ESNext.Array",
-      "ESNext.Collection",
-      "ESNext.Error",
-      "ESNext.Iterator",
-      "ESNext.Promise"
+      "es2022"
     ],
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
@@ -91,7 +87,8 @@
   },
   "include": [
     "src/**/*.ts",
-    "src/**/*.d.ts"
+    "src/**/*.d.ts",
+    "**/*.d.ts"
   ],
   "exclude": [
     "dist",

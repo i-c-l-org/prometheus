@@ -3,7 +3,7 @@
  * Tipos para sistema de correções automáticas
  */
 
-import type { Ocorrencia } from '../shared/types/occurrence.js';
+import type { Ocorrencia } from '../shared/index.js';
 
 /**
  * Resultado de uma correção aplicada em um arquivo

@@ -54,6 +54,6 @@ export interface OpcoesPlanejamento {
  * Originalmente em: src/analistas/estrategistas/operario-estrutura.ts
  */
 export interface ResultadoPlanejamento {
-  plano?: import('../estrutura/plano-estrutura.js').PlanoSugestaoEstrutura;
+  plano?: import('../shared/index.js').PlanoSugestaoEstrutura;
   origem: 'arquetipos' | 'estrategista' | 'nenhum';
 }

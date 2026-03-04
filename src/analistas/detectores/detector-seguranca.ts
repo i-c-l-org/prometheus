@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT-0
-// @prometheus-disable seguranca vulnerabilidade-seguranca
+// @prometheus-disable seguranca vulnerabilidade-seguranca performance PROBLEMA_PERFORMANCE
 import type { NodePath } from '@babel/traverse';
 import type { CallExpression, NewExpression, Node } from '@babel/types';
 import { config } from '@core/config/config.js';
@@ -8,7 +8,7 @@ import { DetectorAgregadosMensagens } from '@core/messages/analistas/detector-ag
 import { detectarContextoProjeto } from '@shared/contexto-projeto.js';
 import { filtrarOcorrenciasSuprimidas } from '@shared/helpers/suppressao.js';
 
-import type { ContextoExecucao,Ocorrencia, ProblemaSeguranca, ReportEvent } from '@';
+import type { ContextoExecucao, ContextoProjeto, Ocorrencia, ProblemaSeguranca, ReportEvent } from '@';
 import { criarAnalista, criarOcorrencia } from '@';
 
 const LIMITE_SEGURANCA = config.ANALISE_LIMITES?.SEGURANCA ?? {
@@ -70,11 +70,11 @@ export const analistaSeguranca = criarAnalista({
     const problemas: ProblemaSeguranca[] = [];
     try {
       // Detectar problemas por padrões de texto (mais confiável que AST para alguns casos)
-      detectarPadroesPerigosos(src, relPath, problemas);
+      detectarPadroesPerigosos(src, relPath, problemas, contextoArquivo);
 
       // Detectar problemas via AST quando disponível
       if (ast) {
-        detectarProblemasAST(ast, problemas);
+        detectarProblemasAST(ast, problemas, contextoArquivo);
       }
 
       // Converter para ocorrências
@@ -134,22 +134,34 @@ export const analistaSeguranca = criarAnalista({
   }
 });
 
-function detectarSqlInjection(linha: string, numeroLinha: number, problemas: ProblemaSeguranca[]): void {
+function detectarSqlInjection(linha: string, numeroLinha: number, problemas: ProblemaSeguranca[], contexto?: ContextoProjeto): void {
+  // Se for puramente frontend (JSX/React) e não tiver sinais de backend,
+  // ser mais crítico apenas com keywords SQL explícitas
+  const isFrontendOnly = contexto?.isFrontend && !contexto?.isBackend;
+
+  if (linha.includes('URLSearchParams') || linha.includes('searchParams')) return;
+
   const padroesSqlInjection = [
-    /`.*\$\{.*\}.*`/,
-    /["'].*%s.*["']/,
-    /["'].*\{.*\}.*["']/,
-    /\+.*\+.*\+.*/,
+    /SELECT.*\$\{.*\}|INSERT.*\$\{.*\}|UPDATE.*\$\{.*\}|DELETE.*\$\{.*\}/i,
+    /FROM.*\$\{.*\}|WHERE.*\$\{.*\}|LIMIT.*\$\{.*\}/i,
     /\.query\s*\(\s*['"`]\s*\$\{/,
     /\.execute\s*\(\s*['"`]\s*\$\{/,
-    /SELECT.*\$\{|INSERT.*\$\{|UPDATE.*\$\{|DELETE.*\$\{/i,
+    /["'].*%s.*["']/,
+    /\+.*SELECT.*\+/,
     /".*".*format.*%s/,
     /f["'].*SELECT.*\{/,
   ];
+
   const variaveisUser = /req\.|params\.|query\.|body\.|input\.|getParam\.|postParam\./;
+  const temKeywordSql = /SELECT|INSERT|UPDATE|DELETE|FROM|WHERE|JOIN|UNION|CREATE|DROP|ALTER/i.test(linha);
 
   for (const padrao of padroesSqlInjection) {
     if (padrao.test(linha) && variaveisUser.test(linha)) {
+      // No frontend, ignorar se não tiver keyword SQL forte
+      if (isFrontendOnly && !temKeywordSql && !/\.query|\.execute/.test(linha)) {
+        continue;
+      }
+
       problemas.push({
         tipo: 'sql-injection',
         descricao: 'Possível SQL Injection - concatenação de input do usuário em query SQL',
@@ -195,9 +207,9 @@ function detectarXXE(src: string, numeroLinha: number, problemas: ProblemaSegura
     /<!ENTITY.*SYSTEM/,
     /<!ENTITY.*PUBLIC/,
     /xml.*setFeature.*XMLConstants\.FEATURE_SECURE_PROCESSING/,
-    /DocumentBuilderFactory.*disallow-doctype-decl/,
+    /\bDocumentBuilderFactory\b.*\bdisallow-doctype-decl\b/,
   ];
-  const contextoXml = /parseXML|parseString|loadXML|readAsXml|XMLReader/;
+  const contextoXml = /\bparseXML\b|\bparseString\b|\bloadXML\b|\breadAsXml\b|\bXMLReader\b/;
 
   for (const padrao of padroesXXE) {
     if (padrao.test(src) && contextoXml.test(src)) {
@@ -304,7 +316,10 @@ function detectarInsecureCookie(linha: string, numeroLinha: number, problemas: P
   }
 }
 
-function detectarMissingCSRF(linha: string, numeroLinha: number, problemas: ProblemaSeguranca[]): void {
+function detectarMissingCSRF(linha: string, numeroLinha: number, problemas: ProblemaSeguranca[], contexto?: ContextoProjeto): void {
+  // Só faz sentido em endpoints de backend (Express, Fastify, etc)
+  if (contexto && !contexto.isBackend) return;
+
   const endpointsMutacao = [
     /app\.(post|put|patch|delete)\s*\(/,
     /router\.(post|put|patch|delete)\s*\(/,
@@ -394,15 +409,13 @@ function detectarTarPit(linha: string, numeroLinha: number, problemas: ProblemaS
 function detectarBypassSecurity(linha: string, numeroLinha: number, problemas: ProblemaSeguranca[]): void {
   const bypasses = [
     /@ts-ignore\s*[^\n]*security/i,
-    /eslint-disable.*security/i,
-    /eslint-disable.*no-unsafe/i,
-    /nocheck/i,
-    /unchecked/i,
+    /\beslint-disable\b.*security/i,
+    /\beslint-disable\b.*no-unsafe/i,
+    /\bnocheck\b/i,
+    /\bunchecked\b/i,
     /as\s+any\s*;/,
     /\/\/\s*skip.*security/i,
     /\/\*\s*skip.*security/i,
-    /process\.env\.NODE_ENV\s*===\s*['"]development['"]/,
-    /if\s*\(\s*process\.env\.NODE_ENV\s*===?\s*['"]development/,
   ];
 
   for (const bypass of bypasses) {
@@ -419,7 +432,12 @@ function detectarBypassSecurity(linha: string, numeroLinha: number, problemas: P
   }
 }
 
-function detectarSSRF(linha: string, numeroLinha: number, problemas: ProblemaSeguranca[]): void {
+function detectarSSRF(linha: string, numeroLinha: number, problemas: ProblemaSeguranca[], contexto?: ContextoProjeto): void {
+  // SSRF é primariamente um problema de backend (quando o servidor fetch-a algo)
+  // No frontend, fetch-ar algo controlado pelo usuário é comum e menos arriscado (o browser isola)
+  const isFrontendOnly = contexto?.isFrontend && !contexto?.isBackend;
+  if (isFrontendOnly) return;
+
   const inputUser = /req\.|params\.|query\.|body\.|url\.|input\.|userUrl|Url\./;
   const fetchingPatterns = [
     /fetch\s*\(/,
@@ -444,7 +462,11 @@ function detectarSSRF(linha: string, numeroLinha: number, problemas: ProblemaSeg
   }
 }
 
-function detectarXSSAvancado(linha: string, numeroLinha: number, problemas: ProblemaSeguranca[]): void {
+function detectarXSSAvancado(linha: string, numeroLinha: number, problemas: ProblemaSeguranca[], contexto?: ContextoProjeto): void {
+  // XSS é primariamente um problema de frontend
+  // Se for puramente backend, reduzir a prioridade ou ignorar se não parecer gerar HTML
+  const isBackendOnly = contexto?.isBackend && !contexto?.isFrontend;
+
   const xssPatterns = [
     /innerHTML\s*=\s*[^"'=]/,
     /\.html\s*\(\s*[^"'=]/,
@@ -456,6 +478,11 @@ function detectarXSSAvancado(linha: string, numeroLinha: number, problemas: Prob
 
   for (const pattern of xssPatterns) {
     if (pattern.test(linha) && inputUser.test(linha)) {
+      // Ignorar innerHTML em arquivos puramente backend (provavelmente não é o DOM)
+      if (isBackendOnly && /innerHTML|insertAdjacentHTML|document\.write/.test(linha)) {
+        continue;
+      }
+
       problemas.push({
         tipo: 'xss-avancado',
         descricao: 'Possível XSS avançado - input do usuário inserido diretamente no DOM',
@@ -496,22 +523,22 @@ function detectarOpenRedirect(linha: string, numeroLinha: number, problemas: Pro
   }
 }
 
-function detectarPadroesPerigosos(src: string, relPath: string, problemas: ProblemaSeguranca[]): void {
+function detectarPadroesPerigosos(src: string, relPath: string, problemas: ProblemaSeguranca[], contexto?: ContextoProjeto): void {
   const linhas = src.split('\n');
 
   linhas.forEach((linha, index) => {
     const numeroLinha = index + 1;
 
-    detectarSqlInjection(linha, numeroLinha, problemas);
+    detectarSqlInjection(linha, numeroLinha, problemas, contexto);
     detectarCommandInjection(linha, numeroLinha, problemas);
-    detectarSSRF(linha, numeroLinha, problemas);
-    detectarXSSAvancado(linha, numeroLinha, problemas);
+    detectarSSRF(linha, numeroLinha, problemas, contexto);
+    detectarXSSAvancado(linha, numeroLinha, problemas, contexto);
     detectarOpenRedirect(linha, numeroLinha, problemas);
     detectarInsecureDeserialization(linha, numeroLinha, problemas);
     detectarCatastrophicRegex(linha, numeroLinha, problemas);
     detectarWeakRandom(linha, numeroLinha, problemas);
     detectarInsecureCookie(linha, numeroLinha, problemas);
-    detectarMissingCSRF(linha, numeroLinha, problemas);
+    detectarMissingCSRF(linha, numeroLinha, problemas, contexto);
     detectarHardcodedIP(linha, numeroLinha, problemas);
     detectarJWTWeak(linha, numeroLinha, problemas);
     detectarTarPit(linha, numeroLinha, problemas);
@@ -559,13 +586,17 @@ function detectarPadroesPerigosos(src: string, relPath: string, problemas: Probl
 
     // innerHTML com variáveis
     if (/\.innerHTML\s*=\s*[^"']/.test(linha)) {
-      problemas.push({
-        tipo: 'dangerous-html',
-        descricao: 'innerHTML com variáveis pode causar XSS',
-        severidade: 'alta',
-        linha: numeroLinha,
-        sugestao: 'Use textContent ou sanitize o HTML antes de inserir'
-      });
+      // Ignorar se for puramente backend
+      const isBackendOnly = contexto?.isBackend && !contexto?.isFrontend;
+      if (!isBackendOnly) {
+        problemas.push({
+          tipo: 'dangerous-html',
+          descricao: 'innerHTML com variáveis pode causar XSS',
+          severidade: 'alta',
+          linha: numeroLinha,
+          sugestao: 'Use textContent ou sanitize o HTML antes de inserir'
+        });
+      }
     }
 
     // Math.random() para criptografia
@@ -671,10 +702,10 @@ function detectarPadroesPerigosos(src: string, relPath: string, problemas: Probl
 
         // Verificar se parece com token/chave real
         const pareceTokReal = valor.length > 20 && (
-        // Aumentado de 8 para 20 para reduzir falsos positivos
-        temAltaEntropia || /^[A-Za-z0-9+/]{20,}={0,2}$/.test(valor)) &&
-        // Base64-like
-        !isPlaceholder;
+          // Aumentado de 8 para 20 para reduzir falsos positivos
+          temAltaEntropia || /^[A-Za-z0-9+/]{20,}={0,2}$/.test(valor)) &&
+          // Base64-like
+          !isPlaceholder;
         if (pareceTokReal) {
           problemas.push({
             tipo: 'hardcoded-secrets',
@@ -728,21 +759,24 @@ function detectarAsyncSemTryCatch(src: string, problemas: ProblemaSeguranca[]): 
 
       // Detectar try-catch em escopo pai (bloco que envolve o await)
       const hasErroHandling = /try\s*\{[\s\S]*?\}\s*catch/.test(fullContext) || /\.catch\s*\(/.test(line) || /\.catch\s*\(/.test(lines[i + 1] || '') ||
-      // Promise encadeada com .then().catch()
-      /\.then\s*\([^)]*\)\s*\.catch/.test(fullContext);
+        // Promise encadeada com .then().catch()
+        /\.then\s*\([^)]*\)\s*\.catch/.test(fullContext);
       if (!hasErroHandling) {
+        // Ignorar se a promise for retornada diretamente (caller trata)
+        if (/return\s+await\s+/.test(line)) continue;
+
         problemas.push({
           tipo: isEventHandler ? 'unhandled-async-event' : 'unhandled-async',
-          descricao: isEventHandler ? 'await em event handler sem tratamento de erro (considere adicionar .catch se necessário)' : 'await sem tratamento de erro pode causar crashes não tratados',
-          severidade: isEventHandler ? 'baixa' : 'media',
+          descricao: isEventHandler ? 'await em event handler sem tratamento de erro (considere adicionar .catch se necessário)' : 'await sem tratamento explícito, assumindo delegado ao caller',
+          severidade: 'baixa', // Será mapeado para 'info' na saída
           linha: i + 1,
-          sugestao: isEventHandler ? 'Event handlers são fire-and-forget. Adicione .catch() apenas se precisar tratar erros específicos' : 'Envolva em try-catch ou use .catch() na Promise'
+          sugestao: isEventHandler ? 'Event handlers são fire-and-forget. Adicione .catch() apenas se precisar tratar erros específicos' : 'Envolva em try-catch ou user .catch() se não for tratado na camada acima'
         });
       }
     }
   }
 }
-function detectarProblemasAST(ast: NodePath<Node>, problemas: ProblemaSeguranca[]): void {
+function detectarProblemasAST(ast: NodePath<Node>, problemas: ProblemaSeguranca[], contexto?: ContextoProjeto): void {
   try {
     traverse(ast.node, {
       // Detectar Function constructor

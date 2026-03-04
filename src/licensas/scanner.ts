@@ -39,11 +39,11 @@ export async function scan({
       if (entryNome === '.bin') return;
       const full = path.join(nmDir, entryNome);
       if (entryNome.startsWith('@')) {
-        const scoped = await fsReaddir(full).catch(() => []);
+        const scopedEntries = await fsReaddir(full).catch(() => []);
         await Promise.all(
-          scoped.map(async (s) => {
-            const p = path.join(full, s);
-            if (await fsStatIsDir(p)) await processPackage(p, result);
+          scopedEntries.map(async (scopedEntry) => {
+            const packagePath = path.join(full, scopedEntry);
+            if (await fsStatIsDir(packagePath)) await processPackage(packagePath, result);
           }),
         );
       } else {
@@ -69,7 +69,7 @@ export async function scan({
     const licenseValor = await normalizeLicense(rawLicenca || 'UNKNOWN');
     const licenseArquivo = await findLicenseFileAsync(pkgDir);
     const repo = data.repository;
-    const repository = repo == null ? null : typeof repo === 'string' ? repo : (typeof repo === 'object' && repo != null && 'url' in repo ? String((repo as { url: unknown }).url) : null);
+    const repository = repo == null ? null : typeof repo === 'string' ? repo : (typeof repo === 'object' && repo != null && 'url' in repo ? String((repo as { url: string }).url) : null);
     resObj.packages.push({
       name,
       version,

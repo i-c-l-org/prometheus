@@ -1,6 +1,6 @@
 {
   "name": "prometheus",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "type": "module",
   "description": "CLI modular para análise, diagnóstico e manutenção de projetos JavaScript/TypeScript",
   "author": "Italo C Lopes",
@@ -88,7 +88,7 @@
     "micromatch": "^4.0.8",
     "ora": "^9.3.0",
     "p-limit": "^7.3.0",
-    "prometheus": "file:prometheus-0.4.0.tgz",
+    "prometheus": "file:prometheus-0.4.1.tgz",
     "xxhashjs": "^0.2.2"
   },
   "devDependencies": {

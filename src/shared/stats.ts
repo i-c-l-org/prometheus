@@ -3,6 +3,9 @@ import type { Estatisticas } from '@';
 
 export type { Estatisticas };
 
+/**
+ * Cria um objeto de estatísticas vazio com as chaves padrão
+ */
 export const createEstatisticas = (): Estatisticas => ({
   requires: {},
   consts: {},
@@ -13,5 +16,7 @@ export const createEstatisticas = (): Estatisticas => ({
   withs: {}
 });
 
-// Estatísticas globais compartilhadas entre analistas e relatorios
+/**
+ * Estatísticas globais compartilhadas entre analistas e relatórios
+ */
 export const estatisticasUsoGlobal: Estatisticas = createEstatisticas();

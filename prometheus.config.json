@@ -1,5 +1,8 @@
 {
   "LANGUAGE": "en",
+  "conventions": {
+    "typesDirectory": "src/types"
+  },
   "INCLUDE_EXCLUDE_RULES": {
     "globalExcludeGlob": [
       "node_modules/**",
@@ -104,9 +107,6 @@
       "todo-comments",
       "analista-padroes-uso"
     ],
-    "conventions": {
-      "typesDirectory": "src/types"
-    },
     "analystsExclude": [
       "documentacao",
       "duplicacoes",

@@ -128,8 +128,8 @@ function detectarPadroesDocumentacao(src: string, problemas: ProblemaDocumentaca
     }
 
     // Números mágicos (não em arrays ou comparações simples)
-    const numMagico = /\b(\d{2,})\b/.exec(linha);
-    if (numMagico && !/(length|size|count)\s*[=><!]/.test(linha) && !/\[\s*\d+\s*\]/.test(linha) && parseInt(numMagico[1]) > 10) {
+    const numMagico = /\b(\d{3,})\b/.exec(linha);
+    if (numMagico && !/(length|size|count|status|code|port|timeout|delay|max|min)\s*[=><!:]/.test(linha) && !/\[\s*\d+\s*\]/.test(linha) && parseInt(numMagico[1]) > 50 && !/['"`]/.test(linha)) {
       problemas.push({
         tipo: 'magic-constants',
         descricao: `Número mágico ${numMagico[1]} sem explicação`,
@@ -230,8 +230,8 @@ function detectarProblemasDocumentacaoAST(ast: NodePath<Node>, problemas: Proble
       ClassDeclaration(path) {
         const node = path.node;
         if (node.body.body.length > 3 &&
-        // Apenas classes não-triviais
-        !node.leadingComments?.some(c => c.value.startsWith('*')) && node.id?.name && !node.id.name.toLowerCase().includes('test') && !node.id.name.toLowerCase().includes('mock')) {
+          // Apenas classes não-triviais
+          !node.leadingComments?.some(c => c.value.startsWith('*')) && node.id?.name && !node.id.name.toLowerCase().includes('test') && !node.id.name.toLowerCase().includes('mock')) {
           // Verificar se é exportada
           const parent = path.parent;
           const isExported = parent.type === 'ExportNamedDeclaration' || parent.type === 'ExportDefaultDeclaration';

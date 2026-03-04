@@ -1,5 +1,114 @@
 // SPDX-License-Identifier: MIT-0
 
+
+// Pequeno utilitário de tipo para isBabelNode esperado por alguns analisadores.
+export interface BabelNode {
+  type: string;
+  [key: string]: unknown;
+}
+
+// @prometheus-disable tipo-inseguro-unknown
+// Justificativa: função é um type guard; aceita `unknown` e valida com checagem runtime.
+export function isBabelNode(obj: unknown): obj is BabelNode {
+  // Implementação de runtime fica em src/@types ou em utilitários reais.
+  return (
+    typeof obj === 'object' &&
+    obj !== null &&
+    typeof (obj as Record<string, unknown>).type === 'string'
+  );
+}
+
+export type Contador = Record<string, number>;
+
+export interface Estatisticas {
+  requires: Contador;
+  consts: Contador;
+  exports: Contador;
+  vars: Contador;
+  lets: Contador;
+  evals: Contador;
+  withs: Contador;
+}
+
+export type ComandoPrometheus =
+  | 'diagnosticar'
+  | 'guardian'
+  | 'podar'
+  | 'reestruturar'
+  | 'atualizar';
+
+/**
+ * Tipos para helpers do shared
+ */
+
+/**
+ * Informações sobre um framework detectado
+ */
+export interface FrameworkInfo {
+  name: string;
+  version?: string;
+  isDev: boolean;
+}
+
+/**
+ * Regra para whitelist de constantes mágicas
+ */
+export interface MagicConstantRule {
+  value: number;
+  description: string;
+  contexts?: string[]; // Contextos onde esse valor é válido (opcional)
+}
+
+/**
+ * Configuração de uma regra específica
+ */
+export interface RuleConfig {
+  severity?: 'error' | 'warning' | 'info' | 'off';
+  exclude?: string[];
+  allowTestFiles?: boolean;
+}
+
+/**
+ * Override de regras para arquivos específicos
+ */
+export interface RuleOverride {
+  files: string[];
+  rules: Record<string, RuleConfig | 'off'>;
+}
+
+/**
+ * Informação de supressão inline
+ */
+export interface SupressaoInfo {
+  /** Linha onde a supressão se aplica */
+  linha: number;
+  /** Regras que estão suprimidas */
+  regras: string[];
+  /** Tipo de supressão */
+  tipo: 'linha-seguinte' | 'bloco-inicio' | 'bloco-fim';
+}
+
+/**
+ * Regras suprimidas agrupadas
+ */
+export interface RegrasSuprimidas {
+  /** Map de linha -> conjunto de regras suprimidas naquela linha */
+  porLinha: Map<number, Set<string>>;
+  /** Regras suprimidas em blocos ativos (sem fim ainda) */
+  blocosAtivos: Set<string>;
+}
+
+/**
+ * Mensagem em memória de conversação
+ */
+export interface MemoryMessage {
+  role: 'user' | 'assistant' | 'system';
+  content: string;
+  timestamp: string;
+  metadata?: Record<string, unknown>;
+}
+
+
 /**
  * Sistema próprio de validação e tipos para dados externos
  * Substitui unknown/any com tipos TypeScript específicos + validação manual
@@ -60,7 +169,7 @@ export interface DisplayNamesAPI {
  * Constructor de DisplayNames
  */
 export interface DisplayNamesConstructor {
-  new (locales: string[], options: { type: string }): DisplayNamesAPI;
+  new(locales: string[], options: { type: string }): DisplayNamesAPI;
 }
 
 /**
@@ -134,6 +243,22 @@ export interface PendenciaProcessavel {
   status?: 'pendente' | 'processando' | 'concluido' | 'erro' | 'cancelado';
   tentativas?: number;
   ultimoErro?: string;
+  [key: string]: unknown;
+}
+
+/**
+ * Contexto de processamento de relatório
+ */
+export interface ContextoRelatorio {
+  total: number;
+  processados: number;
+  erros: number;
+  tempo?: number;
+  avisos?: number;
+  sucessos?: number;
+  fase?: string;
+  detalhes?: string;
+  [key: string]: unknown;
 }
 
 /**
@@ -158,17 +283,24 @@ export interface PlanoMoverItem {
   motivo?: string;
 }
 
+export interface PlanoConflito {
+  alvo: string;
+  motivo: string;
+}
+
+export interface PlanoResumo {
+  total: number;
+  zonaVerde: number;
+  bloqueados: number;
+}
+
 /**
  * Plano de sugestão estrutural
  */
 export interface PlanoSugestaoEstrutura {
   mover: PlanoMoverItem[];
-  conflitos?: Array<{ alvo: string; motivo: string }>;
-  resumo?: {
-    total: number;
-    zonaVerde: number;
-    bloqueados: number;
-  };
+  conflitos?: PlanoConflito[];
+  resumo?: PlanoResumo;
 }
 
 /**
@@ -348,3 +480,106 @@ export function isNumeroValido(valor: unknown): valor is number {
 export function isArrayNaoVazio<T>(valor: unknown): valor is T[] {
   return Array.isArray(valor) && valor.length > 0;
 }
+
+/**
+ * @fileoverview Tipos para sistema de linting CSS interno
+ */
+
+export type CssTreeLoc = { start?: { line?: number; column?: number } };
+
+export type CssTreeChildrenList<T> = {
+  getSize?: () => number;
+  forEach?: (cb: (item: T) => void) => void;
+};
+
+export type CssTreeBlock<T> = { children?: CssTreeChildrenList<T> };
+
+export type CssTreeNode = {
+  type?: string;
+  name?: unknown;
+  prelude?: unknown;
+  block?: CssTreeBlock<CssTreeNode>;
+  loc?: CssTreeLoc;
+  property?: unknown;
+  value?: unknown;
+  important?: unknown;
+};
+
+export type CssLintSeverity = 'warning' | 'error';
+
+export type CssLintWarning = {
+  rule: string;
+  severity: CssLintSeverity;
+  text: string;
+  line?: number;
+  column?: number;
+};
+
+export type CssDuplicateContext = {
+  atruleStack?: Array<{ name: string; prelude: string }>;
+  currentAtRule?: string;
+  currentAtRulePrelude?: string;
+};
+
+
+/**
+ * Tipos para o módulo de formatação (formater.ts)
+ */
+
+export type FormatadorMinimoParser =
+  | 'json'
+  | 'markdown'
+  | 'yaml'
+  | 'code'
+  | 'html'
+  | 'css'
+  | 'python'
+  | 'php'
+  | 'xml'
+  | 'unknown';
+
+export type FormatadorMinimoResultOk = {
+  ok: true;
+  parser: FormatadorMinimoParser;
+  formatted: string;
+  changed: boolean;
+  reason?: string;
+};
+
+export type FormatadorMinimoResultError = {
+  ok: false;
+  parser: FormatadorMinimoParser;
+  error: string;
+};
+
+export type FormatadorMinimoResult =
+  | FormatadorMinimoResultOk
+  | FormatadorMinimoResultError;
+
+/**
+ * Tipos para o módulo de otimização SVG (svgs.ts)
+ */
+
+export type SvgoMinimoMudanca =
+  | 'remover-bom'
+  | 'remover-xml-prolog'
+  | 'remover-doctype'
+  | 'remover-comentarios'
+  | 'remover-metadata'
+  | 'remover-defs-vazio'
+  | 'remover-version'
+  | 'remover-xmlns-xlink'
+  | 'remover-enable-background'
+  | 'colapsar-espacos-entre-tags'
+  | 'normalizar-eol'
+  | 'trim-final';
+
+export type SvgoMinimoResult = {
+  ok: true;
+  data: string;
+  changed: boolean;
+  mudancas: SvgoMinimoMudanca[];
+  originalBytes: number;
+  optimizedBytes: number;
+  warnings: string[];
+};

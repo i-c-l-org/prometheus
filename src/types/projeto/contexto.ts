@@ -12,6 +12,8 @@ export interface ContextoProjeto {
   isTest: boolean;
   isConfiguracao: boolean;
   isInfrastructure: boolean;
+  isBackend: boolean;
+  isFrontend: boolean;
   frameworks: string[];
   linguagens: string[];
   arquetipo?: string;

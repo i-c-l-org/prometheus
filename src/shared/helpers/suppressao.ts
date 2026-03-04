@@ -20,6 +20,7 @@ export function extrairSupressoes(src: string): RegrasSuprimidas {
   const linhas = src.split('\n');
   const porLinha = new Map<number, Set<string>>();
   const blocosAtivos = new Set<string>();
+  const supressoesGlobaisNoArquivo = new Set<string>();
 
   const normalizarLinha = (linha: string): string => {
     let t = linha.trim();
@@ -42,6 +43,17 @@ export function extrairSupressoes(src: string): RegrasSuprimidas {
 
     return t;
   };
+
+  // Primeira passada rápida nos primeiros 1000 caracteres (ou primeiras 20 linhas)
+  // para detectar @prometheus-disable (sem sufixos) que desabilita no arquivo todo
+  const primeirasLinhas = linhas.slice(0, 20);
+  for (const l of primeirasLinhas) {
+    const linhaNorm = normalizarLinha(l);
+    const matchDisable = linhaNorm.match(/^@prometheus-disable\s+(.+)/);
+    if (matchDisable) {
+      matchDisable[1].trim().split(/\s+/).forEach(r => supressoesGlobaisNoArquivo.add(r.trim()));
+    }
+  }
 
   for (let i = 0; i < linhas.length; i++) {
     const linha = linhas[i];
@@ -97,13 +109,16 @@ export function extrairSupressoes(src: string): RegrasSuprimidas {
       continue;
     }
 
-    // Se há blocos ativos, aplicar a esta linha
-    if (blocosAtivos.size > 0) {
+    // Se há blocos ativos ou supressões globais, aplicar a esta linha
+    if (blocosAtivos.size > 0 || supressoesGlobaisNoArquivo.size > 0) {
       if (!porLinha.has(numeroLinha)) {
         porLinha.set(numeroLinha, new Set());
       }
 
       blocosAtivos.forEach((regra) => {
+        porLinha.get(numeroLinha)?.add(regra);
+      });
+      supressoesGlobaisNoArquivo.forEach((regra) => {
         porLinha.get(numeroLinha)?.add(regra);
       });
     }
