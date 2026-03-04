@@ -3,8 +3,8 @@
  * Tipos para fragmentação de relatórios
  */
 
-import type { FileEntryWithAst } from '../comum/file-entries.js';
-import type { Ocorrencia } from '../shared/types/occurrence.js';
+import type { FileEntryWithAst } from '../shared/index.js';
+import type { Ocorrencia } from '../shared/index.js';
 
 export type FileEntryFragmentacao = FileEntryWithAst | FileEntryFragmentacaoBasico;
 

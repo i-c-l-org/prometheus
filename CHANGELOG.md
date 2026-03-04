@@ -12,6 +12,30 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR
 
 ## [Unreleased]
 
+## [0.4.1] - 2026-03-03
+
+### Adicionado
+
+- **Análise de Segurança Contextual**:
+  - Detecção automática de contexto **Frontend vs Backend** para projetos React (via `use client`, imports e APIs).
+  - Redução drástica de falsos positivos em regras de SQL Injection, SSRF e CSRF em código cliente.
+- **Sincronização de Aliases e Docs**:
+  - Novo script `sync-aliases.mjs` resiliente a comentários e vírgulas extras no JSON.
+  - Geração automática de documentação de aliases em `docs/ALIASES.md`.
+- **Avisos de Proveniência**: Implementação sistemática de cabeçalhos de autoria/proveniência em arquivos Markdown.
+
+### Alterado
+
+- **Padronização de Caminhos**: Migração do diretório de tipos de `src/tipos/` para `src/types/` em todo o projeto.
+- **Motor de Supressão**:
+  - Suporte a diretivas `@prometheus-disable` globais (arquivo todo) mesmo com prefixos de comentário.
+  - Melhoria na normalização de linhas para detecção de comandos em todos os tipos de arquivos.
+
+### Corrigido
+
+- **Segurança (Auto-Diagnóstico)**: Refinamento de padrões Regex com limites de palavras (`\b`) para evitar que o Prometheus detectasse o próprio código dos detectores como vulnerável (XXE e Bypass Security).
+- **Performance**: Otimização na extração de supressões para evitar scans redundantes em arquivos grandes.
+
 ## [0.4.0] - 2026-02-25
 
 ### Adicionado

@@ -17,7 +17,7 @@ import type { ExportDeclaration, ImportDeclaration, Program } from '@babel/types
 import { config } from '@core/config/config.js';
 import { traverse } from '@core/config/traverse.js';
 
-import type { ContextoExecucao, EvidenciaContexto, FileEntryWithAst, PackageJson, ReportEvent,ResultadoDeteccaoContextual } from '@';
+import type { ContextoExecucao, EvidenciaContexto, FileEntryWithAst, PackageJson, ReportEvent, ResultadoDeteccaoContextual } from '@';
 
 // Re-exporta os tipos para compatibilidade
 export type { EvidenciaContexto, ResultadoDeteccaoContextual };
@@ -36,12 +36,12 @@ const PADROES_TECNOLOGIA = {
     codigoPatterns: [/Client\(\s*\{[\s\S]*intents/i, /\.login\s*\(\s*process\.env/i, /interaction\.reply/i, /message\.reply/i],
     // Sinais que indicam que NÃO é um bot Discord (é uma CLI)
     antiPatterns: [/new\s+Command\(/i,
-    // Commander.js
-    /program\.parse/i,
-    // CLI parsing
-    /\.option\s*\(/i,
-    // CLI options
-    /bin\/index\.(js|ts)/i // Binary entry point
+      // Commander.js
+      /program\.parse/i,
+      // CLI parsing
+      /\.option\s*\(/i,
+      // CLI options
+      /bin\/index\.(js|ts)/i // Binary entry point
     ]
   },
   'telegram-bot': {
@@ -63,7 +63,7 @@ const PADROES_TECNOLOGIA = {
     configs: ['server.js', 'app.js', 'index.js', 'src/server.js', 'src/app.js'],
     scripts: ['start', 'dev', 'serve', 'test'],
     codigoPatterns: [/express\(\)/i, /app\.use\(/i, /app\.(get|post|put|delete|patch)\(/i, /res\.(json|send|status|sendStatus)/i, /req\.(body|params|query|headers)/i, /router\.(get|post|put|delete)/i, /middleware/i, /cors\(/i, /helmet\(/i],
-    antiPatterns: []
+    antiPatterns: [/useState\s*\(/i, /useEffect\s*\(/i, /ReactDOM\./i, /createRoot\s*\(/i, /<[A-Z][A-Za-z0-9]*\s*\/?>/i]
   },
   'fastify-api': {
     dependencias: ['fastify', '@fastify/cors', '@fastify/helmet', '@fastify/jwt', '@fastify/rate-limit', '@fastify/swagger'],
@@ -73,7 +73,7 @@ const PADROES_TECNOLOGIA = {
     configs: ['server.js', 'app.js', 'index.js', 'src/server.js', 'src/app.js'],
     scripts: ['start', 'dev', 'serve', 'test'],
     codigoPatterns: [/fastify\(\)/i, /\.register\(/i, /reply\.(send|code)/i, /\.listen\(\s*\d+/i, /fastify\.(get|post|put|delete|patch)/i, /request\.(body|params|query|headers)/i, /addHook/i, /setValidatorCompiler/i, /setSerializerCompiler/i],
-    antiPatterns: []
+    antiPatterns: [/useState\s*\(/i, /useEffect\s*\(/i, /ReactDOM\./i, /createRoot\s*\(/i, /<[A-Z][A-Za-z0-9]*\s*\/?>/i]
   },
   'cli-modular': {
     dependencias: ['commander', 'yargs', 'inquirer', 'chalk', 'ora', 'prompts'],
@@ -85,14 +85,14 @@ const PADROES_TECNOLOGIA = {
     codigoPatterns: [/new\s+Command\(/i, /\.command\s*\(/i, /\.option\s*\(/i, /process\.argv/i, /\.parse\s*\(/i, /\.action\s*\(/i, /\.version\s*\(/i, /\.description\s*\(/i],
     // Sinais que indicam que NÃO é um bot
     antiPatterns: [/Client\(\s*\{[\s\S]*intents/i,
-    // Discord client
-    /new\s+Telegraf/i,
-    // Telegram bot
-    /bot\.command/i,
-    // Bot commands
-    /interaction\.reply/i,
-    // Discord interactions
-    /ctx\.reply/i // Telegram context
+      // Discord client
+      /new\s+Telegraf/i,
+      // Telegram bot
+      /bot\.command/i,
+      // Bot commands
+      /interaction\.reply/i,
+      // Discord interactions
+      /ctx\.reply/i // Telegram context
     ]
   },
   'electron-app': {
@@ -113,20 +113,20 @@ const PADROES_TECNOLOGIA = {
     configs: ['next.config.js', 'next.config.ts', 'next.config.mjs', 'next-env.d.ts', 'tailwind.config.js'],
     scripts: ['dev', 'build', 'start', 'lint', 'type-check'],
     codigoPatterns: [/export\s+default\s+function.*Page/i, /getServerSideProps/i, /getStaticProps/i, /getStaticPaths/i, /NextApiRequest/i, /NextApiResponse/i, /useRouter/i, /next\/head/i, /next\/link/i, /export\s+default\s+function\s+Page/i,
-    // App Router
-    /export\s+default\s+function\s+Layout/i,
-    // App Router Layout
-    /export\s+default\s+function\s+Loading/i,
-    // App Router Loading
-    /export\s+default\s+function\s+Error/i,
-    // App Router Error
-    /export\s+default\s+function\s+NotFound/i,
-    // App Router Not Found
-    /metadata\s*=/i,
-    // App Router metadata
-    /generateStaticParams/i,
-    // App Router static generation
-    /generateMetadata/i // App Router metadata generation
+      // App Router
+      /export\s+default\s+function\s+Layout/i,
+      // App Router Layout
+      /export\s+default\s+function\s+Loading/i,
+      // App Router Loading
+      /export\s+default\s+function\s+Error/i,
+      // App Router Error
+      /export\s+default\s+function\s+NotFound/i,
+      // App Router Not Found
+      /metadata\s*=/i,
+      // App Router metadata
+      /generateStaticParams/i,
+      // App Router static generation
+      /generateMetadata/i // App Router metadata generation
     ],
     antiPatterns: []
   },
@@ -504,7 +504,7 @@ export function detectarContextoInteligente(estruturaDetectada: string[], arquiv
 }): ResultadoDeteccaoContextual[] {
   // DEBUG: Log simples para verificar se está sendo chamado
   if (!options?.quiet && config.VERBOSE) {
-    const mensagem = `🔍 Package.json completo:${  JSON.stringify(packageJson, null, 2)}`;
+    const mensagem = `🔍 Package.json completo:${JSON.stringify(packageJson, null, 2)}`;
     const ev: ReportEvent = {
       tipo: 'detector-contexto-inteligente-debug-package',
       nivel: 'info',

@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT-0
 
+
 export interface OptionsBase {
   verbose?: boolean;
   dryRun?: boolean;

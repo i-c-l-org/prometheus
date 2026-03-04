@@ -4,18 +4,18 @@ import { join, resolve as resolvePath, isAbsolute } from 'node:path';
 import { existsSync } from 'node:fs';
 
 const aliases = {
-  '@types/types.js': 'types/types.ts',
-  '@nucleo/': 'nucleo/',
-  '@shared/': 'shared/',
-  '@analistas/': 'analistas/',
-  '@arquitetos/': 'arquitetos/',
-  '@zeladores/': 'zeladores/',
-  '@relatorios/': 'relatorios/',
-  '@guardian/': 'guardian/',
-  '@cli/': 'cli/',
-  '@types/': 'types/',
-  '@src/': '',
-  '@/': '',
+  '@types/types.js': '../src/types/types.ts',
+  '@nucleo/': '../src/nucleo/',
+  '@shared/': '../src/shared/',
+  '@analistas/': '../src/analistas/',
+  '@arquitetos/': '../src/arquitetos/',
+  '@zeladores/': '../src/zeladores/',
+  '@relatorios/': '../src/relatorios/',
+  '@guardian/': '../src/guardian/',
+  '@cli/': '../src/cli/',
+  '@types/': '../src/types/',
+  '@src/': '../src/',
+  '@/': '../src/',
 };
 
 export async function resolve(specifier, context, nextResolve) {
@@ -29,10 +29,9 @@ export async function resolve(specifier, context, nextResolve) {
       let basePath = '';
       if (parentURL) {
         const parentPath = new URL(parentURL).pathname;
-        if (parentPath.includes('/dist/')) basePath = resolvePath(parentPath.split('/dist/')[0], 'dist');
-        else if (parentPath.includes('/src/')) basePath = resolvePath(parentPath.split('/src/')[0], 'src');
-        else basePath = resolvePath(process.cwd(), 'src');
-      } else basePath = resolvePath(process.cwd(), 'src');
+        if (parentPath.includes('/tests/')) basePath = resolvePath(parentPath.split('/tests/')[0], 'tests');
+        else basePath = resolvePath(process.cwd(), 'tests');
+      } else basePath = resolvePath(process.cwd(), 'tests');
       const fullPath = join(basePath, newPath);
       const extensions = ['.js', '.ts', '.mjs', '.cjs'];
       let finalPath = fullPath;

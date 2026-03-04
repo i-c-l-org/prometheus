@@ -33,15 +33,9 @@ export * from './cli/metricas-analistas.js';
 export * from './cli/options.js';
 export * from './cli/processamento-diagnostico.js';
 
-// Comum
-export * from './comum/analistas.js';
-export * from './comum/file-entries.js';
-export * from './comum/package-json.js';
-export * from './comum/utils.js';
+// Comum (agora em shared)
 
-// Estrutura
 export * from './estrutura/arquetipos.js';
-export * from './estrutura/plano-estrutura.js';
 
 // Guardian
 export * from './guardian/baseline.js';

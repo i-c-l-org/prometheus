@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT-0
-// @prometheus-disable PROBLEMA_PERFORMANCE
-// Justificativa: detector de performance que analisa código-fonte - loops são esperados
+// @prometheus-disable PROBLEMA_PERFORMANCE seguranca vulnerabilidade-seguranca
+// Justificativa: detector de performance que analisa código-fonte - loops e padrões de segurança são esperados
 import type { NodePath } from '@babel/traverse';
 import type { CallExpression, ForStatement, Node } from '@babel/types';
 import { config } from '@core/config/config.js';
@@ -9,7 +9,7 @@ import { DetectorAgregadosMensagens } from '@core/messages/analistas/detector-ag
 import { detectarContextoProjeto } from '@shared/contexto-projeto.js';
 import { filtrarOcorrenciasSuprimidas } from '@shared/helpers/suppressao.js';
 
-import type { ContextoExecucao,Ocorrencia, ProblemaPerformance } from '@';
+import type { ContextoExecucao, Ocorrencia, ProblemaPerformance } from '@';
 import { criarAnalista, criarOcorrencia } from '@';
 
 const LIMITE_PERFORMANCE = config.ANALISE_LIMITES?.PERFORMANCE ?? {

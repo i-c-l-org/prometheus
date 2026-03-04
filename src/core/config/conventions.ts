@@ -21,7 +21,7 @@ export function getTypesDirectoryRelPosix(): string {
   const raw = (
     config as unknown as { conventions?: { typesDirectory?: unknown } }
   ).conventions?.typesDirectory;
-  const s = typeof raw === 'string' && raw.trim() ? raw.trim() : 'src/tipos';
+  const s = typeof raw === 'string' && raw.trim() ? raw.trim() : 'src/types';
   return trimSlashes(toPosix(s));
 }
 

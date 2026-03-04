@@ -31,7 +31,6 @@ export type { LeitorRelatorioOptions } from './leitor.js';
 
   /* -------------------------- PROCESSAMENTO -------------------------- */
 
-export * from './processamento.js';
 
   /* -------------------------- FILTRO INTELIGENTE -------------------------- */
 

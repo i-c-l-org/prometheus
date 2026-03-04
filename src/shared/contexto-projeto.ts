@@ -31,9 +31,15 @@ export function detectarContextoProjeto(opcoes: DetectarContextoOpcoes): Context
     isTest: false,
     isConfiguracao: false,
     isInfrastructure: false,
+    isBackend: false,
+    isFrontend: false,
     frameworks: [],
     linguagens: []
   };
+
+  // Heurística rápida de frontend vs backend por extensões
+  const isJSX = /\.(tsx|jsx)$/.test(p);
+  if (isJSX) contexto.isFrontend = true;
 
   // Detecta linguagens
   if (/\.(ts|tsx)$/.test(p)) contexto.linguagens.push('typescript');
@@ -62,8 +68,8 @@ export function detectarContextoProjeto(opcoes: DetectarContextoOpcoes): Context
 
   // Detecta se é arquivo de infraestrutura (setup, main, index)
   contexto.isInfrastructure = /index\.|main\.|app\.|server\.|setup\.|bootstrap/.test(p) || /(client\.login|client\.connect|createApp|express\(\)|listen\(|server\.start)/.test(conteudo) || /export\s+default|module\.exports\s*=/.test(conteudo) || /(guardian|sentinela|verificador|hash|diff|baseline)/i.test(p) ||
-  // Guardian e verificação
-  /(monitor|watch|observer|scanner)/i.test(p); // Monitoring
+    // Guardian e verificação
+    /(monitor|watch|observer|scanner)/i.test(p); // Monitoring
 
   // Detecta frameworks por imports/requires
   const importMatches = conteudo.match(/import.*from.*['"`]([^'"`]+)['"`]|require\(['"`]([^'"`]+)['"`]\)/g) || [];
@@ -90,17 +96,39 @@ export function detectarContextoProjeto(opcoes: DetectarContextoOpcoes): Context
   }
 
   // Frameworks web
-  if (/express|fastify|koa|hapi/.test(allImports)) {
+  if (/express|fastify|koa|hapi|prisma|typeorm|mongoose|knex|pg|sqlite|redis|jsonwebtoken|bcrypt/.test(allImports)) {
     contexto.frameworks.push('backend');
     contexto.isWebApp = true;
+    contexto.isBackend = true;
   }
-  if (/react|vue|angular|svelte/.test(allImports)) {
+  if (/react|vue|angular|svelte|next\/|lucide|radix|framer-motion|styled-components|emotion|tailwind/.test(allImports)) {
     contexto.frameworks.push('frontend');
     contexto.isWebApp = true;
+    contexto.isFrontend = true;
   }
   if (/next|nuxt|gatsby|remix/.test(allImports)) {
     contexto.frameworks.push('fullstack');
     contexto.isWebApp = true;
+    // Se tem 'use client' no topo, é frontend
+    if (conteudo.trim().startsWith("'use client'") || conteudo.trim().startsWith('"use client"')) {
+      contexto.isFrontend = true;
+    } else if (rel.includes('/api/') || rel.includes('.server.')) {
+      contexto.isBackend = true;
+    }
+  }
+
+  // Se tem JSX mas não foi marcado como frontend, marca agora
+  if (isJSX) contexto.isFrontend = true;
+
+  // Heurística por variáveis de ambiente/APIs globais
+  if (/\bwindow\b|\bdocument\b|\blocalStorage\b|\bsessionStorage\b|\bnavigator\b/.test(conteudo)) {
+    contexto.isFrontend = true;
+  }
+  if (/\bprocess\.env\b|__dirname|__filename|\bmodule\.exports\b/.test(conteudo)) {
+    // process.env pode aparecer em ambos, mas __dirname/module.exports são backend
+    if (/__dirname|__filename|module\.exports/.test(conteudo)) {
+      contexto.isBackend = true;
+    }
   }
 
   // Detecta por conteúdo específico se imports não cobrirem
