@@ -4,9 +4,7 @@
  */
 
 import type { MetricaAnalista } from '../../analistas/metricas.js';
-import type { Tecnica } from '../../shared/index.js';
-import type { FileEntryWithAst } from '../../shared/index.js';
-import type { Ocorrencia } from '../../shared/index.js';
+import type { FileEntryWithAst, Ocorrencia, Tecnica } from '../../shared/index.js';
 import type { ContextoExecucao } from './ambiente.js';
 
 /**
