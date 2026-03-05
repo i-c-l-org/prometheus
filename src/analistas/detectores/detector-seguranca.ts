@@ -776,7 +776,7 @@ function detectarAsyncSemTryCatch(src: string, problemas: ProblemaSeguranca[]): 
     }
   }
 }
-function detectarProblemasAST(ast: NodePath<Node>, problemas: ProblemaSeguranca[], contexto?: ContextoProjeto): void {
+function detectarProblemasAST(ast: NodePath<Node>, problemas: ProblemaSeguranca[], _contexto?: ContextoProjeto): void {
   try {
     traverse(ast.node, {
       // Detectar Function constructor

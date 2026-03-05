@@ -9,7 +9,7 @@ import { DetectorAgregadosMensagens } from '@core/messages/analistas/detector-ag
 import { detectarContextoProjeto } from '@shared/contexto-projeto.js';
 import { filtrarOcorrenciasSuprimidas } from '@shared/helpers/suppressao.js';
 
-import type { ContextoExecucao, Ocorrencia, ProblemaPerformance } from '@';
+import type { ContextoExecucao, ContextoProjeto, Ocorrencia, ProblemaPerformance } from '@';
 import { criarAnalista, criarOcorrencia } from '@';
 
 const LIMITE_PERFORMANCE = config.ANALISE_LIMITES?.PERFORMANCE ?? {
@@ -41,7 +41,7 @@ export const analistaDesempenho = criarAnalista({
     const problemas: ProblemaPerformance[] = [];
     try {
       // Detectar problemas por padrões de texto
-      detectarPadroesPerformance(src, problemas, relPath);
+      detectarPadroesPerformance(src, problemas, relPath, contextoArquivo);
 
       // Detectar problemas via AST quando disponível
       if (ast) {
@@ -173,7 +173,7 @@ function detectarInefficientArray(linha: string, numeroLinha: number, problemas:
   }
 }
 
-function detectarPadroesPerformance(src: string, problemas: ProblemaPerformance[], relPath: string): void {
+function detectarPadroesPerformance(src: string, problemas: ProblemaPerformance[], relPath: string, contexto?: ContextoProjeto): void {
   const linhas = src.split('\n');
   let dentroLoop = 0;
 
@@ -237,7 +237,10 @@ function detectarPadroesPerformance(src: string, problemas: ProblemaPerformance[
     }
 
     // React: map sem key (detecção melhorada)
-    if (/\.map\s*\([^)]*\)/.test(linha) && (/return\s*<|<\w+/.test(linha) || relPath.includes('.tsx') || relPath.includes('.jsx')) && !linha.includes('key=')) {
+    const mapPattern = /\.map\s*\([^)]*\)/.test(linha);
+    const isJsxLine = /return\s*<|<\w+/.test(linha) || relPath.includes('.tsx') || relPath.includes('.jsx');
+    const needsKey = !linha.includes('key=');
+    if (mapPattern && isJsxLine && needsKey && !contexto?.isServerComponent) {
       problemas.push({
         tipo: 'unnecessary-rerender',
         descricao: 'React map sem key prop pode causar rerenders desnecessários',

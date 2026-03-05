@@ -33,6 +33,7 @@ export function detectarContextoProjeto(opcoes: DetectarContextoOpcoes): Context
     isInfrastructure: false,
     isBackend: false,
     isFrontend: false,
+    isServerComponent: false,
     frameworks: [],
     linguagens: []
   };
@@ -40,6 +41,11 @@ export function detectarContextoProjeto(opcoes: DetectarContextoOpcoes): Context
   // Heurística rápida de frontend vs backend por extensões
   const isJSX = /\.(tsx|jsx)$/.test(p);
   if (isJSX) contexto.isFrontend = true;
+
+  const isAppDir = /(^|\/)app(\/|$)/.test(rel);
+  const hasUseClientDirective = /^\s*(['"])use client\1/m.test(conteudo);
+  const hasUseServerDirective = /^\s*(['"])use server\1/m.test(conteudo);
+  contexto.isServerComponent = hasUseServerDirective || (isAppDir && !hasUseClientDirective);
 
   // Detecta linguagens
   if (/\.(ts|tsx)$/.test(p)) contexto.linguagens.push('typescript');
