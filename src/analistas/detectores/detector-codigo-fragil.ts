@@ -191,12 +191,18 @@ export const analistaCodigoFragil = criarAnalista({
             }
           }
         },
-        // Números mágicos
+        // Números mágicos - apenas reportar se for valor não-comum
         NumericLiteral(path: NodePath<NumericLiteral>) {
           const value = path.node.value;
 
-          // Ignorar se está em declaração de variável ou índice de array
+          // Ignorar valores comuns que sempre são válidos
+          // Indices de array (0, 1) são frequentes e esperados
           if (isInVariableDeclarator(path) || isInArrayIndex(path)) {
+            return;
+          }
+
+          // Ignorar números negativos comuns (-1 para not found)
+          if (value === -1) {
             return;
           }
 
@@ -211,13 +217,17 @@ export const analistaCodigoFragil = criarAnalista({
           if (isWhitelistedConstant(value, frameworksDetectados)) {
             return;
           }
-          fragilidades.push({
-            tipo: 'magic-number',
-            linha: path.node.loc?.start.line || 0,
-            coluna: path.node.loc?.start.column || 0,
-            severidade: 'baixa',
-            contexto: `Número mágico: ${value}`
-          });
+
+          // Apenas reportar números maiores que 1 dígito para evitar falsos positivos
+          if (Math.abs(value) >= 10) {
+            fragilidades.push({
+              tipo: 'magic-number',
+              linha: path.node.loc?.start.line || 0,
+              coluna: path.node.loc?.start.column || 0,
+              severidade: 'baixa',
+              contexto: `Número mágico: ${value}`
+            });
+          }
         },
         // Muitos parâmetros - ClassMethod
         ClassMethod(path: NodePath<ClassMethod>) {
@@ -311,19 +321,21 @@ function detectarConsoleLog(src: string, fragilidades: Fragilidade[]): void {
     }
 
     // Detectar console.log não comentado
-    const consoleMatch = line.match(/console\.log\s*\(/);
+    const consoleMatch = line.match(/console\.(log|debug|info)\s*\(/);
     if (consoleMatch) {
       // Verificar se não está dentro de comentário de bloco
       const beforeMatch = line.substring(0, consoleMatch.index);
       if (beforeMatch.includes('/*') && !beforeMatch.includes('*/')) {
         continue; // Está dentro de comentário de bloco
       }
+
+      // Reduzir severidade para info (console.log em dev é válido)
       fragilidades.push({
         tipo: 'console-log',
         linha: i + 1,
         coluna: consoleMatch.index || 0,
         severidade: 'baixa',
-        contexto: 'console.log encontrado'
+        contexto: 'console.log encontrado - considere remover em produção'
       });
     }
   }

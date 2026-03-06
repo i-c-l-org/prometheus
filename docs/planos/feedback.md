@@ -1,3 +1,11 @@
+---
+Proveniência e Autoria: Este documento integra o projeto Prometheus (licença MIT-0).
+Nada aqui implica cessão de direitos morais/autorais.
+Conteúdos de terceiros não licenciados de forma compatível não devem ser incluídos.
+Referências a materiais externos devem ser linkadas e reescritas com palavras próprias.
+---
+
+
 # Feedback - Relatório de Performance (Prometheus CLI)
 
 ## Problemas identificados como FALSOS POSITIVOS
@@ -59,3 +67,4 @@ Os seguintes problemas foram confirmados como reais e devem ser corrigidos:
 1. `app/galeria/github-stats/_components/GitHubStatsPreview.tsx:147` - setTimeout sem cleanup no unmount
 2. `app/galeria/visitors/_components/VisitorsBadgeGrid.tsx:61` - setTimeout sem cleanup no unmount
 3. `app/api/visitors/[id]/badge.svg/route.ts:140` - console.log em produção (nível baixo)
+

@@ -350,15 +350,9 @@ export const detectorDependencias = {
           grafoDependencias.set(relPath, depsSet);
         }
         depsSet.add(resolved.key);
-        // Import externo
+        // Import externo - apenas reportar se for dependência fantasma (erro)
+        // Removido: reportar todo import externo como info (gera muito ruído)
         if (!val.startsWith('.') && !val.startsWith('/')) {
-          ocorrencias.push({
-            tipo: 'info',
-            mensagem: DetectorDependenciasMensagens.importDependenciaExterna(val),
-            relPath,
-            linha: p.node.loc?.start.line,
-            coluna: p.node.loc?.start.column
-          });
           // Verificação de dependência fantasma
           if (depsPackageJson) {
             const nomeBaseMod = val.startsWith('@') ? val.split('/').slice(0, 2).join('/') : val.split('/')[0];
@@ -430,15 +424,9 @@ export const detectorDependencias = {
             grafoDependencias.set(relPath, depsSet);
           }
           depsSet.add(resolved.key);
-          // Require externo
+          // Require externo - apenas reportar se for dependência fantasma (erro)
+          // Removido: reportar todo require externo como info (gera muito ruído)
           if (!val.startsWith('.') && !val.startsWith('/')) {
-            ocorrencias.push({
-              tipo: 'info',
-              mensagem: DetectorDependenciasMensagens.requireDependenciaExterna(val),
-              relPath,
-              linha: p.node.loc?.start.line,
-              coluna: p.node.loc?.start.column
-            });
             // Verificação de dependência fantasma
             if (depsPackageJson) {
               const nomeBaseMod = val.startsWith('@') ? val.split('/').slice(0, 2).join('/') : val.split('/')[0];
