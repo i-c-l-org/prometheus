@@ -5,7 +5,7 @@ import { existsSync } from 'node:fs';
 
 const aliases = {
   '@types/types.js': 'types/types.ts',
-  '@nucleo/': 'nucleo/',
+  '@core/': 'core/',
   '@shared/': 'shared/',
   '@analistas/': 'analistas/',
   '@arquitetos/': 'arquitetos/',

@@ -773,7 +773,7 @@ prometheus diagnosticar --json
 ## Licenca
 
  ![MIT-0](https://kitsune-galeria.vercel.app/api/svg/badges/info/badge-license-mit.svg)
- 
+
  Avisos de terceiros: **THIRD-PARTY-NOTICES.txt**.
 
 <img align="right" src="./img/logo.png" width="90" height="90"/>

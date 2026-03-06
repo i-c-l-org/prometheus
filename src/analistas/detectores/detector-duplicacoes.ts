@@ -198,8 +198,18 @@ function extrairInfoFuncao(path: NodePath, caminho: string, tipoFuncao: BlocoFun
 async function extrairFuncoesDoContexto(contexto: ContextoExecucao, caminhoAtual: string): Promise<BlocoFuncao[]> {
   const todasFuncoes: BlocoFuncao[] = [];
 
-  // Limitar a análise a alguns arquivos para performance
-  const arquivosParaComparar = contexto.arquivos.filter(arq => arq.relPath !== caminhoAtual && arq.ast).slice(0, 20); // Limitar para evitar overhead
+  // Limitado a 10 arquivos para performance (reduzido de 20)
+  // Prioriza arquivos do mesmo diretório para encontrar duplicações mais relevantes
+  const arquivosOrdenados = contexto.arquivos
+    .filter(arq => arq.relPath !== caminhoAtual && arq.ast)
+    .sort((a, b) => {
+      // Prioriza arquivos no mesmo diretório
+      const mesmoDir = a.relPath.split('/').slice(0, -1).join('/') === b.relPath.split('/').slice(0, -1).join('/');
+      if (mesmoDir && a.relPath.split('/').slice(0, -1).join('/') === caminhoAtual.split('/').slice(0, -1).join('/')) return -1;
+      return 0;
+    });
+
+  const arquivosParaComparar = arquivosOrdenados.slice(0, 10);
 
   for (const arquivo of arquivosParaComparar) {
     if (arquivo.ast && arquivo.content) {
