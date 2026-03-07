@@ -19,6 +19,9 @@
 
 ## Status do Projeto
 
+![Clones](https://kitsune-galeria.vercel.app/api/clones/i-c-l-org/prometheus/badge.svg?labelColor=0f172a&valueColor=1d4ed8)
+![Unique Clones na verdade, depois corrijo](https://kitsune-galeria.vercel.app/api/unique-visits/i-c-l-org/prometheus/badge.svg?labelGradientStart=4c1d95&labelGradientEnd=7c3aed&valueGradientStart=0f172a&valueGradientEnd=1e293b)
+
 ![analitico](https://kitsune-galeria.vercel.app/api/svg/badges/decorativos/badge-analitico.svg)
 ![colaborador](https://kitsune-galeria.vercel.app/api/svg/badges/decorativos/badge-colaborador.svg)
 
