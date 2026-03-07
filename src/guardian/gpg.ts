@@ -7,6 +7,13 @@ import { log } from '@core/messages/index.js';
 
 const execFileAsync = promisify(execFile);
 
+function shellEscape(str: string): string {
+  if (str === '') {
+    return "''";
+  }
+  return `'${str.replace(/'/g, `'\\''`)}'`;
+}
+
 export interface GpgSignature {
   assinatura: string;
   assinante: string;
@@ -170,8 +177,9 @@ export async function verificarAssinatura(conteudo: string, assinatura: string):
     const tempFile = `/tmp/prometheus_gpg_verify_${Date.now()}.sig`;
     const { writeFile, unlink } = await import('node:fs/promises');
     await writeFile(tempFile, assinatura, 'utf-8');
+    const escapedConteudo = shellEscape(conteudo);
     const { stdout, stderr } = await execAsync(
-      `echo -n "${conteudo.replace(/"/g, '\\"')}" | gpg --batch --verify ${tempFile} 2>&1`,
+      `echo -n ${escapedConteudo} | gpg --batch --verify ${tempFile} 2>&1`,
       { timeout: 30000 }
     );
     await unlink(tempFile);
