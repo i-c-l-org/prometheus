@@ -30,7 +30,7 @@ export interface GpgVerificationResult {
 
 export async function verificarGpgInstalado(): Promise<boolean> {
   try {
-    await execAsync('gpg --version', { timeout: 5000 });
+    await execFileAsync('gpg --version', { timeout: 5000 });
     return true;
   } catch {
     return false;
@@ -39,7 +39,7 @@ export async function verificarGpgInstalado(): Promise<boolean> {
 
 export async function listarChavesPublicas(): Promise<string[]> {
   try {
-    const { stdout } = await execAsync('gpg --list-keys --with-colons', { timeout: 10000 });
+    const { stdout } = await execFileAsync('gpg --list-keys --with-colons', { timeout: 10000 });
     const keys: string[] = [];
     const lines = stdout.split('\n');
     for (const line of lines) {
@@ -178,7 +178,7 @@ export async function verificarAssinatura(conteudo: string, assinatura: string):
     const { writeFile, unlink } = await import('node:fs/promises');
     await writeFile(tempFile, assinatura, 'utf-8');
     const escapedConteudo = shellEscape(conteudo);
-    const { stdout, stderr } = await execAsync(
+    const { stdout, stderr } = await execFileAsync(
       `echo -n ${escapedConteudo} | gpg --batch --verify ${tempFile} 2>&1`,
       { timeout: 30000 }
     );
@@ -217,7 +217,7 @@ export async function verificarAssinatura(conteudo: string, assinatura: string):
 
 export async function obterInfoChave(keyId: string): Promise<{ nome?: string; email?: string; keyId?: string } | null> {
   try {
-    const { stdout } = await execAsync(`gpg --list-keys --keyid-format LONG ${keyId}`, { timeout: 10000 });
+    const { stdout } = await execFileAsync(`gpg --list-keys --keyid-format LONG ${keyId}`, { timeout: 10000 });
     const lines = stdout.split('\n');
     const currentKey: { nome?: string; email?: string; keyId?: string } = {};
     for (const line of lines) {
