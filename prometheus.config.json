@@ -3,6 +3,8 @@
   "conventions": {
     "typesDirectory": "src/types"
   },
+  "GUARDIAN_GPG_ENABLED": false,
+  "GUARDIAN_GPG_KEY_ID": "",
   "INCLUDE_EXCLUDE_RULES": {
     "globalExcludeGlob": [
       "node_modules/**",
@@ -112,7 +114,7 @@
       "duplicacoes",
       "xml",
       "performance",
-      "qualidade-testes"
+      "qualidade-teste"
     ]
   }
 }
