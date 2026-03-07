@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT-0
-import { exec } from 'node:child_process';
+import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 
 import { config } from '@core/config/config.js';
 import { log } from '@core/messages/index.js';
 
-const execAsync = promisify(exec);
+const execFileAsync = promisify(execFile);
 
 export interface GpgSignature {
   assinatura: string;
@@ -51,7 +51,7 @@ export async function listarChavesPublicas(): Promise<string[]> {
 
 export async function listarChavesPrivadas(): Promise<string[]> {
   try {
-    const { stdout } = await execAsync('gpg --list-secret-keys --with-colons', { timeout: 10000 });
+    const { stdout } = await execFileAsync('gpg', ['--list-secret-keys', '--with-colons'], { timeout: 10000 });
     const keys: string[] = [];
     const lines = stdout.split('\n');
     for (const line of lines) {
@@ -74,7 +74,7 @@ export async function obterKeyIdPadrao(): Promise<string | null> {
     return chaveConfig;
   }
   try {
-    const { stdout } = await execAsync('gpg --list-secret-keys --keyid-format LONG --with-colons', { timeout: 10000 });
+    const { stdout } = await execFileAsync('gpg', ['--list-secret-keys', '--keyid-format', 'LONG', '--with-colons'], { timeout: 10000 });
     const lines = stdout.split('\n');
     for (const line of lines) {
       if (line.startsWith('sec:')) {
@@ -107,24 +107,30 @@ export async function assinarConteudo(conteudo: string, keyId?: string): Promise
   }
   try {
     const passphrase = config.GUARDIAN_GPG_PASSPHRASE || '';
-    let cmd = `echo -n "${conteudo.replace(/"/g, '\\"')}" | gpg --batch --yes --armor --sign --local-user ${keyIdReal}`;
     let stdout = '';
     if (passphrase) {
       const { writeFile, unlink } = await import('node:fs/promises');
       const passFile = `/tmp/prometheus_gpg_pass_${Date.now()}.txt`;
       await writeFile(passFile, passphrase, 'utf-8');
-      cmd += ` --passphrase-file ${passFile}`;
-      const result = await execAsync(cmd, { timeout: 30000 });
+      const result = await execFileAsync(
+        'gpg',
+        ['--batch', '--yes', '--armor', '--sign', '--local-user', keyIdReal, '--passphrase-file', passFile],
+        { timeout: 30000, input: conteudo }
+      );
       stdout = result.stdout;
       await unlink(passFile).catch(() => {});
     } else {
-      cmd += ' --passphrase-fd 0';
-      const result = await execAsync(cmd, { timeout: 30000 });
+      const result = await execFileAsync(
+        'gpg',
+        ['--batch', '--yes', '--armor', '--sign', '--local-user', keyIdReal],
+        { timeout: 30000, input: conteudo }
+      );
       stdout = result.stdout;
     }
-    const { stdout: infoStdout } = await execAsync(
-      `echo -n "${conteudo.replace(/"/g, '\\"')}" | gpg --batch --verify --local-user ${keyIdReal}`,
-      { timeout: 30000 }
+    const { stdout: infoStdout } = await execFileAsync(
+      'gpg',
+      ['--batch', '--verify', '--local-user', keyIdReal],
+      { timeout: 30000, input: conteudo }
     );
     let assinante = keyIdReal;
     let signKeyId: string | undefined;
