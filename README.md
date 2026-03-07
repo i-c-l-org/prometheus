@@ -5,7 +5,7 @@
 > Referências a materiais externos devem ser linkadas e reescritas com palavras próprias.
 -->
 
-<img src="./img/amarelo.png"/>
+<img src="./img/capa.png"/>
 
 ---
 
