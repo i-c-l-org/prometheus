@@ -90,7 +90,12 @@ function detectarConsoleEmProducao(linha: string, numeroLinha: number, problemas
     /\/\/\s* eslint-disable/i,
   ];
 
-  // Apenas detectar console.error e console.warn como problemas (não console.log que pode ser debug)
+  const isJSDocComment = /^\s*\*\s/.test(linha) || /^\s*\/\*\*/.test(linha);
+  if (isJSDocComment) return;
+
+  const isInlineComment = /^\s*\/\//.test(linha);
+  if (isInlineComment) return;
+
   const consolePatterns = [
     /console\.(error|warn)\s*\(/,
   ];
@@ -236,10 +241,14 @@ function detectarPadroesPerformance(src: string, problemas: ProblemaPerformance[
   }
 
     // React: map sem key (detecção melhorada)
+    // Não reportar para Server Components (não fazem re-renders) ou se já tem key
     const mapPattern = /\.map\s*\([^)]*\)/.test(linha);
     const isJsxLine = /return\s*<|<\w+/.test(linha) || relPath.includes('.tsx') || relPath.includes('.jsx');
     const needsKey = !linha.includes('key=');
-    if (mapPattern && isJsxLine && needsKey && !contexto?.isServerComponent) {
+    const isServerComp = contexto?.isServerComponent === true;
+    const isAsyncFunction = /async\s+function|function\s+async|\=>\s*async/.test(linha);
+
+    if (mapPattern && isJsxLine && needsKey && !isServerComp && !isAsyncFunction) {
       problemas.push({
         tipo: 'unnecessary-rerender',
         descricao: 'React map sem key prop pode causar rerenders desnecessários',

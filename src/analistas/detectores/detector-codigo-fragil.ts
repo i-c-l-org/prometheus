@@ -410,7 +410,16 @@ function detectarProblemasAvancados(src: string, fragilidades: Fragilidade[]): v
     }
 
     // Potencial vazamento de memória - setInterval/setTimeout sem clear + addEventListener sem remove
-    if ((/setInterval\s*\(/.test(line) || /setTimeout\s*\(/.test(line)) && !src.includes('clear') && !line.includes('once')) {
+    // Ignorar se há useEffect com cleanup ou clearTimeout/clearInterval no código
+    const hasUseEffectCleanup = /useEffect\s*\([^)]*=>\s*\{[^}]*return\s*\(\s*\)\s*=>/.test(src) ||
+                                /useEffect\s*\(\s*\(\s*\)\s*=>\s*\{[^}]*return\s+function/.test(src) ||
+                                /useEffect\s*\(\s*\(\s*\)\s*=>\s*\{[^}]*clear(Timer|Interval)/.test(src);
+    const hasClearTimer = src.includes('clearTimeout') || src.includes('clearInterval');
+
+    if ((/setInterval\s*\(/.test(line) || /setTimeout\s*\(/.test(line)) &&
+        !hasClearTimer &&
+        !hasUseEffectCleanup &&
+        !line.includes('once')) {
       fragilidades.push({
         tipo: 'memory-leak-potential',
         linha: i + 1,
