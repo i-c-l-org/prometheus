@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT-0
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
-
+import { spawn } from 'node:child_process';
 import { config } from '@core/config/config.js';
 import { log } from '@core/messages/index.js';
 
@@ -99,67 +99,61 @@ export async function obterKeyIdPadrao(): Promise<string | null> {
 
 export async function assinarConteudo(conteudo: string, keyId?: string): Promise<GpgSignature | null> {
   const gpgHabilitado = config.GUARDIAN_GPG_ENABLED;
-  if (!gpgHabilitado) {
-    return null;
-  }
+  if (!gpgHabilitado) return null;
+
   const instalado = await verificarGpgInstalado();
   if (!instalado) {
     log.aviso('🛡️ GPG não instalado. Assinatura desabilitada.');
     return null;
   }
+
   const keyIdReal = keyId || await obterKeyIdPadrao();
   if (!keyIdReal) {
     log.aviso('🛡️ Nenhuma chave GPG encontrada. Assinatura desabilitada.');
     return null;
   }
+
+  // Função auxiliar para executar GPG via spawn (substitui o execFileAsync com input)
+  const runGpg = (args: string[]): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const child = spawn('gpg', args);
+      let stdout = '';
+      let stderr = '';
+
+      child.stdin.write(conteudo);
+      child.stdin.end();
+      child.stdout.on('data', (data) => stdout += data);
+      child.stderr.on('data', (data) => stderr += data);
+      child.on('close', (code) => code === 0 ? resolve(stdout) : reject(new Error(stderr)));
+    });
+  };
+
   try {
     const passphrase = config.GUARDIAN_GPG_PASSPHRASE || '';
+    let passFile: string | undefined;
     let stdout = '';
+
     if (passphrase) {
       const { writeFile, unlink } = await import('node:fs/promises');
-      const passFile = `/tmp/prometheus_gpg_pass_${Date.now()}.txt`;
+      passFile = `/tmp/prometheus_gpg_pass_${Date.now()}.txt`;
       await writeFile(passFile, passphrase, 'utf-8');
-      const result = await execFileAsync(
-        'gpg',
-        ['--batch', '--yes', '--armor', '--sign', '--local-user', keyIdReal, '--passphrase-file', passFile],
-        { timeout: 30000, input: conteudo }
-      );
-      stdout = result.stdout;
+
+      stdout = await runGpg(['--batch', '--yes', '--armor', '--sign', '--local-user', keyIdReal, '--passphrase-file', passFile]);
       await unlink(passFile).catch(() => {});
     } else {
-      const result = await execFileAsync(
-        'gpg',
-        ['--batch', '--yes', '--armor', '--sign', '--local-user', keyIdReal],
-        { timeout: 30000, input: conteudo }
-      );
-      stdout = result.stdout;
+      stdout = await runGpg(['--batch', '--yes', '--armor', '--sign', '--local-user', keyIdReal]);
     }
-    const { stdout: infoStdout } = await execFileAsync(
-      'gpg',
-      ['--batch', '--verify', '--local-user', keyIdReal],
-      { timeout: 30000, input: conteudo }
-    );
-    let assinante = keyIdReal;
-    let signKeyId: string | undefined;
-    const infoLines = infoStdout.split('\n');
-    for (const line of infoLines) {
-      if (line.includes('signature from')) {
-        const match = line.match(/signature from\s+["']([^"']+)["']/i) || line.match(/key\s+ID\s+([A-F0-9]+)/i);
-        if (match) {
-          assinante = match[1];
-          signKeyId = match[1];
-        }
-      }
-    }
+
+    // Verificação
+    const infoStdout = await runGpg(['--batch', '--verify', '--local-user', keyIdReal]);
+
     return {
       assinatura: stdout,
-      assinante,
-      keyId: signKeyId,
+      assinante: keyIdReal, // Ajuste conforme necessário
       timestamp: new Date().toISOString()
     };
   } catch (err) {
-    const erroMsg = err instanceof Error ? err.message : String(err);
-    log.aviso(`🛡️ Erro ao assinar com GPG: ${erroMsg}`);
+    log.aviso(`🛡️ Erro ao assinar com GPG: ${err}`);
     return null;
   }
 }
